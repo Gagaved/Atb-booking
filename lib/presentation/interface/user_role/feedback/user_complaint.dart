@@ -74,7 +74,9 @@ class _TitleComplaint extends StatelessWidget {
         }
 
         /// Во всех остальных состояниях
-        else {
+        else if (state is ComplaintErrorState) {
+          return Container();
+        } else {
           return Padding(
             padding: const EdgeInsets.symmetric(vertical: 10),
             child:
@@ -85,11 +87,6 @@ class _TitleComplaint extends StatelessWidget {
                     color: appThemeData.colorScheme.onSurface, fontSize: 28),
               ),
               const SizedBox(height: 5),
-              Text(
-                "...",
-                style: appThemeData.textTheme.headlineSmall
-                    ?.copyWith(color: Colors.black, fontSize: 23),
-              ),
             ]),
           );
         }
@@ -116,32 +113,44 @@ class _MessageField extends StatelessWidget {
                     textAlign: TextAlign.left,
                     style: Theme.of(context).textTheme.headlineSmall?.copyWith(
                         color: Colors.black54,
-                        fontSize: 24,
+                        fontSize: 22,
                         fontWeight: FontWeight.w300)),
-              ),
-              Container(
-                height: 0.3,
-                color: Colors.black54,
               ),
               SizedBox(
                 width: double.infinity,
-                child: TextField(
-                  onChanged: (form) {
-                    context
-                        .read<ComplaintBloc>()
-                        .add(ComplaintMessageInputEvent(form));
-                  },
-                  controller: FeedbackUserComplaint.messageInputController,
-                  decoration:
-                      const InputDecoration(hintText: 'Введите текст \n\n'),
-                  keyboardType: TextInputType.streetAddress,
-                  style: Theme.of(context)
-                      .textTheme
-                      .headlineSmall
-                      ?.copyWith(color: Colors.black, fontSize: 20),
-                  maxLines: 20,
-                  minLines: 1,
-                  maxLength: 1000,
+                child: Container(
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 10, vertical: 8),
+                  decoration: const BoxDecoration(
+                    color: Color.fromARGB(255, 238, 238, 238),
+                    borderRadius: BorderRadius.all(Radius.circular(10.0) //
+                        ),
+                  ),
+                  child: TextField(
+                    onChanged: (form) {
+                      context
+                          .read<ComplaintBloc>()
+                          .add(ComplaintMessageInputEvent(form));
+                    },
+                    controller: FeedbackUserComplaint.messageInputController,
+                    decoration: const InputDecoration(
+                      hintText: "Введите текст сообщения...",
+                      filled: true,
+                      fillColor: Color.fromARGB(255, 238, 238, 238),
+                      border: OutlineInputBorder(
+                        borderSide: BorderSide.none,
+                        borderRadius: BorderRadius.all(Radius.circular(10.0)),
+                      ),
+                    ),
+                    keyboardType: TextInputType.streetAddress,
+                    style: Theme.of(context)
+                        .textTheme
+                        .headlineSmall
+                        ?.copyWith(color: Colors.black, fontSize: 20),
+                    maxLines: 20,
+                    minLines: 1,
+                    maxLength: 1000,
+                  ),
                 ),
               )
             ],
@@ -153,9 +162,17 @@ class _MessageField extends StatelessWidget {
           return Center(
               child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
-            children: const [
+            children: [
               Text('Ой...  Не удалось загрузить.',
-                  style: TextStyle(fontSize: 30)),
+                  style: TextStyle(fontSize: 25)),
+              SizedBox(height: 50),
+              AtbElevatedButton(
+                  onPressed: () {
+                    context
+                        .read<ComplaintBloc>()
+                        .add(ComplaintStartingEvent(state.currentUser!));
+                  },
+                  text: "Попробовать еще раз")
             ],
           ));
         } else {
@@ -200,7 +217,7 @@ class _Button extends StatelessWidget {
                     title: Text(
                       "Не удалось отправить сообщение",
                       textAlign: TextAlign.center,
-                      style: TextStyle(color: Colors.green.shade900),
+                      style: TextStyle(color: appThemeData.colorScheme.error),
                     ),
                   );
                 }

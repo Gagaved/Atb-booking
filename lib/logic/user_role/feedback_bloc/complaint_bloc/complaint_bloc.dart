@@ -42,7 +42,7 @@ class ComplaintBloc extends Bloc<ComplaintEvent, ComplaintState> {
             message, feedbackTypeId, officeId, officeLevelId, workplaceId, guiltyId);
         emit(ComplaintSuccessState());
       } catch (_) {
-        emit(ComplaintErrorState());
+        emit(ComplaintErrorState(currentUser));
       }
     });
   }
