@@ -36,7 +36,7 @@ class AdminOfficePageBloc
         print("emit loaded state");
         office = await OfficeProvider().getOfficeById(event.officeId);
         levels = await OfficeRepository().getLevelsByOfficeId(office!.id);
-        address = office!.address!;
+        address = office!.address;
         bookingRange = office!.maxBookingRangeInDays;
         workTimeRange = office!.workTimeRange;
         emit(AdminOfficePageLoadedState(address!, bookingRange!, workTimeRange!,
@@ -51,7 +51,7 @@ class AdminOfficePageBloc
       try {
         office = await OfficeProvider().getOfficeById(office!.id);
         levels = await OfficeRepository().getLevelsByOfficeId(office!.id);
-        address = office!.address!;
+        address = office!.address;
         bookingRange = office!.maxBookingRangeInDays;
         workTimeRange = office!.workTimeRange;
         print("emit loaded state after reload ");

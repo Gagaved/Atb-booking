@@ -35,8 +35,8 @@ class ShimmerPersonCard extends StatelessWidget {
             width: double.infinity,
             color: Color.fromARGB(237, 234, 234, 234),
             child: Shimmer(
-              duration: const Duration(seconds: 3), //Default value
-              interval: const Duration(seconds: 5), //Default value: Duration(seconds: 0)
+              duration: const Duration(seconds: 3),
+              interval: const Duration(seconds: 5),
               color: Colors.white, //Default value
               //colorOpacity: 0, //Default value
               enabled: true, //Default value

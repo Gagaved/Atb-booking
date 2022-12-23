@@ -19,7 +19,7 @@ import 'booking_card_widget.dart';
 class _FilterButtons extends StatelessWidget {
   const _FilterButtons({Key? key}) : super(key: key);
   static const List<Widget> fruits = <Widget>[
-    Text('Мои'),
+    Text('Мои '),
     Text('Гостевые'),
     Text('Все')
   ];
@@ -70,42 +70,40 @@ class BookingScreen extends StatelessWidget {
           if (state is BookingListLoadingState) {
             return Padding(
                 padding: const EdgeInsets.fromLTRB(15.0, 0.0, 15.0, 0),
-                child: Expanded(
-                  child: ListView.builder(
-                      itemCount: 4,
-                      itemBuilder: (context, index) {
-                        return const ShimmerBookingCard();
-                      })
+                child: Column(
+                  children: const [
+                ShimmerBookingCard(),
+                ShimmerBookingCard(),
+                ShimmerBookingCard(),
+                  ],
                 ));
           } else if (state is BookingListLoadedState) {
             if (state.bookingList.isNotEmpty) {
               return Padding(
                 padding: const EdgeInsets.fromLTRB(10.0, 00.0, 10.0, 0),
-                child: Stack(children: <Widget>[
-                  Scrollbar(
-                    child: ListView.builder(
-                      controller: scrollController,
-                      itemCount: state.bookingList.length,
-                      itemBuilder: (context, index) {
-                        final item = state.bookingList[index];
-                        return GestureDetector(
-                          onTap: () {
-                            BookingListBloc().add(BookingCardTapEvent(item.id));
-                            Navigator.of(context).push(MaterialPageRoute(
-                                builder: (context) =>
-                                    BlocProvider<BookingDetailsBloc>(
-                                      create: (context) => BookingDetailsBloc(
-                                          state.bookingList[index].id, true),
-                                      child: const BookingDetailsScreen(),
-                                    )));
-                          },
-                          child: getBookingCard(
-                              state.bookingList[index], state.mapOfTypes),
-                        );
-                      },
-                    ),
+                child: Scrollbar(
+                  child: ListView.builder(
+                    controller: scrollController,
+                    itemCount: state.bookingList.length,
+                    itemBuilder: (context, index) {
+                      final item = state.bookingList[index];
+                      return GestureDetector(
+                        onTap: () {
+                          BookingListBloc().add(BookingCardTapEvent(item.id));
+                          Navigator.of(context).push(MaterialPageRoute(
+                              builder: (context) =>
+                                  BlocProvider<BookingDetailsBloc>(
+                                    create: (context) => BookingDetailsBloc(
+                                        state.bookingList[index].id, true),
+                                    child: const BookingDetailsScreen(),
+                                  )));
+                        },
+                        child: getBookingCard(
+                            state.bookingList[index], state.mapOfTypes),
+                      );
+                    },
                   ),
-                ]),
+                ),
               );
             } else {
               return Padding(

@@ -45,7 +45,7 @@ class _DateRangePickerWidget extends StatelessWidget {
           _textEditingController.text =
           "${DateFormat('dd.MM.yyyy').format(
               selectedDateTimeRange!.start)} - ${DateFormat('dd.MM.yyyy')
-              .format(selectedDateTimeRange!.end)}";
+              .format(selectedDateTimeRange.end)}";
         }
         return TextField(
           decoration: InputDecoration(
