@@ -1,6 +1,7 @@
 import 'package:atb_booking/data/models/user.dart';
 import 'package:atb_booking/data/services/image_provider.dart';
 import 'package:atb_booking/data/services/network/network_controller.dart';
+import 'package:atb_booking/logic/secure_storage_api.dart';
 import 'package:atb_booking/logic/user_role/booking/booking_details_bloc/booking_details_bloc.dart';
 import 'package:atb_booking/logic/user_role/feedback_bloc/complaint_bloc/complaint_bloc.dart';
 import 'package:atb_booking/logic/user_role/people_profile_bloc/people_profile_booking_bloc.dart';
@@ -86,7 +87,8 @@ class AddedPeopleCard extends StatelessWidget {
       clipBehavior: Clip.antiAlias,
       // чтоб обрезал края при нажатии на карт
       child: InkWell(
-        onTap: (){
+        onTap: () async{
+          if(user.id == await SecurityStorage().getIdStorage()) return;
           Navigator.of(context).push(
             MaterialPageRoute(
               builder: (context) => BlocProvider.value(
@@ -136,7 +138,8 @@ class AddedPeopleCard extends StatelessWidget {
                       : const SizedBox.shrink()
                 ]),
                 trailing: GestureDetector(
-                    onTap: () {
+                    onTap: ()async {
+                      if(user.id == await SecurityStorage().getIdStorage()) return;
                       _showSimpleDialog(context, user);
                     },
                     child: const Icon(Icons.more_vert)),
