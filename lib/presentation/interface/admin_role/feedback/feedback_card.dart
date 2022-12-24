@@ -27,6 +27,7 @@ class FeedbackCard extends StatelessWidget {
               ),
             ),
           );
+          context.read<AdminFeedbackBloc>().add(AdminFeedbackLoadEvent(true)); 
         },
         child: Card(
             semanticContainer: true,

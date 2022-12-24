@@ -1,5 +1,12 @@
 import 'package:atb_booking/data/models/feedback.dart';
+import 'package:atb_booking/data/services/feedback_provider.dart';
+import 'package:atb_booking/data/services/image_provider.dart';
+import 'package:atb_booking/data/services/network/network_controller.dart';
+import 'package:atb_booking/logic/admin_role/feedback/admin_feedback_bloc.dart';
 import 'package:atb_booking/logic/admin_role/feedback/feedback_open_card_bloc/feedback_open_card_bloc.dart';
+import 'package:atb_booking/logic/user_role/people_profile_bloc/people_profile_booking_bloc.dart';
+import 'package:atb_booking/presentation/constants/styles.dart';
+import 'package:atb_booking/presentation/interface/user_role/people/person_profile_screen.dart';
 import 'package:atb_booking/presentation/widgets/elevated_button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -39,7 +46,7 @@ class _PersonSenderCard extends StatelessWidget {
       if (state is FeedbackOpenCardLoadedState) {
         ///
         ///
-        ///
+        /// Отправитель
         return Padding(
           padding: const EdgeInsets.symmetric(horizontal: 30.0, vertical: 20),
           child: Column(
@@ -59,10 +66,18 @@ class _PersonSenderCard extends StatelessWidget {
                               fontWeight: FontWeight.w300)),
                 ),
               ),
-              InkWell(
-                  onTap: () {
-                    // Navigator.of(context).push(MaterialPageRoute(
-                    //     builder: (context) => NewBookingScreen()));
+              GestureDetector(
+                  onTap: () async {
+                    await Navigator.of(context).push(
+                      MaterialPageRoute(
+                        builder: (context) => BlocProvider.value(
+                          value: PeopleProfileBookingBloc()
+                            ..add(PeopleProfileBookingLoadEvent(
+                                id: state.user.id)),
+                          child: PersonProfileScreen(state.user),
+                        ),
+                      ),
+                    );
                   },
                   child: AddedFeedbackPeopleCard(user: state.user))
             ],
@@ -92,10 +107,10 @@ class _Body extends StatelessWidget {
           if (state.feedback.feedbackTypeId == 1) {
             return Column(
               children: [
-            _Message(
-              message: state.feedback.comment,
-            ),
-            _ButtonDelete(state.feedback),
+                _Message(
+                  message: state.feedback.comment,
+                ),
+                _ButtonDelete(state.feedback),
               ],
             );
           }
@@ -104,20 +119,22 @@ class _Body extends StatelessWidget {
           else if (state.feedback.feedbackTypeId == 2) {
             return Column(
               children: [
-            _PersonComplaintCard(),
-
-
-            _Message(
-              message: state.feedback.comment,
-            ),
-            _ButtonDelete(state.feedback),
+                _PersonComplaintCard(),
+                _Message(
+                  message: state.feedback.comment,
+                ),
+                _ButtonDelete(state.feedback),
               ],
             );
           }
 
           /// Жалоба на рабочее место
           else if (state.feedback.feedbackTypeId == 3) {
-            return Container(); //todo Сделать для feedback type 3
+            return Column(children: [
+              _PlanComplaint(),
+              _Message(message: state.feedback.comment),
+              _ButtonDelete(state.feedback),
+            ]);
           } else {
             throw ('Unknown type of feedback');
           }
@@ -151,7 +168,7 @@ class _Body extends StatelessWidget {
 class _Message extends StatelessWidget {
   final String message;
 
-  const _Message({required this.message});
+  const _Message({super.key, required this.message});
 
   @override
   Widget build(BuildContext context) {
@@ -191,18 +208,14 @@ class _ButtonDelete extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 20),
       child: AtbElevatedButton(
-          onPressed: () {
-            // context.read<AdminFeedbackBloc>().add(AdminFeedbackDeleteItemEvent(feedback)); //todo Сделать
+          onPressed: () async{
+            await FeedbackProvider().deleteFeedback(feedback.id);
             Navigator.pop(context);
           },
           text: "Закрыть обращение"),
     );
   }
 }
-
-
-
-
 
 class _PersonComplaintCard extends StatelessWidget {
   @override
@@ -220,7 +233,9 @@ class _PersonComplaintCard extends StatelessWidget {
               SizedBox(
                 width: double.infinity,
                 child: Padding(
-                  padding: const EdgeInsets.only(left: 8,),
+                  padding: const EdgeInsets.only(
+                    left: 8,
+                  ),
                   child: Text("На кого жалуются",
                       textAlign: TextAlign.left,
                       style: Theme.of(context)
@@ -233,9 +248,17 @@ class _PersonComplaintCard extends StatelessWidget {
                 ),
               ),
               GestureDetector(
-                  onTap: () {
-                    // Navigator.of(context).push(MaterialPageRoute(
-                    //     builder: (context) => NewBookingScreen()));
+                  onTap: () async {
+                    await Navigator.of(context).push(
+                      MaterialPageRoute(
+                        builder: (context) => BlocProvider.value(
+                          value: PeopleProfileBookingBloc()
+                            ..add(PeopleProfileBookingLoadEvent(
+                                id: state.complaint!.id)),
+                          child: PersonProfileScreen(state.complaint!),
+                        ),
+                      ),
+                    );
                   },
                   child: AddedFeedbackPeopleCard(user: state.complaint!))
             ],
@@ -250,5 +273,25 @@ class _PersonComplaintCard extends StatelessWidget {
         );
       }
     });
+  }
+}
+
+class _PlanComplaint extends StatelessWidget {
+  const _PlanComplaint({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Container();
+
+
+
+
+
+
+
+
+
+
+
   }
 }

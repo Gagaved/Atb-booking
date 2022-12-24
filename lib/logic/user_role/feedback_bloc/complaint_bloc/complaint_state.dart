@@ -9,12 +9,14 @@ class ComplaintLoadingState extends ComplaintState {}
 
 class ComplaintLoadedState extends ComplaintState {
   bool isInitial = false;
-  bool showButton;
-  User userPerson;
+  final bool showButton;
+  final User userPerson;
   ComplaintLoadedState({required this.userPerson, required this.showButton});
 }
 
-class ComplaintSuccessState extends ComplaintState {
-}
+class ComplaintSuccessState extends ComplaintState {}
 
-class ComplaintErrorState extends ComplaintState {}
+class ComplaintErrorState extends ComplaintState {
+  final User? currentUser;
+  ComplaintErrorState(this.currentUser);
+}

@@ -73,7 +73,9 @@ class _TitleComplaint extends StatelessWidget {
         }
 
         /// Во всех остальных состояниях
-        else {
+        else if (state is ComplaintErrorState) {
+          return Container();
+        } else {
           return Padding(
             padding: const EdgeInsets.symmetric(vertical: 10),
             child:
@@ -84,11 +86,6 @@ class _TitleComplaint extends StatelessWidget {
                     color: Theme.of(context).colorScheme.onSurface, fontSize: 28),
               ),
               const SizedBox(height: 5),
-              Text(
-                "...",
-                style: Theme.of(context).textTheme.headlineSmall
-                    ?.copyWith(color: Colors.black, fontSize: 23),
-              ),
             ]),
           );
         }
@@ -150,9 +147,17 @@ class _MessageField extends StatelessWidget {
           return Center(
               child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
-            children: const [
+            children: [
               Text('Ой...  Не удалось загрузить.',
-                  style: TextStyle(fontSize: 30)),
+                  style: TextStyle(fontSize: 25)),
+              SizedBox(height: 50),
+              AtbElevatedButton(
+                  onPressed: () {
+                    context
+                        .read<ComplaintBloc>()
+                        .add(ComplaintStartingEvent(state.currentUser!));
+                  },
+                  text: "Попробовать еще раз")
             ],
           ));
         } else {
@@ -197,7 +202,7 @@ class _Button extends StatelessWidget {
                     title: Text(
                       "Не удалось отправить сообщение",
                       textAlign: TextAlign.center,
-                      style: TextStyle(color: Colors.green.shade900),
+                      style: TextStyle(color: appThemeData.colorScheme.error),
                     ),
                   );
                 }
