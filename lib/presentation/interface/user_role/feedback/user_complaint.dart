@@ -61,13 +61,16 @@ class _TitleComplaint extends StatelessWidget {
               Text(
                 "Пожаловаться на:",
                 style: Theme.of(context).textTheme.headlineSmall?.copyWith(
-                    color: Theme.of(context).colorScheme.onSurface, fontSize: 28),
+                    color: Theme.of(context).colorScheme.onSurface,
+                    fontSize: 28),
               ),
               const SizedBox(height: 5),
               Text(
                 state.userPerson.fullName,
-                style: Theme.of(context).textTheme.headlineSmall
-                    ?.copyWith( fontSize: 23),
+                style: Theme.of(context)
+                    .textTheme
+                    .headlineSmall
+                    ?.copyWith(fontSize: 23),
               ),
             ]),
           );
@@ -84,7 +87,8 @@ class _TitleComplaint extends StatelessWidget {
               Text(
                 "Пожаловаться на:",
                 style: Theme.of(context).textTheme.headlineSmall?.copyWith(
-                    color: Theme.of(context).colorScheme.onSurface, fontSize: 28),
+                    color: Theme.of(context).colorScheme.onSurface,
+                    fontSize: 28),
               ),
               const SizedBox(height: 5),
             ]),
@@ -111,32 +115,41 @@ class _MessageField extends StatelessWidget {
                 width: double.infinity,
                 child: Text("Сообщение",
                     textAlign: TextAlign.left,
-                    style: Theme.of(context).textTheme.headlineSmall?.copyWith(
-
-                        fontSize: 24,
-                        fontWeight: FontWeight.w300)
-
-                ),
+                    style: Theme.of(context)
+                        .textTheme
+                        .headlineSmall
+                        ?.copyWith(fontSize: 22, fontWeight: FontWeight.w300)),
               ),
               SizedBox(
                 width: double.infinity,
-                child: TextField(
-                  onChanged: (form) {
-                    context
-                        .read<ComplaintBloc>()
-                        .add(ComplaintMessageInputEvent(form));
-                  },
-                  controller: FeedbackUserComplaint.messageInputController,
-                  decoration:
-                      const InputDecoration(hintText: 'Введите текст \n\n'),
-                  keyboardType: TextInputType.streetAddress,
-                  style: Theme.of(context)
-                      .textTheme
-                      .headlineSmall
-                      ?.copyWith(fontSize: 20),
-                  maxLines: 20,
-                  minLines: 1,
-                  maxLength: 1000,
+                child: Container(
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 0, vertical: 8),
+                  child: TextField(
+                    onChanged: (form) {
+                      context
+                          .read<ComplaintBloc>()
+                          .add(ComplaintMessageInputEvent(form));
+                    },
+                    controller: FeedbackUserComplaint.messageInputController,
+                    decoration: InputDecoration(
+                      hintText: "Введите текст сообщения...",
+                      filled: true,
+                      fillColor: Theme.of(context).backgroundColor,
+                      border: const OutlineInputBorder(
+                        borderSide: BorderSide.none,
+                        borderRadius: BorderRadius.all(Radius.circular(10.0)),
+                      ),
+                    ),
+                    keyboardType: TextInputType.streetAddress,
+                    style: Theme.of(context)
+                        .textTheme
+                        .headlineSmall
+                        ?.copyWith(fontSize: 20),
+                    maxLines: 20,
+                    minLines: 1,
+                    maxLength: 1000,
+                  ),
                 ),
               )
             ],
@@ -149,9 +162,9 @@ class _MessageField extends StatelessWidget {
               child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Text('Ой...  Не удалось загрузить.',
+              const Text('Ой...  Не удалось загрузить.',
                   style: TextStyle(fontSize: 25)),
-              SizedBox(height: 50),
+              const SizedBox(height: 50),
               AtbElevatedButton(
                   onPressed: () {
                     context
@@ -238,9 +251,6 @@ class _Button extends StatelessWidget {
             FeedbackUserComplaint.messageInputController.clear();
             return Center(
                 child: ElevatedButton(
-              style: ButtonStyle(
-                //backgroundColor: MaterialStateProperty.all<Color>(Colors.grey),
-              ),
               onPressed: () {},
               child: SizedBox(
                   width: 240,
@@ -252,8 +262,6 @@ class _Button extends StatelessWidget {
                         Center(
                             child: Text(
                           "Отправить",
-                          // style: Theme.of(context).textTheme.displayLarge
-                          //     ?.copyWith(color: Colors.white, fontSize: 20),
                         )),
                       ],
                     ),
