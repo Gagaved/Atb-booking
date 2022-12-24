@@ -784,7 +784,7 @@ class _DeleteWorkspaceButton extends StatelessWidget {
                       const SizedBox(
                         width: 5,
                       ),
-                      const Icon(Icons.delete)
+                      const Icon(Icons.delete,color: Colors.white,)
                     ],
                   ),
                 ),
@@ -845,7 +845,7 @@ class _AddInfoButton extends StatelessWidget {
                       const SizedBox(
                         width: 5,
                       ),
-                      const Icon(Icons.featured_play_list)
+                      const Icon(Icons.featured_play_list,color: Colors.white,)
                     ],
                   ),
                 ),
@@ -1147,7 +1147,7 @@ class _UploadImagePanel extends StatelessWidget {
                       style: Theme.of(context).textTheme.titleMedium!
                           .copyWith(color: Colors.white, fontSize: 15),
                     ),
-                    const Icon(Icons.image)
+                    const Icon(Icons.image,color: Colors.white,)
                   ],
                 ),
               ),
@@ -1176,7 +1176,7 @@ class _UploadImagePanel extends StatelessWidget {
                       style: Theme.of(context).textTheme.titleMedium!
                           .copyWith(color: Colors.white, fontSize: 15),
                     ),
-                    const Icon(Icons.add_a_photo)
+                    const Icon(Icons.add_a_photo,color: Colors.white,)
                   ],
                 ),
               ),
