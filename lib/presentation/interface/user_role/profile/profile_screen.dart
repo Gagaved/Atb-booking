@@ -71,13 +71,13 @@ class ProfileScreen extends StatelessWidget {
                         errorWidget: (context, url, error) => Container()),
                     userName: state.userPerson.fullName,
                   ),
-                  const SizedBox(height: 55),
+                  const SizedBox(height: 35),
                   _UserInfo(
                     email: state.userPerson.email,
                     number: state.userPerson.phone,
                     job: state.userPerson.jobTitle,
                   ),
-                  const SizedBox(height: 65),
+                  const SizedBox(height: 45),
                   GestureDetector(
                       onTap: () {
                         _bubbleTransition(context);
@@ -158,7 +158,7 @@ class _UserInfo extends StatelessWidget {
       child: Column(children: [
         _RowForInfo(
           title: "E-MAIL",
-          body: job,
+          body: email,
           titleStyle: Theme.of(context)
               .textTheme
               .headlineSmall!
@@ -169,7 +169,7 @@ class _UserInfo extends StatelessWidget {
         const SizedBox(height: 15),
         _RowForInfo(
           title: "Должность",
-          body: email,
+          body: job,
           titleStyle: Theme.of(context)
               .textTheme
               .headlineSmall!
@@ -217,6 +217,7 @@ class _RowForInfo extends StatelessWidget {
               style: titleStyle,
             ),
             Container(
+              padding: EdgeInsets.symmetric(horizontal: 10, vertical: 1),
                 decoration: ShapeDecoration(
                   color: Theme.of(context).backgroundColor,
                   shape: const RoundedRectangleBorder(
