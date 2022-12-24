@@ -1,4 +1,5 @@
 import 'package:atb_booking/data/models/feedback.dart';
+import 'package:atb_booking/data/services/feedback_provider.dart';
 import 'package:atb_booking/data/services/image_provider.dart';
 import 'package:atb_booking/data/services/network/network_controller.dart';
 import 'package:atb_booking/logic/admin_role/feedback/admin_feedback_bloc.dart';
@@ -130,7 +131,11 @@ class _Body extends StatelessWidget {
 
           /// Жалоба на рабочее место
           else if (state.feedback.feedbackTypeId == 3) {
-            return Container(); //todo Сделать для feedback type 3
+            return Column(children: [
+              _PlanComplaint(),
+              _Message(message: state.feedback.comment),
+              _ButtonDelete(state.feedback),
+            ]);
           } else {
             throw ('Unknown type of feedback');
           }
@@ -204,8 +209,8 @@ class _ButtonDelete extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 20),
       child: AtbElevatedButton(
-          onPressed: () {
-            // context.read<AdminFeedbackBloc>().add(AdminFeedbackDeleteItemEvent(feedback)); //todo Сделать
+          onPressed: () async{
+            await FeedbackProvider().deleteFeedback(feedback.id);
             Navigator.pop(context);
           },
           text: "Закрыть обращение"),
@@ -269,5 +274,25 @@ class _PersonComplaintCard extends StatelessWidget {
         );
       }
     });
+  }
+}
+
+class _PlanComplaint extends StatelessWidget {
+  const _PlanComplaint({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Container();
+
+
+
+
+
+
+
+
+
+
+    
   }
 }

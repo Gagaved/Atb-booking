@@ -22,7 +22,7 @@ class AdminFeedbackScreen extends StatelessWidget {
                 Navigator.pushReplacement(context,
                     MaterialPageRoute(builder: (context) => const Auth()));
                 NetworkController()
-                    .exitFromApp(); //todo вынести в блок как эвент и ждать
+                    .exitFromApp(); 
               },
               icon: const Icon(Icons.logout, size: 28))
         ],
