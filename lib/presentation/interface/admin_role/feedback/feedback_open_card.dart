@@ -1,11 +1,7 @@
 import 'package:atb_booking/data/models/feedback.dart';
 import 'package:atb_booking/data/services/feedback_provider.dart';
-import 'package:atb_booking/data/services/image_provider.dart';
-import 'package:atb_booking/data/services/network/network_controller.dart';
-import 'package:atb_booking/logic/admin_role/feedback/admin_feedback_bloc.dart';
 import 'package:atb_booking/logic/admin_role/feedback/feedback_open_card_bloc/feedback_open_card_bloc.dart';
 import 'package:atb_booking/logic/user_role/people_profile_bloc/people_profile_booking_bloc.dart';
-import 'package:atb_booking/presentation/constants/styles.dart';
 import 'package:atb_booking/presentation/interface/user_role/people/person_profile_screen.dart';
 import 'package:atb_booking/presentation/widgets/elevated_button.dart';
 import 'package:flutter/material.dart';
@@ -61,9 +57,7 @@ class _PersonSenderCard extends StatelessWidget {
                           .textTheme
                           .headlineSmall
                           ?.copyWith(
-                              color: Colors.black54,
-                              fontSize: 25,
-                              fontWeight: FontWeight.w300)),
+                              fontSize: 25, fontWeight: FontWeight.w300)),
                 ),
               ),
               GestureDetector(
@@ -168,7 +162,7 @@ class _Body extends StatelessWidget {
 class _Message extends StatelessWidget {
   final String message;
 
-  const _Message({super.key, required this.message});
+  const _Message({required this.message});
 
   @override
   Widget build(BuildContext context) {
@@ -180,19 +174,20 @@ class _Message extends StatelessWidget {
           Padding(
             padding: const EdgeInsets.only(left: 8, bottom: 5),
             child: Text("Сообщение",
-                style: Theme.of(context).textTheme.headlineSmall?.copyWith(
-                    color: Colors.black54,
-                    fontSize: 25,
-                    fontWeight: FontWeight.w300)),
+                style: Theme.of(context)
+                    .textTheme
+                    .headlineSmall
+                    ?.copyWith(fontSize: 25, fontWeight: FontWeight.w300)),
           ),
           Container(
               width: double.infinity,
               padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 5),
-              decoration: const BoxDecoration(
-                color: Color.fromARGB(255, 238, 238, 238),
-                borderRadius: BorderRadius.all(Radius.circular(10.0)),
+              decoration: BoxDecoration(
+                color: Theme.of(context).backgroundColor,
+                borderRadius: const BorderRadius.all(Radius.circular(10.0)),
               ),
-              child: Text(message, style: Theme.of(context).textTheme.bodyMedium)),
+              child:
+                  Text(message, style: Theme.of(context).textTheme.bodyMedium)),
         ],
       ),
     );
@@ -201,6 +196,7 @@ class _Message extends StatelessWidget {
 
 class _ButtonDelete extends StatelessWidget {
   FeedbackItem feedback;
+
   _ButtonDelete(this.feedback);
 
   @override
@@ -208,7 +204,7 @@ class _ButtonDelete extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 20),
       child: AtbElevatedButton(
-          onPressed: () async{
+          onPressed: () async {
             await FeedbackProvider().deleteFeedback(feedback.id);
             Navigator.pop(context);
           },
@@ -242,9 +238,7 @@ class _PersonComplaintCard extends StatelessWidget {
                           .textTheme
                           .headlineSmall
                           ?.copyWith(
-                              color: Colors.black54,
-                              fontSize: 25,
-                              fontWeight: FontWeight.w300)),
+                              fontSize: 25, fontWeight: FontWeight.w300)),
                 ),
               ),
               GestureDetector(
@@ -277,21 +271,10 @@ class _PersonComplaintCard extends StatelessWidget {
 }
 
 class _PlanComplaint extends StatelessWidget {
-  const _PlanComplaint({super.key});
+  const _PlanComplaint();
 
   @override
   Widget build(BuildContext context) {
     return Container();
-
-
-
-
-
-
-
-
-
-
-
   }
 }

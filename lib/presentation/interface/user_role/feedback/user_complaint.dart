@@ -1,4 +1,5 @@
 import 'package:atb_booking/logic/user_role/feedback_bloc/complaint_bloc/complaint_bloc.dart';
+import 'package:atb_booking/presentation/constants/styles.dart';
 import 'package:atb_booking/presentation/widgets/elevated_button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -66,7 +67,7 @@ class _TitleComplaint extends StatelessWidget {
               Text(
                 state.userPerson.fullName,
                 style: Theme.of(context).textTheme.headlineSmall
-                    ?.copyWith(color: Colors.black, fontSize: 23),
+                    ?.copyWith( fontSize: 23),
               ),
             ]),
           );
@@ -189,11 +190,10 @@ class _Button extends StatelessWidget {
                 }
                 if (state is ComplaintSuccessState) {
                   _exit = true;
-                  return AlertDialog(
+                  return const AlertDialog(
                     title: Text(
                       "Сообщение отправлено",
                       textAlign: TextAlign.center,
-                      style: TextStyle(color: Colors.green.shade900),
                     ),
                   );
                 }
