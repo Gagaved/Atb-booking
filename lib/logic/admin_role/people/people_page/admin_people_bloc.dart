@@ -15,7 +15,7 @@ class AdminPeopleBloc extends Bloc<AdminPeopleEvent, AdminPeopleState> {
 
   AdminPeopleBloc() : super(const AdminPeopleInitialState([])) {
     on<AdminPeopleLoadEvent>((event, emit) async {
-      emit(AdminPeopleLoadingState(loadedUsers));
+      emit(AdminPeopleLoadingState(loadedUsers,page));
       currentForm = event.form;
       if (event.formHasBeenChanged) page = 0;
       if (page == 0) {

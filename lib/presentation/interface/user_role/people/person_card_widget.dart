@@ -9,98 +9,8 @@ import 'package:atb_booking/presentation/interface/user_role/feedback/user_compl
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:shimmer_animation/shimmer_animation.dart';
+import 'package:shimmer/shimmer.dart';
 import 'person_profile_screen.dart';
-
-
-class ShimmerPersonCard extends StatelessWidget {
-  const ShimmerPersonCard({Key? key}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Card(
-        elevation: 0,
-        color: Colors.transparent,
-        surfaceTintColor: Colors.transparent,
-        clipBehavior: Clip.antiAlias,
-        child: Shimmer(
-          duration: const Duration(seconds: 3), //Default value
-          interval: const Duration(seconds: 3), //Default value: Duration(seconds: 0)
-          color: Colors.white, //Default value
-          colorOpacity: 0, //Default value
-          enabled: true, //Default value
-          direction: const ShimmerDirection.fromLTRB(),  //Default Value
-          child: Container(
-            height: 75,
-            width: double.infinity,
-            color: Color.fromARGB(237, 234, 234, 234),
-            child: Shimmer(
-              duration: const Duration(seconds: 3),
-              interval: const Duration(seconds: 5),
-              color: Colors.white, //Default value
-              //colorOpacity: 0, //Default value
-              enabled: true, //Default value
-              direction: const ShimmerDirection.fromLTRB(),  //Default Value
-              child: Padding(
-                padding: const EdgeInsets.all(10),
-                child: Row(
-                  children: [
-                    Padding(
-                      padding: const EdgeInsets.symmetric(vertical: 0),
-                      child: Center(
-                        child: ClipOval(
-                          child: Container(
-                            decoration: const BoxDecoration(
-                              color:Color.fromARGB(76, 180, 180, 180),
-                              ),
-                            height: 53,
-                            width: 53,
-                            ),
-
-                          ),
-                        ),
-                      ),
-                    Padding(
-                      padding: const EdgeInsets.only(left: 30.0),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Padding(
-                            padding: const EdgeInsets.symmetric(vertical: 4.0),
-                            child: Container(
-                              decoration: const BoxDecoration(
-                                color:Color.fromARGB(76, 180, 180, 180),
-                                borderRadius: BorderRadius.all(Radius.circular(20.0) //
-                                ),
-                              ),
-                              height: 17,
-                              width: 100,
-                            ),
-                          ),
-                          Padding(
-                            padding: const EdgeInsets.symmetric(vertical: 4.0),
-                            child: Container(
-                              decoration: const BoxDecoration(
-                                color:Color.fromARGB(76, 180, 180, 180),
-                                borderRadius: BorderRadius.all(Radius.circular(20.0) //
-                                ),
-                              ),
-                              height: 15,
-                              width: 180,
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-            ),
-
-          ),
-        ));
-  }
-}
 
 
 class PersonCard extends StatelessWidget {
@@ -186,6 +96,168 @@ class PersonCard extends StatelessWidget {
     ));
   }
 }
+
+
+class ShimmerPersonCard extends StatelessWidget {
+  const ShimmerPersonCard({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.all(0.0),
+      child: Stack(children: [
+        Shimmer.fromColors(
+          highlightColor: const Color.fromARGB(66, 220, 220, 220),
+          baseColor: const Color.fromARGB(211, 217, 217, 217),
+          child: Card(
+              elevation: 0,
+              clipBehavior: Clip.antiAlias,
+              shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(12.0)),
+              child: SizedBox(
+                height: 75,
+                child: Row(children: [
+                  Expanded(
+                    flex: 65,
+                    child: Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Row(
+                            children: const [
+                            ],
+                          ),
+                          //_WorkspaceRow(booking),
+                          //_AddressRow(booking),
+                        ],
+                      ),
+                    ),
+                  ),
+                  Expanded(flex: 35, child: Container()),
+                ]),
+              )),
+        ),
+        Padding(
+          padding: const EdgeInsets.all(8.0),
+          child:
+          Row(crossAxisAlignment: CrossAxisAlignment.start, children: [
+            Shimmer.fromColors(
+              highlightColor: const Color.fromARGB(111, 182, 182, 182),
+              baseColor: const Color.fromARGB(163, 196, 196, 196),
+              child: Padding(
+                padding: const EdgeInsets.symmetric(vertical: 3),
+                child: Card(
+                    elevation: 0,
+                    clipBehavior: Clip.antiAlias,
+                    shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(60.0)),
+                    child: Center(
+                      child: SizedBox(
+                        height: 55,
+                        width: 55,
+                        child: Row(children: [
+                          Expanded(
+                            flex: 65,
+                            child: Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Row(
+                                    children: [
+                                      //_TimeRow(booking),
+                                    ],
+                                  ),
+                                  //_WorkspaceRow(booking),
+                                  //_AddressRow(booking),
+                                ],
+                              ),
+                            ),
+                          ),
+                          Expanded(flex: 35, child: Container()),
+                        ]),
+                      ),
+                    )),
+              ),
+            ),
+
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Shimmer.fromColors(
+                    highlightColor: const Color.fromARGB(111, 182, 182, 182),
+                    baseColor: const Color.fromARGB(163, 196, 196, 196),
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(vertical: 3,horizontal: 15),
+                      child: Card(
+                          elevation: 0,
+                          clipBehavior: Clip.antiAlias,
+                          shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(10.0)),
+                          child: SizedBox(
+                            height: 15,
+                            width: 160,
+                            child: Row(children: [
+                              const Expanded(
+                                flex: 65,
+                                child: Padding(
+                                  padding: EdgeInsets.all(8.0),
+                                ),
+                              ),
+                              Expanded(flex: 35, child: Container()),
+                            ]),
+                          )),
+                    ),
+                  ),Shimmer.fromColors(
+                    highlightColor: const Color.fromARGB(111, 182, 182, 182),
+                    baseColor: const Color.fromARGB(163, 196, 196, 196),
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(vertical: 3,horizontal: 15),
+                      child: Card(
+                          elevation: 0,
+                          clipBehavior: Clip.antiAlias,
+                          shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(10.0)),
+                          child: SizedBox(
+                            height: 15,
+                            width: 100,
+                            child: Row(children: [
+                              Expanded(
+                                flex: 65,
+                                child: Padding(
+                                  padding: const EdgeInsets.all(8.0),
+                                  child: Column(
+                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    children: [
+                                      Row(
+                                        children: [
+                                          //_TimeRow(booking),
+                                        ],
+                                      ),
+                                      //_WorkspaceRow(booking),
+                                      //_AddressRow(booking),
+                                    ],
+                                  ),
+                                ),
+                              ),
+                              Expanded(flex: 35, child: Container()),
+                            ]),
+                          )),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ]),
+        ),
+      ]),
+    );
+  }
+}
+
 
 void _showSimpleDialog(BuildContext contextDialog, User user) {
   showDialog(

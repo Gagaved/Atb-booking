@@ -72,10 +72,6 @@ class BookingListBloc extends Bloc<BookingListEvent, BookingListState> {
         emit(BookingListLoadingState(
           filterList: filter,
         ));
-        await Future.delayed(Duration(seconds: 5));
-        ///todo remove
-
-
 
         final currentUserId = await SecurityStorage().getIdStorage();
         final List<Booking> bookingList = await BookingProvider()

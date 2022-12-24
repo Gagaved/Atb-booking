@@ -6,6 +6,7 @@ import 'package:atb_booking/logic/user_role/booking/booking_list_bloc/booking_li
 import 'package:atb_booking/presentation/constants/styles.dart';
 import 'package:atb_booking/presentation/interface/admin_role/people/admin_person_card.dart';
 import 'package:atb_booking/presentation/interface/auth/auth_screen.dart';
+import 'package:atb_booking/presentation/interface/user_role/people/person_card_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -15,16 +16,22 @@ class AdminPeopleScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Center(child: Text("Люди"),),actions: [
-        IconButton(
-            onPressed: () {
-              BookingListBloc().add(BookingListInitialEvent());
-              Navigator.pushReplacement(
-                  context, MaterialPageRoute(builder: (_) => const Auth()));
-              NetworkController().exitFromApp();//todo вынести в блок как эвент и ждать
-            },
-            icon: const Icon(Icons.logout, size: 28))
-      ],),
+      appBar: AppBar(
+        title: Center(
+          child: Text("Люди"),
+        ),
+        actions: [
+          IconButton(
+              onPressed: () {
+                BookingListBloc().add(BookingListInitialEvent());
+                Navigator.pushReplacement(
+                    context, MaterialPageRoute(builder: (_) => const Auth()));
+                NetworkController()
+                    .exitFromApp(); //todo вынести в блок как эвент и ждать
+              },
+              icon: const Icon(Icons.logout, size: 28))
+        ],
+      ),
       body: Column(
         children: [
           _PeopleSearchField(),
@@ -122,38 +129,47 @@ class _PeopleSearchResultList extends StatelessWidget {
             );
           }
           if (state.users.isNotEmpty) {
-            return ListView.builder(
-                //controller: _scrollController,
+            if (state is AdminPeopleLoadingState && state.page ==0) {
+              return ListView.builder(
+                controller: _scrollController,
                 shrinkWrap: false,
-                itemCount: state.users.length,
+                itemCount: 6,
                 itemBuilder: (context, index) {
-                  return Column(
-                    children: [
-                      AdminPersonCard(state.users[index]),
-                      (state is AdminPeopleLoadingState &&
-                              index == state.users.length - 1)
-                          ? Container(
-                              height: 150,
-                              padding: const EdgeInsets.fromLTRB(0, 0, 0, 100),
-                              child: const Center(
-                                child: CircularProgressIndicator(),
-                              ))
-                          : const SizedBox.shrink(),
-                    ],
-                  );
-                });
+                  return const ShimmerPersonCard();
+                },);
+            } else {
+              return ListView.builder(
+                  //controller: _scrollController,
+                  shrinkWrap: false,
+                  itemCount: state.users.length,
+                  itemBuilder: (context, index) {
+                    return Column(
+                      children: [
+                        AdminPersonCard(state.users[index]),
+                        (state is AdminPeopleLoadingState &&
+                                index == state.users.length - 1)
+                            ? Container(
+                                height: 150,
+                                padding:
+                                    const EdgeInsets.fromLTRB(0, 0, 0, 100),
+                                child: const Center(
+                                  child: CircularProgressIndicator(),
+                                ))
+                            : const SizedBox.shrink(),
+                      ],
+                    );
+                  });
+            }
           } else {
-            return Expanded(
-              child: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 20.0),
-                child: Center(
-                  child: Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Text(
-                      "Ничего не найдено",
-                      style: appThemeData.textTheme.headlineMedium,
-                      textAlign: TextAlign.center,
-                    ),
+            return Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 20.0),
+              child: Center(
+                child: Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Text(
+                    "Ничего не найдено",
+                    style: appThemeData.textTheme.headlineMedium,
+                    textAlign: TextAlign.center,
                   ),
                 ),
               ),

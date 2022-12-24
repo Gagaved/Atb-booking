@@ -5,8 +5,7 @@ import 'package:atb_booking/presentation/constants/styles.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import 'package:shimmer_animation/shimmer_animation.dart';
-
+import 'package:shimmer/shimmer.dart';
 
 class _WorkspaceRow extends StatelessWidget {
   const _WorkspaceRow(this.booking);
@@ -335,92 +334,200 @@ class BookingCard extends StatelessWidget {
 
 
 class ShimmerBookingCard extends StatelessWidget {
-  const ShimmerBookingCard({Key? key}) : super(key: key);
+  const ShimmerBookingCard({super.key});
 
-  @override
   Widget build(BuildContext context) {
-    return Card(
-      elevation: 0,
-      color: Colors.transparent,
-      surfaceTintColor: Colors.transparent,
-      clipBehavior: Clip.antiAlias,
-      child: Shimmer(
-        duration: const Duration(seconds: 3), //Default value
-        interval: const Duration(seconds: 3), //Default value: Duration(seconds: 0)
-        color: Colors.white, //Default value
-        colorOpacity: 0, //Default value
-        enabled: true, //Default value
-        direction: const ShimmerDirection.fromLTRB(),  //Default Value
-        child: Container(
-          height: 150,
-          width: double.infinity,
-          color: Color.fromARGB(237, 234, 234, 234),
-          child: Shimmer(
-            duration: const Duration(seconds: 3), //Default value
-            interval: const Duration(seconds: 5), //Default value: Duration(seconds: 0)
-            color: Colors.white, //Default value
-            //colorOpacity: 0, //Default value
-            enabled: true, //Default value
-            direction: const ShimmerDirection.fromLTRB(),  //Default Value
-            child: Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Padding(
-                    padding: const EdgeInsets.symmetric(vertical: 4.0),
-                    child: Container(
-                      decoration: const BoxDecoration(
-                        color:Color.fromARGB(76, 180, 180, 180),
-                        borderRadius: BorderRadius.all(Radius.circular(20.0) //
-                        ),
+    return Padding(
+      padding: const EdgeInsets.all(6.0),
+      child: Stack(children: [
+        Shimmer.fromColors(
+          baseColor: Color.fromARGB(66, 220, 220, 220),
+          highlightColor: Color.fromARGB(211, 217, 217, 217),
+          child: Card(
+              elevation: 0,
+              clipBehavior: Clip.antiAlias,
+              shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(20.0)),
+              child: SizedBox(
+                height: 150,
+                child: Row(children: [
+                  Expanded(
+                    flex: 65,
+                    child: Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Row(
+                            children: [
+                              //_TimeRow(booking),
+                            ],
+                          ),
+                          //_WorkspaceRow(booking),
+                          //_AddressRow(booking),
+                        ],
                       ),
-                      height: 29,
-                      width: 100,
                     ),
                   ),
-                  Padding(
-                    padding: const EdgeInsets.symmetric(vertical: 4.0),
-                    child: Container(
-                      decoration: const BoxDecoration(
-                        color:Color.fromARGB(76, 180, 180, 180),
-                        borderRadius: BorderRadius.all(Radius.circular(20.0) //
-                        ),
-                      ),
+                  Expanded(flex: 35, child: Container()),
+                ]),
+              )),
+        ),
+        Padding(
+          padding: const EdgeInsets.all(8.0),
+          child:
+          Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+            Shimmer.fromColors(
+              highlightColor: Color.fromARGB(111, 182, 182, 182),
+              baseColor: Color.fromARGB(163, 196, 196, 196),
+              child: Padding(
+                padding: const EdgeInsets.symmetric(vertical: 3),
+                child: Card(
+                    elevation: 0,
+                    clipBehavior: Clip.antiAlias,
+                    shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(20.0)),
+                    child: SizedBox(
                       height: 27,
-                      width: 180,
-                    ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.symmetric(vertical: 4.0),
-                    child: Container(
-                      decoration: const BoxDecoration(
-                        color:Color.fromARGB(76, 180, 180, 180),
-                        borderRadius: BorderRadius.all(Radius.circular(20.0) //
+                      width: 120,
+                      child: Row(children: [
+                        Expanded(
+                          flex: 65,
+                          child: Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Row(
+                                  children: [
+                                    //_TimeRow(booking),
+                                  ],
+                                ),
+                                //_WorkspaceRow(booking),
+                                //_AddressRow(booking),
+                              ],
+                            ),
+                          ),
                         ),
-                      ),
-                      height: 24,
-                      width: 160,
-                    ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.symmetric(vertical: 4.0),
-                    child: Container(
-                      decoration: const BoxDecoration(
-                        color:Color.fromARGB(76, 180, 180, 180),
-                        borderRadius: BorderRadius.all(Radius.circular(20.0) //
-                        ),
-                      ),
-                      height: 20,
-                      width: 100,
-                    ),
-                  ),
-                ],
+                        Expanded(flex: 35, child: Container()),
+                      ]),
+                    )),
               ),
             ),
-          ),
-
+            Shimmer.fromColors(
+              highlightColor: Color.fromARGB(111, 182, 182, 182),
+              baseColor: Color.fromARGB(163, 196, 196, 196),
+              child: Padding(
+                padding: const EdgeInsets.symmetric(vertical: 3),
+                child: Card(
+                    elevation: 0,
+                    clipBehavior: Clip.antiAlias,
+                    shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(20.0)),
+                    child: SizedBox(
+                      height: 24,
+                      width: 200,
+                      child: Row(children: [
+                        Expanded(
+                          flex: 65,
+                          child: Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Row(
+                                  children: [
+                                    //_TimeRow(booking),
+                                  ],
+                                ),
+                                //_WorkspaceRow(booking),
+                                //_AddressRow(booking),
+                              ],
+                            ),
+                          ),
+                        ),
+                        Expanded(flex: 35, child: Container()),
+                      ]),
+                    )),
+              ),
+            ),
+            Shimmer.fromColors(
+              highlightColor: Color.fromARGB(111, 182, 182, 182),
+              baseColor: Color.fromARGB(163, 196, 196, 196),
+              child: Padding(
+                padding: const EdgeInsets.symmetric(vertical: 3),
+                child: Card(
+                    elevation: 0,
+                    clipBehavior: Clip.antiAlias,
+                    shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(20.0)),
+                    child: SizedBox(
+                      height: 18,
+                      width: 200,
+                      child: Row(children: [
+                        Expanded(
+                          flex: 65,
+                          child: Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Row(
+                                  children: [
+                                    //_TimeRow(booking),
+                                  ],
+                                ),
+                                //_WorkspaceRow(booking),
+                                //_AddressRow(booking),
+                              ],
+                            ),
+                          ),
+                        ),
+                        Expanded(flex: 35, child: Container()),
+                      ]),
+                    )),
+              ),
+            ),
+            Shimmer.fromColors(
+              highlightColor: Color.fromARGB(111, 182, 182, 182),
+              baseColor: Color.fromARGB(163, 196, 196, 196),
+              child: Padding(
+                padding: const EdgeInsets.symmetric(vertical: 3),
+                child: Card(
+                    elevation: 0,
+                    clipBehavior: Clip.antiAlias,
+                    shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(10.0)),
+                    child: SizedBox(
+                      height: 15,
+                      width: 160,
+                      child: Row(children: [
+                        Expanded(
+                          flex: 65,
+                          child: Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Row(
+                                  children: [
+                                    //_TimeRow(booking),
+                                  ],
+                                ),
+                                //_WorkspaceRow(booking),
+                                //_AddressRow(booking),
+                              ],
+                            ),
+                          ),
+                        ),
+                        Expanded(flex: 35, child: Container()),
+                      ]),
+                    )),
+              ),
+            ),
+          ]),
         ),
-      ));
+      ]),
+    );
   }
 }

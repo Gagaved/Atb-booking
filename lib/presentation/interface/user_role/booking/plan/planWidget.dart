@@ -9,6 +9,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';
+
 class PlanWidget extends StatelessWidget {
   static TransformationController _transformationController =
       TransformationController();
@@ -24,8 +25,7 @@ class PlanWidget extends StatelessWidget {
         if (state is PlanLoadedState) {
           _transformationController =
               TransformationController(_transformationController.value);
-          _transformationController.addListener(() {
-          });
+          _transformationController.addListener(() {});
           print("____________");
           var elements = <Widget>[];
           Widget? backgroundImage;
@@ -39,7 +39,8 @@ class PlanWidget extends StatelessWidget {
                 height: double.infinity,
                 child: CachedNetworkImage(
                     fit: BoxFit.fitHeight,
-                    imageUrl: AppImageProvider.getImageUrlFromImageId(state.levelPlanImageId!),
+                    imageUrl: AppImageProvider.getImageUrlFromImageId(
+                        state.levelPlanImageId!),
                     httpHeaders: NetworkController().getAuthHeader(),
                     placeholder: (context, url) => const Center(),
                     errorWidget: (context, url, error) =>
@@ -67,10 +68,7 @@ class PlanWidget extends StatelessWidget {
                   color: const Color.fromARGB(255, 232, 232, 232),
                   width: 1000.0 * PlanWidget.SCALE_FACTOR,
                   height: 1000.0 * PlanWidget.SCALE_FACTOR,
-                  child: Stack(
-                    fit: StackFit.expand,
-                    children: elements
-                  ),
+                  child: Stack(fit: StackFit.expand, children: elements),
                 ),
               ),
               Padding(
@@ -100,7 +98,8 @@ class PlanWidget extends StatelessWidget {
                 //height:  double.infinity,
                 child: CachedNetworkImage(
                     fit: BoxFit.fitHeight,
-                    imageUrl: AppImageProvider.getImageUrlFromImageId(state.levelPlanImageId!),
+                    imageUrl: AppImageProvider.getImageUrlFromImageId(
+                        state.levelPlanImageId!),
                     httpHeaders: NetworkController().getAuthHeader(),
                     placeholder: (context, url) => const Center(),
                     errorWidget: (context, url, error) =>
@@ -129,8 +128,8 @@ class PlanWidget extends StatelessWidget {
                   width: 1000.0 * PlanWidget.SCALE_FACTOR,
                   height: 1000.0 * PlanWidget.SCALE_FACTOR,
                   child: Stack(
-                      children: elements,
-                      ),
+                    children: elements,
+                  ),
                 ),
               ),
               Padding(
@@ -145,8 +144,8 @@ class PlanWidget extends StatelessWidget {
                 padding:
                     const EdgeInsets.symmetric(horizontal: 30.0, vertical: 10),
                 child: _DatePickerWidget(
-                    onChanged: (DateTime dateTime) {},
-                  ),
+                  onChanged: (DateTime dateTime) {},
+                ),
               )
             ],
           );
@@ -251,7 +250,6 @@ class _LevelPlanElementWidget extends StatelessWidget {
   }
 }
 
-
 class _DatePickerWidget extends StatefulWidget {
   const _DatePickerWidget({required this.onChanged});
 
@@ -273,8 +271,8 @@ class _DatePickerWidgetState extends State<_DatePickerWidget> {
 
   @override
   Widget build(
-      BuildContext context,
-      ) {
+    BuildContext context,
+  ) {
     if (_selectedDate != null) {
       _textEditingController.text =
           (DateFormat.yMMMMd("ru_RU").format(_selectedDate!)).toString();
@@ -315,8 +313,11 @@ class _DatePickerWidgetState extends State<_DatePickerWidget> {
             );
           },
           context: context,
-          initialDate: DateTime.now().add(const Duration(days: 1)),
-          firstDate: DateTime.now(),
+          initialDate: DateTime(DateTime.now().year, DateTime.now().month,
+                  DateTime.now().day, DateTime.now().hour)
+              .add(const Duration(days: 1)),
+          firstDate: DateTime(DateTime.now().year, DateTime.now().month,
+              DateTime.now().day, DateTime.now().hour),
           lastDate: DateTime.now()
               .add(Duration(days: PlanBloc().maxBookingRangeInDays!)),
         );

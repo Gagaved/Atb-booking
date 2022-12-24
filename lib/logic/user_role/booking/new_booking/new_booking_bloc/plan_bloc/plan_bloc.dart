@@ -25,7 +25,7 @@ class PlanBloc extends Bloc<PlanEvent, PlanState> {
   int? maxBookingRangeInDays;
   Map<int, WorkspaceType>? workspaceTypes;
   LevelPlanElementData? selectedWorkspace;
-  DateTime selectedDate = DateTime.now().add(Duration(days: 1));
+  DateTime selectedDate = DateTime(DateTime.now().year,DateTime.now().month,DateTime.now().day,DateTime.now().hour).add(const Duration(days: 1));
   final LevelPlanRepository levelPlanRepository = LevelPlanRepository();
   final WorkspaceTypeRepository workspaceTypeRepository =
       WorkspaceTypeRepository();
