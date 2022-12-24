@@ -36,7 +36,7 @@ class PersonProfileScreen extends StatelessWidget {
                 borderRadius: BorderRadius.circular(0.0)),
             clipBehavior: Clip.antiAliasWithSaveLayer,
             child: Row(
-              crossAxisAlignment: CrossAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 Padding(
                   padding: const EdgeInsets.all(8.0),
@@ -181,7 +181,7 @@ class PersonProfileScreen extends StatelessWidget {
                                       10.0, 0.0, 10.0, 0),
                                   child: Center(
                                     child: Text(
-                                      "Броней пока нет",
+                                      "У этого пользователя нет активных броней",
                                       textAlign: TextAlign.center,
                                       style: Theme.of(context)
                                           .textTheme
