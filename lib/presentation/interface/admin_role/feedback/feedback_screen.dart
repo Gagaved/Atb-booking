@@ -20,8 +20,7 @@ class AdminFeedbackScreen extends StatelessWidget {
               onPressed: () {
                 Navigator.pushReplacement(context,
                     MaterialPageRoute(builder: (context) => const Auth()));
-                NetworkController()
-                    .exitFromApp(); 
+                NetworkController().exitFromApp();
               },
               icon: const Icon(Icons.logout, size: 28))
         ],
@@ -62,7 +61,7 @@ class _DropdownButtonType extends StatelessWidget {
               Container(
                 padding:
                     const EdgeInsets.symmetric(horizontal: 10, vertical: 2),
-                decoration:  BoxDecoration(
+                decoration: BoxDecoration(
                   color: Theme.of(context).backgroundColor,
                   borderRadius: const BorderRadius.all(Radius.circular(10.0) //
                       ),
@@ -101,7 +100,7 @@ class _DropdownButtonType extends StatelessWidget {
               Container(
                 padding:
                     const EdgeInsets.symmetric(horizontal: 10, vertical: 2),
-                decoration:  BoxDecoration(
+                decoration: BoxDecoration(
                   color: Theme.of(context).backgroundColor,
                   borderRadius: const BorderRadius.all(Radius.circular(10.0) //
                       ),
@@ -140,7 +139,7 @@ class _DropdownButtonType extends StatelessWidget {
               Container(
                 padding:
                     const EdgeInsets.symmetric(horizontal: 10, vertical: 2),
-                decoration:  BoxDecoration(
+                decoration: BoxDecoration(
                   color: Theme.of(context).backgroundColor,
                   borderRadius: const BorderRadius.all(Radius.circular(10.0) //
                       ),

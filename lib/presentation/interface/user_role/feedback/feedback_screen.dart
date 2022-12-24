@@ -466,11 +466,10 @@ class _Button extends StatelessWidget {
                 }
                 if (state is FeedbackSuccessState) {
                   _exit = true;
-                  return AlertDialog(
+                  return const AlertDialog(
                     title: Text(
                       "Сообщение отправлено",
                       textAlign: TextAlign.center,
-                      style: TextStyle(color: Colors.green.shade900),
                     ),
                   );
                 }
