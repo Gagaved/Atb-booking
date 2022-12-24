@@ -3,7 +3,9 @@ import 'package:atb_booking/data/services/image_provider.dart';
 import 'package:atb_booking/data/services/network/network_controller.dart';
 import 'package:atb_booking/logic/admin_role/feedback/admin_feedback_bloc.dart';
 import 'package:atb_booking/logic/admin_role/feedback/feedback_open_card_bloc/feedback_open_card_bloc.dart';
+import 'package:atb_booking/logic/user_role/people_profile_bloc/people_profile_booking_bloc.dart';
 import 'package:atb_booking/presentation/constants/styles.dart';
+import 'package:atb_booking/presentation/interface/user_role/people/person_profile_screen.dart';
 import 'package:atb_booking/presentation/widgets/elevated_button.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
@@ -65,9 +67,17 @@ class _PersonSenderCard extends StatelessWidget {
                 ),
               ),
               GestureDetector(
-                  onTap: () {
-                    // Navigator.of(context).push(MaterialPageRoute(
-                    //     builder: (context) => NewBookingScreen()));
+                  onTap: () async {
+                    await Navigator.of(context).push(
+                      MaterialPageRoute(
+                        builder: (context) => BlocProvider.value(
+                          value: PeopleProfileBookingBloc()
+                            ..add(PeopleProfileBookingLoadEvent(
+                                id: state.user.id)),
+                          child: PersonProfileScreen(state.user),
+                        ),
+                      ),
+                    );
                   },
                   child: AddedFeedbackPeopleCard(user: state.user))
             ],
@@ -97,10 +107,10 @@ class _Body extends StatelessWidget {
           if (state.feedback.feedbackTypeId == 1) {
             return Column(
               children: [
-            _Message(
-              message: state.feedback.comment,
-            ),
-            _ButtonDelete(state.feedback),
+                _Message(
+                  message: state.feedback.comment,
+                ),
+                _ButtonDelete(state.feedback),
               ],
             );
           }
@@ -109,13 +119,11 @@ class _Body extends StatelessWidget {
           else if (state.feedback.feedbackTypeId == 2) {
             return Column(
               children: [
-            _PersonComplaintCard(),
-
-
-            _Message(
-              message: state.feedback.comment,
-            ),
-            _ButtonDelete(state.feedback),
+                _PersonComplaintCard(),
+                _Message(
+                  message: state.feedback.comment,
+                ),
+                _ButtonDelete(state.feedback),
               ],
             );
           }
@@ -205,10 +213,6 @@ class _ButtonDelete extends StatelessWidget {
   }
 }
 
-
-
-
-
 class _PersonComplaintCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -225,7 +229,9 @@ class _PersonComplaintCard extends StatelessWidget {
               SizedBox(
                 width: double.infinity,
                 child: Padding(
-                  padding: const EdgeInsets.only(left: 8,),
+                  padding: const EdgeInsets.only(
+                    left: 8,
+                  ),
                   child: Text("На кого жалуются",
                       textAlign: TextAlign.left,
                       style: Theme.of(context)
@@ -238,9 +244,17 @@ class _PersonComplaintCard extends StatelessWidget {
                 ),
               ),
               GestureDetector(
-                  onTap: () {
-                    // Navigator.of(context).push(MaterialPageRoute(
-                    //     builder: (context) => NewBookingScreen()));
+                  onTap: () async {
+                    await Navigator.of(context).push(
+                      MaterialPageRoute(
+                        builder: (context) => BlocProvider.value(
+                          value: PeopleProfileBookingBloc()
+                            ..add(PeopleProfileBookingLoadEvent(
+                                id: state.complaint!.id)),
+                          child: PersonProfileScreen(state.complaint!),
+                        ),
+                      ),
+                    );
                   },
                   child: AddedFeedbackPeopleCard(user: state.complaint!))
             ],
