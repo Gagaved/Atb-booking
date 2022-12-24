@@ -17,7 +17,6 @@ class BookingDeleteDialog extends StatelessWidget {
           content: Text(
             'Вы действительно хотите отменить  бонирование?',
             style: Theme.of(context).textTheme.headlineSmall?.copyWith(
-                color: Colors.black54,
                 fontSize: 20,
                 fontWeight: FontWeight.w300),
           ),
@@ -29,7 +28,6 @@ class BookingDeleteDialog extends StatelessWidget {
               child: Text(
                 'Отмена',
                 style: Theme.of(context).textTheme.headlineSmall?.copyWith(
-                    color: Colors.black54,
                     fontSize: 20,
                     fontWeight: FontWeight.w500),
               ),
@@ -46,7 +44,6 @@ class BookingDeleteDialog extends StatelessWidget {
               child: Text(
                 'Отменить',
                 style: Theme.of(context).textTheme.headlineSmall?.copyWith(
-                    color: Colors.black54,
                     fontSize: 20,
                     fontWeight: FontWeight.w500),
               ),

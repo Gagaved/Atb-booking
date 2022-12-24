@@ -14,11 +14,8 @@ class Application extends StatelessWidget {
       //Заголовок и тема
       title: 'ATB Flutter Demo',
       theme: appThemeData,
-      // initialRoute: (typeUser == "")
-      //     ? "/auth"
-      //     : (typeUser == 'USER')
-      //         ? "/home"
-      //         : "/adminHome",
+      darkTheme: appDarkThemeData,
+      themeMode: ThemeMode.system,
       onGenerateRoute: _appRouter.onGenerateRoute,
     );
   }

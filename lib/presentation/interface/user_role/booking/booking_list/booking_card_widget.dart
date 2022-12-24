@@ -25,7 +25,7 @@ class _WorkspaceRow extends StatelessWidget {
           padding: const EdgeInsets.symmetric(horizontal: 8.0),
           child: Text(
             booking.workspace.type.type,
-            style: appThemeData.textTheme.bodyLarge!
+            style: Theme.of(context).textTheme.bodyLarge!
                 .copyWith(
                   fontWeight: FontWeight.w600,
                   height: 0,
@@ -67,7 +67,7 @@ class _DateRow extends StatelessWidget {
           padding: const EdgeInsets.symmetric(horizontal: 8.0),
           child: Text(
             dateString,
-            style: appThemeData.textTheme.bodyMedium!
+            style: Theme.of(context).textTheme.bodyMedium!
                 .copyWith(height: 0, fontWeight: FontWeight.w400),
           ),
         ),
@@ -98,7 +98,7 @@ class _TimeRow extends StatelessWidget {
           padding: const EdgeInsets.symmetric(horizontal: 8.0),
           child: Text(
             text,
-            style: appThemeData.textTheme.bodyLarge!.copyWith(
+            style: Theme.of(context).textTheme.bodyLarge!.copyWith(
               fontWeight: FontWeight.w400,
               height: 0,
             ),
@@ -127,7 +127,7 @@ class _AddressRow extends StatelessWidget {
           padding: const EdgeInsets.symmetric(horizontal: 8.0),
           child: Text(
             "${booking.officeAddress}, ${booking.workspace.level} этаж",
-            style: appThemeData.textTheme.bodySmall!.copyWith(
+            style: Theme.of(context).textTheme.bodySmall!.copyWith(
               fontWeight: FontWeight.w500,
               height: 0,
             ),
@@ -290,8 +290,6 @@ class BookingCard extends StatelessWidget {
       child: Card(
           clipBehavior: Clip.antiAliasWithSaveLayer,
           shape: RoundedRectangleBorder(
-              side: const BorderSide(
-                  width: 0.3, color: Color.fromARGB(255, 200, 194, 207)),
               borderRadius: BorderRadius.circular(20.0)),
           child: Stack(alignment: Alignment.centerLeft, children: [
             Row(
@@ -338,10 +336,10 @@ class ShimmerBookingCard extends StatelessWidget {
 
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.all(6.0),
+      padding: const EdgeInsets.symmetric(vertical: 0.0),
       child: Stack(children: [
         Shimmer.fromColors(
-          baseColor: Color.fromARGB(66, 220, 220, 220),
+          baseColor: Theme.of(context).backgroundColor,
           highlightColor: Color.fromARGB(211, 217, 217, 217),
           child: Card(
               elevation: 0,
@@ -349,7 +347,7 @@ class ShimmerBookingCard extends StatelessWidget {
               shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(20.0)),
               child: SizedBox(
-                height: 150,
+                height: 144,
                 child: Row(children: [
                   Expanded(
                     flex: 65,

@@ -1,9 +1,7 @@
 import 'package:atb_booking/data/models/feedback.dart';
-import 'package:atb_booking/data/models/user.dart';
-import 'package:atb_booking/data/services/users_repository.dart';
+
 import 'package:atb_booking/logic/admin_role/feedback/admin_feedback_bloc.dart';
 import 'package:atb_booking/logic/admin_role/feedback/feedback_open_card_bloc/feedback_open_card_bloc.dart';
-import 'package:atb_booking/presentation/constants/styles.dart';
 import 'package:atb_booking/presentation/interface/admin_role/feedback/feedback_open_card.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -36,7 +34,7 @@ class FeedbackCard extends StatelessWidget {
             clipBehavior: Clip.antiAliasWithSaveLayer,
             shape: RoundedRectangleBorder(
                 side: BorderSide(
-                    width: 0, color: appThemeData.colorScheme.tertiary),
+                    width: 0, color: Theme.of(context).colorScheme.tertiary),
                 borderRadius: BorderRadius.circular(12.0)),
             child: Padding(
               padding: const EdgeInsets.all(3.0),
@@ -45,11 +43,11 @@ class FeedbackCard extends StatelessWidget {
                   Expanded(
                       child: ListTile(
                     title: Text(_DateConvert(feedback.date),
-                        style: appThemeData.textTheme.bodyMedium!
+                        style: Theme.of(context).textTheme.bodyMedium!
                             .copyWith(fontWeight: FontWeight.w400)),
                     subtitle: Text(
                       feedback.userFullName,
-                      style: appThemeData.textTheme.titleSmall,
+                      style: Theme.of(context).textTheme.titleSmall,
                     ),
                     trailing: GestureDetector(
                       onTap: () {

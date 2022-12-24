@@ -1,13 +1,10 @@
 import 'package:atb_booking/data/models/booking.dart';
 import 'package:atb_booking/data/models/user.dart';
-import 'package:atb_booking/data/models/workspace_type.dart';
 import 'package:atb_booking/data/services/image_provider.dart';
 import 'package:atb_booking/data/services/network/network_controller.dart';
 import 'package:atb_booking/logic/admin_role/people/person_booking_list/admin_person_booking_list_bloc.dart';
 import 'package:atb_booking/logic/user_role/booking/booking_details_bloc/booking_details_bloc.dart';
-import 'package:atb_booking/presentation/constants/styles.dart';
 import 'package:atb_booking/presentation/interface/user_role/booking/booking_details/booking_details_screen.dart';
-import 'package:atb_booking/presentation/interface/user_role/booking/booking_list/booking_card_widget.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -61,15 +58,15 @@ class _PersonInfoWidget extends StatelessWidget {
                           .headlineSmall
                           ?.copyWith(
                               fontSize: 25,
-                              color: appThemeData.colorScheme.primary),
+                              color: Theme.of(context).colorScheme.primary),
                     ),
                     Text(
                       user.email,
-                      style: appThemeData.textTheme.bodyLarge,
+                      style: Theme.of(context).textTheme.bodyLarge,
                     ),
                     Text(
                       user.phone,
-                      style: appThemeData.textTheme.bodyLarge,
+                      style: Theme.of(context).textTheme.bodyLarge,
                     ),
                   ],
                 ),
@@ -175,7 +172,7 @@ class _BookingCard extends StatelessWidget {
                         contentPadding: const EdgeInsets.only(left: 10),
                         title: Text(
                           booking.workspace.type.type,
-                          style: appThemeData.textTheme.titleMedium,
+                          style: Theme.of(context).textTheme.titleMedium,
                         ),
                         subtitle: Text(
                           'c ' +
@@ -187,7 +184,7 @@ class _BookingCard extends StatelessWidget {
                               '\n' +
                               DateFormat.yMMMMd("ru_RU")
                                   .format(booking.reservationInterval.start),
-                          style: appThemeData.textTheme.titleMedium,
+                          style: Theme.of(context).textTheme.titleMedium,
                         ),
                         //trailing: trailing ? Icon(Icons.cancel, color: Colors.black) : null,
                       ),
@@ -199,9 +196,9 @@ class _BookingCard extends StatelessWidget {
                         child: ListTile(
                           contentPadding: EdgeInsets.zero,
                           title: Text(booking.cityName,
-                              style: appThemeData.textTheme.titleMedium),
+                              style: Theme.of(context).textTheme.titleMedium),
                           subtitle: Text(booking.officeAddress,
-                              style: appThemeData.textTheme.titleMedium),
+                              style: Theme.of(context).textTheme.titleMedium),
                         ),
                       ))
                 ],

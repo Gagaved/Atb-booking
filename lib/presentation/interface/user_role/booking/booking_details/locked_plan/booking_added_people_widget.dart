@@ -3,10 +3,9 @@ import 'package:atb_booking/data/services/image_provider.dart';
 import 'package:atb_booking/data/services/network/network_controller.dart';
 import 'package:atb_booking/logic/user_role/booking/booking_details_bloc/booking_details_bloc.dart';
 import 'package:atb_booking/logic/user_role/feedback_bloc/complaint_bloc/complaint_bloc.dart';
-import 'package:atb_booking/logic/user_role/feedback_bloc/feedback_bloc.dart';
-import 'package:atb_booking/presentation/constants/styles.dart';
-import 'package:atb_booking/presentation/interface/user_role/feedback/feedback_screen.dart';
+import 'package:atb_booking/logic/user_role/people_profile_bloc/people_profile_booking_bloc.dart';
 import 'package:atb_booking/presentation/interface/user_role/feedback/user_complaint.dart';
+import 'package:atb_booking/presentation/interface/user_role/people/person_profile_screen.dart';
 import 'package:atb_booking/presentation/widgets/elevated_button.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
@@ -86,59 +85,70 @@ class AddedPeopleCard extends StatelessWidget {
     return Card(
       clipBehavior: Clip.antiAlias,
       // чтоб обрезал края при нажатии на карт
-      child: Row(
-        children: [
-          Expanded(
-            child: ListTile(
-              leading: Stack(children: [
-                Padding(
-                  padding: const EdgeInsets.all(4.0),
-                  child: Container(
-                    clipBehavior: Clip.antiAlias,
-                    decoration: const BoxDecoration(
-                      shape: BoxShape.circle,
-                    ),
-                    child: SizedBox(
-                      width: 50,
-                      height: 50,
-                      child: CachedNetworkImage(
-                          fit: BoxFit.cover,
-                          imageUrl: AppImageProvider.getImageUrlFromImageId(
-                              user.avatarImageId),
-                          httpHeaders: NetworkController().getAuthHeader(),
-                          progressIndicatorBuilder:
-                              (context, url, downloadProgress) => Center(
-                                  child: CircularProgressIndicator(
-                                      value: downloadProgress.progress)),
-                          errorWidget: (context, url, error) => Container()),
-                    ),
-                  ),
-                ),
-                (user.isFavorite)
-                    ? Container(
-                        decoration: const BoxDecoration(
-                          shape: BoxShape.circle,
-                          color: Colors.white,
-                        ),
-                        child:
-                            Icon(Icons.star, color: appThemeData.primaryColor))
-                    : const SizedBox.shrink()
-              ]),
-              trailing: IconButton(
-                  color: Colors.black,
-                  onPressed: () {
-                    FocusScope.of(context).unfocus();
-                    _showSimpleDialog(context, user);
-                  },
-                  icon: const Icon(Icons.more_vert)),
-              title: Text(user.fullName),
-              subtitle: Text(
-                user.email,
-                style: appThemeData.textTheme.bodySmall,
+      child: InkWell(
+        onTap: (){
+          Navigator.of(context).push(
+            MaterialPageRoute(
+              builder: (context) => BlocProvider.value(
+                value: PeopleProfileBookingBloc()
+                  ..add(PeopleProfileBookingLoadEvent(id: user.id)),
+                child: PersonProfileScreen(user),
               ),
             ),
-          ),
-        ],
+          );
+        },
+        child: Row(
+          children: [
+            Expanded(
+              child: ListTile(
+                leading: Stack(children: [
+                  Padding(
+                    padding: const EdgeInsets.all(4.0),
+                    child: Container(
+                      clipBehavior: Clip.antiAlias,
+                      decoration: const BoxDecoration(
+                        shape: BoxShape.circle,
+                      ),
+                      child: SizedBox(
+                        width: 50,
+                        height: 50,
+                        child: CachedNetworkImage(
+                            fit: BoxFit.cover,
+                            imageUrl: AppImageProvider.getImageUrlFromImageId(
+                                user.avatarImageId),
+                            httpHeaders: NetworkController().getAuthHeader(),
+                            progressIndicatorBuilder:
+                                (context, url, downloadProgress) => Center(
+                                    child: CircularProgressIndicator(
+                                        value: downloadProgress.progress)),
+                            errorWidget: (context, url, error) => Container()),
+                      ),
+                    ),
+                  ),
+                  (user.isFavorite)
+                      ? Container(
+                          decoration: const BoxDecoration(
+                            shape: BoxShape.circle,
+                            color: Colors.white,
+                          ),
+                          child:
+                              Icon(Icons.star, color: Theme.of(context).primaryColor))
+                      : const SizedBox.shrink()
+                ]),
+                trailing: GestureDetector(
+                    onTap: () {
+                      _showSimpleDialog(context, user);
+                    },
+                    child: const Icon(Icons.more_vert)),
+                title: Text(user.fullName),
+                subtitle: Text(
+                  user.email,
+                  style: Theme.of(context).textTheme.bodySmall,
+                ),
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }
@@ -153,8 +163,8 @@ void _showSimpleDialog(BuildContext contextDialog, User user) {
           child: SimpleDialog(
             title: Text(
               user.fullName,
-              style: appThemeData.textTheme.headlineSmall
-                  ?.copyWith(color: appThemeData.primaryColor),
+              style: Theme.of(context).textTheme.headlineSmall
+                  ?.copyWith(color: Theme.of(context).primaryColor),
             ),
             children: <Widget>[
               SimpleDialogOption(
@@ -177,7 +187,7 @@ void _showSimpleDialog(BuildContext contextDialog, User user) {
                     const Icon(Icons.report_gmailerrorred),
                     const SizedBox(width: 10),
                     Text('Пожаловаться',
-                        style: appThemeData.textTheme.titleMedium),
+                        style: Theme.of(context).textTheme.titleMedium),
                   ],
                 ),
               ),
@@ -201,14 +211,14 @@ void _showSimpleDialog(BuildContext contextDialog, User user) {
                       const Icon(Icons.star),
                       const SizedBox(width: 10),
                       Text('Убрать из избранного',
-                          style: appThemeData.textTheme.titleMedium),
+                          style: Theme.of(context).textTheme.titleMedium),
                     ] else ...[
                       const Icon(
                         Icons.star_border,
                       ),
                       const SizedBox(width: 10),
                       Text('Добавить в избранные',
-                          style: appThemeData.textTheme.titleMedium),
+                          style: Theme.of(context).textTheme.titleMedium),
                     ],
                   ],
                 ),

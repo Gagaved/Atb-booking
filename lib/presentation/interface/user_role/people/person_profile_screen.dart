@@ -74,10 +74,13 @@ class PersonProfileScreen extends StatelessWidget {
                                 const EdgeInsets.symmetric(horizontal: 8.0),
                             child: Text(
                               user.fullName,
-                              style: appThemeData.textTheme.bodyLarge!.copyWith(
-                                fontWeight: FontWeight.w600,
-                                height: 0,
-                              ),
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .bodyLarge!
+                                  .copyWith(
+                                    fontWeight: FontWeight.w600,
+                                    height: 0,
+                                  ),
                             ),
                           ),
                         ),
@@ -87,11 +90,13 @@ class PersonProfileScreen extends StatelessWidget {
                                 const EdgeInsets.symmetric(horizontal: 8.0),
                             child: Text(
                               user.jobTitle,
-                              style:
-                                  appThemeData.textTheme.bodyMedium!.copyWith(
-                                fontWeight: FontWeight.w300,
-                                height: 0,
-                              ),
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .bodyMedium!
+                                  .copyWith(
+                                    fontWeight: FontWeight.w300,
+                                    height: 0,
+                                  ),
                             ),
                           ),
                         ),
@@ -101,11 +106,13 @@ class PersonProfileScreen extends StatelessWidget {
                                 const EdgeInsets.symmetric(horizontal: 8.0),
                             child: Text(
                               user.email,
-                              style:
-                                  appThemeData.textTheme.bodyMedium!.copyWith(
-                                fontWeight: FontWeight.w300,
-                                height: 0,
-                              ),
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .bodyMedium!
+                                  .copyWith(
+                                    fontWeight: FontWeight.w300,
+                                    height: 0,
+                                  ),
                             ),
                           ),
                         ),
@@ -123,65 +130,78 @@ class PersonProfileScreen extends StatelessWidget {
             },
             builder: (context, state) {
               return Expanded(
-                child: (state is PeopleProfileBooking_LoadingState)
-                    ? const Padding(
-                        padding: EdgeInsets.fromLTRB(10.0, 0.0, 10.0, 0),
-                        child: Center(
-                          child: CircularProgressIndicator(),
-                        ))
-                    : (state is PeopleProfileBooking_LoadedState)
-                        ? Padding(
-                            padding:
-                                const EdgeInsets.fromLTRB(10.0, 00.0, 10.0, 0),
-                            child: Stack(children: <Widget>[
-                              Scrollbar(
-                                child: Expanded(
-                                  child: ListView.builder(
-                                    controller: scrollController,
-                                    itemCount: state.bookingList.length,
-                                    itemBuilder: (context, index) {
-                                      final item = state.bookingList[index];
-                                      return GestureDetector(
-                                        onTap: () {
-                                          PeopleProfileBookingBloc().add(
-                                              PeopleProfileBookingCardTapEvent(
-                                                  item.id));
-                                          Navigator.of(context).push(
-                                              MaterialPageRoute(
-                                                  builder: (context) =>
-                                                      BlocProvider(
-                                                        create: (context) =>
-                                                            BookingDetailsBloc(item.id,false),
-                                                        child:
-                                                            const BookingDetailsScreen(),
-                                                      )));
-                                        },
-                                        child: getBookingCard(
-                                            state.bookingList[index],
-                                            state.mapOfTypes),
-                                      );
-                                    },
+                  child: (state is PeopleProfileBooking_LoadingState)
+                      ? const Padding(
+                          padding: EdgeInsets.fromLTRB(10.0, 0.0, 10.0, 0),
+                          child: Center(
+                            child: CircularProgressIndicator(),
+                          ))
+                      : (state is PeopleProfileBooking_LoadedState)
+                          ? Padding(
+                              padding: const EdgeInsets.fromLTRB(
+                                  10.0, 00.0, 10.0, 0),
+                              child: Stack(children: <Widget>[
+                                Scrollbar(
+                                  child: Expanded(
+                                    child: ListView.builder(
+                                      controller: scrollController,
+                                      itemCount: state.bookingList.length,
+                                      itemBuilder: (context, index) {
+                                        final item = state.bookingList[index];
+                                        return GestureDetector(
+                                          onTap: () {
+                                            PeopleProfileBookingBloc().add(
+                                                PeopleProfileBookingCardTapEvent(
+                                                    item.id));
+                                            Navigator.of(context).push(
+                                                MaterialPageRoute(
+                                                    builder: (context) =>
+                                                        BlocProvider(
+                                                          create: (context) =>
+                                                              BookingDetailsBloc(
+                                                                  item.id,
+                                                                  false),
+                                                          child:
+                                                              const BookingDetailsScreen(),
+                                                        )));
+                                          },
+                                          child: getBookingCard(
+                                              state.bookingList[index],
+                                              state.mapOfTypes),
+                                        );
+                                      },
+                                    ),
                                   ),
                                 ),
-                              ),
-                            ]),
-                          )
-                        : (state is PeopleProfileBooking_EmptyState)
-                            ? Padding(
-                                padding:
-                                    const EdgeInsets.fromLTRB(10.0, 0.0, 10.0, 0),
-                                child: Center(
-                                  child: Text(
-                                    "Броней пока нет",
-                                    textAlign: TextAlign.center,
-                                    style: appThemeData.textTheme.titleLarge,
-                                  ),
-                                ))
-                            : Center(
-                                child: ErrorWidget(
-                                    "ErrorStatePeopleProfileBookingBloc"),
-                              ),
-              );
+                              ]),
+                            )
+                          : (state is PeopleProfileBooking_EmptyState)
+                              ? Padding(
+                                  padding: const EdgeInsets.fromLTRB(
+                                      10.0, 0.0, 10.0, 0),
+                                  child: Center(
+                                    child: Text(
+                                      "Броней пока нет",
+                                      textAlign: TextAlign.center,
+                                      style: Theme.of(context)
+                                          .textTheme
+                                          .titleLarge,
+                                    ),
+                                  ))
+                              : Center(
+                                  child: Padding(
+                                      padding: const EdgeInsets.all(8.0),
+                                      child: Text(
+                                        "Не удалось загрузить список пронирований, проверьте интернет подключение",
+                                        style: Theme.of(context)
+                                            .textTheme
+                                            .headlineSmall
+                                            ?.copyWith(
+                                                fontSize: 22,
+                                                fontWeight: FontWeight.w300),
+                                        textAlign: TextAlign.center,
+                                      )),
+                                ));
             },
           )
         ],

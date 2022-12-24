@@ -1,6 +1,5 @@
 import 'dart:async';
 import 'package:atb_booking/logic/user_role/people_bloc/people_bloc.dart';
-import 'package:atb_booking/presentation/constants/styles.dart';
 import 'package:atb_booking/presentation/interface/user_role/people/person_card_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -33,7 +32,7 @@ class PeopleScreen extends StatelessWidget {
 
 class SearchPeopleTextField extends StatelessWidget {
   final _controller = TextEditingController();
-  Timer? _debounce;
+  static Timer? _debounce;
 
   SearchPeopleTextField({super.key});
 
@@ -57,7 +56,7 @@ class SearchPeopleTextField extends StatelessWidget {
               decoration: InputDecoration(
                 hintText: "Введите имя",
                 filled: true,
-                fillColor: const Color.fromARGB(255, 238, 238, 238),
+                fillColor: Theme.of(context).backgroundColor,
                 border: const OutlineInputBorder(
                   borderSide: BorderSide.none,
                   borderRadius: BorderRadius.all(Radius.circular(10.0)),
@@ -129,25 +128,6 @@ class SearchResultList extends StatelessWidget {
             }
           }
         }
-
-        // if (state is PeopleEmptyState) {
-        //   return Expanded(
-        //     child: Padding(
-        //       padding: const EdgeInsets.symmetric(horizontal: 20.0),
-        //       child: Center(
-        //         child: Padding(
-        //           padding: const EdgeInsets.all(8.0),
-        //           child: Text(
-        //             "Ничего не найдено"
-        //             ,
-        //             style: appThemeData.textTheme.headlineMedium,
-        //             textAlign: TextAlign.center,
-        //           ),
-        //         ),
-        //       ),
-        //     ),
-        //   );
-        // }
         if (state is PeopleInitialState) {
           return Expanded(
             child: Padding(
@@ -157,7 +137,7 @@ class SearchResultList extends StatelessWidget {
                   padding: const EdgeInsets.all(8.0),
                   child: Text(
                     "Введите имя человека в строку поиска выше",
-                    style: appThemeData.textTheme.headlineMedium,
+                    style: Theme.of(context).textTheme.headlineMedium,
                     textAlign: TextAlign.center,
                   ),
                 ),
@@ -166,6 +146,21 @@ class SearchResultList extends StatelessWidget {
           );
         }
         if (state is PeopleLoadedState) {
+          if(state.users.isEmpty){
+            return Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 20.0),
+              child: Center(
+                child: Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Text(
+                    "Ничего не найдено"
+                    ,
+                    style: Theme.of(context).textTheme.headlineMedium,
+                    textAlign: TextAlign.center,
+                  ),
+                ),
+              ));
+          }
           return Expanded(
             child: ListView.builder(
               controller: _scrollController,

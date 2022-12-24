@@ -1,7 +1,6 @@
 import 'package:atb_booking/logic/admin_role/feedback/admin_feedback_bloc.dart';
 import 'package:atb_booking/logic/admin_role/offices/offices_screen/admin_offices_bloc.dart';
 import 'package:atb_booking/logic/admin_role/people/people_page/admin_people_bloc.dart';
-import 'package:atb_booking/presentation/constants/styles.dart';
 import 'package:atb_booking/presentation/interface/admin_role/feedback/feedback_screen.dart';
 import 'package:atb_booking/presentation/interface/admin_role/offices/offices_list_screen.dart';
 import 'package:atb_booking/presentation/interface/admin_role/people/people_screen.dart';
@@ -59,14 +58,14 @@ class _HomeState extends State<AdminHome> {
                           color: Colors.white,
                         );
                       } else {
-                        return IconThemeData(color: appThemeData.primaryColor);
+                        return IconThemeData(color: Theme.of(context).primaryColor);
                       }
                     }),
-                    indicatorColor: appThemeData.primaryColor,
+                    indicatorColor: Theme.of(context).primaryColor,
                     //surfaceTintColor: Colors.lightGreen,
                   ),
                   child: Container(
-                    color: appThemeData.colorScheme.secondary,
+                    color: Theme.of(context).colorScheme.secondary,
                     child: NavigationBar(
                       selectedIndex: selectedIndex,
                       onDestinationSelected: (index) => setState(() {

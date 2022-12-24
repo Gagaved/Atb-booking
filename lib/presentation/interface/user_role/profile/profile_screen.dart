@@ -13,7 +13,6 @@ import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-
 void _bubbleTransition(BuildContext context) async {
   await Navigator.push(
     context,
@@ -37,7 +36,8 @@ class ProfileScreen extends StatelessWidget {
           IconButton(
               onPressed: () {
                 context.read<BookingListBloc>().add(BookingListInitialEvent());
-                NetworkController().exitFromApp();//todo вынести в блок как эвент и ждать
+                NetworkController()
+                    .exitFromApp(); //todo вынести в блок как эвент и ждать
                 Navigator.pushReplacement(
                     context, MaterialPageRoute(builder: (_) => const Auth()));
               },
@@ -73,8 +73,8 @@ class ProfileScreen extends StatelessWidget {
                   ),
                   const SizedBox(height: 55),
                   _UserInfo(
-                      email: state.userPerson.email,
-                      number: state.userPerson.phone,
+                    email: state.userPerson.email,
+                    number: state.userPerson.phone,
                     job: state.userPerson.jobTitle,
                   ),
                   const SizedBox(height: 65),
@@ -127,9 +127,9 @@ class _UserTitle extends StatelessWidget {
       children: [
         ClipOval(
           child: SizedBox(
-        width: 150,
-        height: 150,
-        child: avatar,
+            width: 150,
+            height: 150,
+            child: avatar,
           ),
         ),
         const SizedBox(height: 25),
@@ -149,6 +149,7 @@ class _UserInfo extends StatelessWidget {
   final String job;
   final String email;
   final String number;
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -156,70 +157,78 @@ class _UserInfo extends StatelessWidget {
       width: double.infinity,
       child: Column(children: [
         _RowForInfo(
-            "E-MAIL",
-            "job",
-            Theme.of(context).textTheme.headlineSmall!.copyWith(
-                color: Colors.black54,
-                fontSize: 22,
-                fontWeight: FontWeight.w300),
-            Theme.of(context)
-                .textTheme
-                .headlineSmall!
-                .copyWith(color: Colors.black, fontSize: 23),
-            job),
-        _RowForInfo(
-            "Должность",
-            "email",
-            Theme.of(context).textTheme.headlineSmall!.copyWith(
-                color: Colors.black54,
-                fontSize: 22,
-                fontWeight: FontWeight.w300),
-            Theme.of(context)
-                .textTheme
-                .headlineSmall!
-                .copyWith(color: Colors.black, fontSize: 23),
-            email),
+          title: "E-MAIL",
+          body: job,
+          titleStyle: Theme.of(context)
+              .textTheme
+              .headlineSmall!
+              .copyWith(fontSize: 22, fontWeight: FontWeight.w300),
+          bodyStyle:
+              Theme.of(context).textTheme.headlineSmall!.copyWith(fontSize: 23),
+        ),
         const SizedBox(height: 15),
         _RowForInfo(
-            "Телефон",
-            "number",
-            Theme.of(context).textTheme.headlineSmall!.copyWith(
-                color: Colors.black54,
-                fontSize: 22,
-                fontWeight: FontWeight.w300),
-            Theme.of(context)
-                .textTheme
-                .headlineSmall!
-                .copyWith(color: Colors.black, fontSize: 23),
-            number),
+          title: "Должность",
+          body: email,
+          titleStyle: Theme.of(context)
+              .textTheme
+              .headlineSmall!
+              .copyWith(fontSize: 22, fontWeight: FontWeight.w300),
+          bodyStyle:
+              Theme.of(context).textTheme.headlineSmall!.copyWith(fontSize: 23),
+        ),
+        const SizedBox(height: 15),
+        _RowForInfo(
+          title: "Телефон",
+          body: number,
+          titleStyle: Theme.of(context)
+              .textTheme
+              .headlineSmall!
+              .copyWith(fontSize: 22, fontWeight: FontWeight.w300),
+          bodyStyle:
+              Theme.of(context).textTheme.headlineSmall!.copyWith(fontSize: 23),
+        ),
       ]),
     );
   }
 }
 
-Row _RowForInfo(String title, String dataType, TextStyle titleStyle,
-    TextStyle dataStyle, String element) {
-  return Row(
-    children: [
-      Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Text(
-            title,
-            style: titleStyle,
-          ),
+class _RowForInfo extends StatelessWidget {
+  final String title;
+  final TextStyle titleStyle;
+  final TextStyle bodyStyle;
+  final String body;
+
+  const _RowForInfo(
+      {required this.title,
+      required this.titleStyle,
+      required this.bodyStyle,
+      required this.body});
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      children: [
+        Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              title,
+              style: titleStyle,
+            ),
             Container(
-                decoration: const ShapeDecoration(
-                  color: Color.fromARGB(255, 243, 243, 243),
-                  shape: RoundedRectangleBorder(
+                decoration: ShapeDecoration(
+                  color: Theme.of(context).backgroundColor,
+                  shape: const RoundedRectangleBorder(
                     borderRadius: BorderRadius.all(Radius.circular(10.0)),
                   ),
                 ),
-                child: Text(element, style: dataStyle))
-        ],
-      )
-    ],
-  );
+                child: Text(body, style: bodyStyle))
+          ],
+        )
+      ],
+    );
+  }
 }
 
 class _UserBubbleButton extends StatelessWidget {
@@ -250,7 +259,7 @@ class _UserBubbleBtn extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: Theme.of(context).backgroundColor,
         borderRadius: BorderRadius.circular(15),
         boxShadow: [
           BoxShadow(
@@ -273,14 +282,14 @@ class _UserBubbleBtn extends StatelessWidget {
           Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
             Text(
               title,
-              style: const TextStyle(color: Colors.black, fontSize: 17),
+              //style: const TextStyle(color: Colors.black, fontSize: 17),
             ),
             const SizedBox(
               height: 5,
             ),
             Text(
               subTitle,
-              style: const TextStyle(color: Colors.grey, fontSize: 15),
+              style: Theme.of(context).textTheme.bodySmall,
             )
           ]),
           const Icon(Icons.keyboard_arrow_right_sharp)

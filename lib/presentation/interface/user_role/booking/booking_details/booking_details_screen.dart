@@ -1,9 +1,7 @@
-
 import 'package:atb_booking/data/services/image_provider.dart';
 import 'package:atb_booking/data/services/network/network_controller.dart';
 import 'package:atb_booking/logic/user_role/booking/booking_details_bloc/booking_details_bloc.dart';
 import 'package:atb_booking/logic/user_role/booking/locked_plan_bloc/locked_plan_bloc.dart';
-import 'package:atb_booking/presentation/constants/styles.dart';
 import 'package:atb_booking/presentation/interface/user_role/booking/booking_details/booking_delete_confirmation_popup.dart';
 import 'package:atb_booking/presentation/interface/user_role/booking/booking_details/locked_plan/booking_added_people_widget.dart';
 import 'package:atb_booking/presentation/interface/user_role/booking/booking_details/locked_plan/lockedPlanWidget.dart';
@@ -12,6 +10,46 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';
+
+class _InfoField extends StatelessWidget {
+  final String title;
+  final String body;
+
+  const _InfoField({required this.title, required this.body});
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 30.0, vertical: 5),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(title,
+              textAlign: TextAlign.left,
+              style: Theme
+                  .of(context)
+                  .textTheme
+                  .headlineSmall
+                  ?.copyWith(fontSize: 24, fontWeight: FontWeight.w300)),
+          Container(
+            decoration: BoxDecoration(
+              color: Theme
+                  .of(context)
+                  .backgroundColor,
+              borderRadius: const BorderRadius.all(Radius.circular(10.0)),
+            ),
+            child: Text(body,
+                style: Theme
+                    .of(context)
+                    .textTheme
+                    .headlineSmall
+                    ?.copyWith(fontSize: 23)),
+          ),
+        ],
+      ),
+    );
+  }
+}
 
 class BookingDetailsScreen extends StatelessWidget {
   const BookingDetailsScreen({super.key});
@@ -35,7 +73,9 @@ class BookingDetailsScreen extends StatelessWidget {
               child: SingleChildScrollView(
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
+
                     ///
                     ///
                     /// Фотографии рабочего места.
@@ -47,7 +87,8 @@ class BookingDetailsScreen extends StatelessWidget {
                           child: ListView.builder(
                               shrinkWrap: true,
                               scrollDirection: Axis.horizontal,
-                              itemCount: state.booking.workspace.photosIds.length,
+                              itemCount:
+                              state.booking.workspace.photosIds.length,
                               //state.workspace.photos.length,
                               itemBuilder: (context, index) {
                                 return GestureDetector(
@@ -55,14 +96,15 @@ class BookingDetailsScreen extends StatelessWidget {
                                   child: CachedNetworkImage(
                                     fit: BoxFit.cover,
                                     imageUrl:
-                                        AppImageProvider.getImageUrlFromImageId(
-                                            state.booking.workspace
-                                                .photosIds[index]),
+                                    AppImageProvider.getImageUrlFromImageId(
+                                        state.booking.workspace
+                                            .photosIds[index]),
                                     httpHeaders:
-                                        NetworkController().getAuthHeader(),
-                                    placeholder: (context, url) => const Center(),
+                                    NetworkController().getAuthHeader(),
+                                    placeholder: (context, url) =>
+                                    const Center(),
                                     errorWidget: (context, url, error) =>
-                                        const Icon(Icons.error),
+                                    const Icon(Icons.error),
                                   ),
                                   onTap: () {
                                     showDialog(
@@ -70,52 +112,56 @@ class BookingDetailsScreen extends StatelessWidget {
                                         context: context,
                                         builder: (BuildContext context) {
                                           return GestureDetector(
-                                            behavior: HitTestBehavior.translucent,
+                                            behavior:
+                                            HitTestBehavior.translucent,
                                             onTap: () {
                                               int count = 0;
                                               Navigator.popUntil(context,
-                                                  (route) {
-                                                return count++ == 1;
-                                              });
+                                                      (route) {
+                                                    return count++ == 1;
+                                                  });
                                             },
                                             child: InteractiveViewer(
                                               transformationController:
-                                                  TransformationController(),
+                                              TransformationController(),
                                               maxScale: 2.0,
                                               minScale: 0.1,
                                               child: AlertDialog(
-                                                  //clipBehavior: Clip.none,
+                                                //clipBehavior: Clip.none,
                                                   shape:
-                                                      const RoundedRectangleBorder(
-                                                          borderRadius:
-                                                              BorderRadius.all(
-                                                                  Radius.circular(
-                                                                      0.0))),
-                                                  insetPadding:
-                                                      const EdgeInsets.symmetric(
-                                                          horizontal: 10,
-                                                          vertical: 200),
+                                                  const RoundedRectangleBorder(
+                                                      borderRadius:
+                                                      BorderRadius.all(
+                                                          Radius
+                                                              .circular(
+                                                              0.0))),
+                                                  insetPadding: const EdgeInsets
+                                                      .symmetric(
+                                                      horizontal: 10,
+                                                      vertical: 200),
                                                   contentPadding:
-                                                      const EdgeInsets.symmetric(
-                                                          horizontal: 10,
-                                                          vertical: 10),
+                                                  const EdgeInsets
+                                                      .symmetric(
+                                                      horizontal: 10,
+                                                      vertical: 10),
                                                   content: CachedNetworkImage(
                                                     fit: BoxFit.cover,
                                                     imageUrl: AppImageProvider
                                                         .getImageUrlFromImageId(
-                                                            state
-                                                                    .booking
-                                                                    .workspace
-                                                                    .photosIds[
-                                                                index]),
+                                                        state
+                                                            .booking
+                                                            .workspace
+                                                            .photosIds[
+                                                        index]),
                                                     httpHeaders:
-                                                        NetworkController()
-                                                            .getAuthHeader(),
-                                                    placeholder: (context, url) =>
-                                                        const Center(),
+                                                    NetworkController()
+                                                        .getAuthHeader(),
+                                                    placeholder:
+                                                        (context, url) =>
+                                                    const Center(),
                                                     errorWidget: (context, url,
-                                                            error) =>
-                                                        const Icon(Icons.error),
+                                                        error) =>
+                                                    const Icon(Icons.error),
                                                   )),
                                             ),
                                           );
@@ -136,7 +182,10 @@ class BookingDetailsScreen extends StatelessWidget {
                         MaterialButton(
                           shape: RoundedRectangleBorder(
                               side: BorderSide(
-                                  width: 0, color: appThemeData.primaryColor),
+                                  width: 0,
+                                  color: Theme
+                                      .of(context)
+                                      .primaryColor),
                               borderRadius: BorderRadius.circular(7.0)),
                           onPressed: () {
                             showDialog(
@@ -145,35 +194,44 @@ class BookingDetailsScreen extends StatelessWidget {
                                   return AlertDialog(
                                       shape: RoundedRectangleBorder(
                                           borderRadius:
-                                              BorderRadius.circular(00.0)),
+                                          BorderRadius.circular(00.0)),
                                       insetPadding: const EdgeInsets.symmetric(
                                           horizontal: 00, vertical: 00),
                                       titlePadding: const EdgeInsets.symmetric(
                                           horizontal: 00, vertical: 00),
-                                      contentPadding: const EdgeInsets.symmetric(
+                                      contentPadding:
+                                      const EdgeInsets.symmetric(
                                           horizontal: 00, vertical: 00),
                                       clipBehavior: Clip.none,
                                       content: SizedBox(
                                           width: double.infinity,
                                           height:
-                                              MediaQuery.of(context).size.width,
+                                          MediaQuery
+                                              .of(context)
+                                              .size
+                                              .width,
                                           child: BlocProvider.value(
                                             value: LockedPlanBloc(),
                                             child: const LockedPlanWidget(),
                                           )));
                                 });
                           },
-                          color: appThemeData.primaryColor,
+                          color: Theme
+                              .of(context)
+                              .primaryColor,
                           child: Container(
                             height: 50,
                             child: Row(
                               children: [
                                 Text(
                                   (state.booking.guests != null &&
-                                          state.booking.guests!.isNotEmpty)
+                                      state.booking.guests!.isNotEmpty)
                                       ? "Показать\nна плане"
                                       : "Показать на плане",
-                                  style: appThemeData.textTheme.titleMedium!
+                                  style: Theme
+                                      .of(context)
+                                      .textTheme
+                                      .titleMedium!
                                       .copyWith(
                                     color: Colors.white,
                                   ),
@@ -181,7 +239,7 @@ class BookingDetailsScreen extends StatelessWidget {
                                 const SizedBox(
                                   width: 5,
                                 ),
-                                const Icon(Icons.place)
+                                const Icon(Icons.place, color: Colors.white,)
                               ],
                             ),
                           ),
@@ -191,7 +249,10 @@ class BookingDetailsScreen extends StatelessWidget {
                           MaterialButton(
                             shape: RoundedRectangleBorder(
                                 side: BorderSide(
-                                    width: 0, color: appThemeData.primaryColor),
+                                    width: 0,
+                                    color: Theme
+                                        .of(context)
+                                        .primaryColor),
                                 borderRadius: BorderRadius.circular(7.0)),
                             onPressed: () {
                               showDialog(
@@ -203,7 +264,9 @@ class BookingDetailsScreen extends StatelessWidget {
                                     );
                                   });
                             },
-                            color: appThemeData.primaryColor,
+                            color: Theme
+                                .of(context)
+                                .primaryColor,
                             child: Container(
                               height: 50,
                               child: Row(
@@ -211,7 +274,10 @@ class BookingDetailsScreen extends StatelessWidget {
                                 children: [
                                   Text(
                                     "Гости",
-                                    style: appThemeData.textTheme.titleMedium!
+                                    style: Theme
+                                        .of(context)
+                                        .textTheme
+                                        .titleMedium!
                                         .copyWith(
                                       color: Colors.white,
                                     ),
@@ -220,7 +286,8 @@ class BookingDetailsScreen extends StatelessWidget {
                                   const SizedBox(
                                     width: 5,
                                   ),
-                                  const Icon(Icons.people),
+                                  const Icon(
+                                    Icons.people, color: Colors.white,),
                                   Container(
                                     width: 30,
                                     height: 30,
@@ -231,11 +298,17 @@ class BookingDetailsScreen extends StatelessWidget {
                                             Radius.circular(20))),
                                     child: Center(
                                         child: Text(
-                                      state.booking.guests!.length.toString(),
-                                      style: appThemeData.textTheme.titleMedium!
-                                          .copyWith(
-                                              color: appThemeData.primaryColor),
-                                    )),
+                                          state.booking.guests!.length
+                                              .toString(),
+                                          style: Theme
+                                              .of(context)
+                                              .textTheme
+                                              .titleMedium!
+                                              .copyWith(
+                                              color: Theme
+                                                  .of(context)
+                                                  .primaryColor),
+                                        )),
                                   )
                                 ],
                               ),
@@ -258,13 +331,13 @@ class BookingDetailsScreen extends StatelessWidget {
                               width: double.infinity,
                               child: Text("Бронирующий",
                                   textAlign: TextAlign.left,
-                                  style: Theme.of(context)
+                                  style: Theme
+                                      .of(context)
                                       .textTheme
                                       .headlineSmall
                                       ?.copyWith(
-                                          color: Colors.black54,
-                                          fontSize: 22,
-                                          fontWeight: FontWeight.w300)),
+                                      fontSize: 22,
+                                      fontWeight: FontWeight.w300)),
                             ),
                             Container(
                               height: 0.3,
@@ -279,245 +352,124 @@ class BookingDetailsScreen extends StatelessWidget {
                     ///
                     ///
                     /// Описание рабочего места
-                    Padding(
-                      padding: const EdgeInsets.symmetric(
-                          horizontal: 30.0, vertical: 5),
-                      child: Column(
-                        children: [
-                          SizedBox(
-                            width: double.infinity,
-                            child: Container(
-                              child: Text("Описание",
-                                  textAlign: TextAlign.left,
-                                  style: Theme.of(context)
-                                      .textTheme
-                                      .headlineSmall
-                                      ?.copyWith(
-                                          color: Colors.black54,
-                                          fontSize: 22,
-                                          fontWeight: FontWeight.w300)),
-                            ),
-                          ),
-                          Container(
-                            decoration: const ShapeDecoration(
-                              color: Color.fromARGB(255, 243, 243, 243),
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.all(
-                                    Radius.circular(10.0)),
-                              ),
-                            ),
-                            width: double.infinity,
-                            child: Text(state.booking.workspace.description,
-                                style: Theme.of(context)
-                                    .textTheme
-                                    .headlineSmall
-                                    ?.copyWith(
-                                        color: Colors.black, fontSize: 23)),
-                          ),
-                        ],
-                      ),
+                    _InfoField(
+                      title: "Описание рабочего места",
+                      body: state.booking.workspace.description,
                     ),
 
                     ///
                     ///
                     ///Название и этаж
-                    Padding(
-                      padding: const EdgeInsets.symmetric(
-                          horizontal: 30.0, vertical: 5),
-                      child: Column(
-                        children: [
-                          Container(
-                            width: double.infinity,
-                            child: Text("Место",
-                                textAlign: TextAlign.left,
-                                style: Theme.of(context)
-                                    .textTheme
-                                    .headlineSmall
-                                    ?.copyWith(
-                                    color: Colors.black54,
-                                    fontSize: 22,
-                                    fontWeight: FontWeight.w300)),
-                          ),
-                          Container(
-                            decoration: const ShapeDecoration(
-                              color: Color.fromARGB(255, 243, 243, 243),
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.all(
-                                    Radius.circular(10.0)),
-                              ),
-                            ),
-                            width: double.infinity,
-                            child: Text(
-                                "${state.booking.workspace.type.type} ${state.booking.workspace.level} Этаж",
-                                style: Theme.of(context)
-                                    .textTheme
-                                    .headlineSmall
-                                    ?.copyWith(
-                                        color: Colors.black, fontSize: 23)),
-                          ),
-                        ],
-                      ),
-                    ),
+                    _InfoField(
+                        title: "Место",
+                        body:
+                        "${state.booking.workspace.type.type} ${state.booking
+                            .workspace.level} Этаж"),
 
                     ///
                     ///
                     /// ОФИС
-                    Padding(
-                      padding: const EdgeInsets.symmetric(
-                          horizontal: 30.0, vertical: 5),
-                      child: Column(
-                        children: [
-                          SizedBox(
-                            width: double.infinity,
-                            child: Text("Офис",
-                                textAlign: TextAlign.left,
-                                style: Theme.of(context)
-                                    .textTheme
-                                    .headlineSmall
-                                    ?.copyWith(
-                                        color: Colors.black54,
-                                        fontSize: 22,
-                                        fontWeight: FontWeight.w300)),
-                          ),
-                          Container(
-                            decoration: const ShapeDecoration(
-                              color: Color.fromARGB(255, 243, 243, 243),
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.all(
-                                    Radius.circular(10.0)),
-                              ),
-                            ),
-                            width: double.infinity,
-                            child: Text(
-                                '${state.booking.cityName}. ${state.booking.officeAddress}',
-                                style: Theme.of(context)
-                                    .textTheme
-                                    .headlineSmall
-                                    ?.copyWith(
-                                        color: Colors.black, fontSize: 24)),
-                          ),
-                        ],
-                      ),
-                    ),
+                    _InfoField(
+                        title: "Офис",
+                        body:
+                        '${state.booking.cityName} ${state.booking
+                            .officeAddress}'),
 
                     ///
                     ///
                     /// ДАТА
-                    Padding(
-                      padding: const EdgeInsets.symmetric(
-                          horizontal: 30.0, vertical: 5),
-                      child: Column(
-                        children: [
-                          SizedBox(
-                            width: double.infinity,
-                            child: Text("Дата",
-                                textAlign: TextAlign.left,
-                                style: Theme.of(context)
-                                    .textTheme
-                                    .headlineSmall
-                                    ?.copyWith(
-                                        color: Colors.black54,
-                                        fontSize: 22,
-                                        fontWeight: FontWeight.w300)),
-                          ),
-                          Container(
-                            decoration: const ShapeDecoration(
-                              color: Color.fromARGB(255, 243, 243, 243),
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.all(
-                                    Radius.circular(10.0)),
-                              ),
-                            ),
-                            width: double.infinity,
-                            child: Text(
-                              DateFormat.yMMMMd("ru_RU").format(
-                                  state.booking.reservationInterval.start),
-                              style: Theme.of(context)
-                                  .textTheme
-                                  .headlineSmall
-                                  ?.copyWith(color: Colors.black, fontSize: 24),
-                            ),
-                          ),
-                        ],
-                      ),
+                    _InfoField(
+                      title: "Дата",
+                      body: DateFormat.yMMMMd("ru_RU")
+                          .format(state.booking.reservationInterval.start),
                     ),
 
                     ///
                     ///
                     /// ВРЕМЯ
-                    Padding(
-                      padding: const EdgeInsets.symmetric(
-                          horizontal: 30.0, vertical: 5),
-                      child: Column(
-                        children: [
-                          SizedBox(
-                            width: double.infinity,
-                            child: Text("Время",
-                                textAlign: TextAlign.left,
-                                style: Theme.of(context)
-                                    .textTheme
-                                    .headlineSmall
-                                    ?.copyWith(
-                                        color: Colors.black54,
-                                        fontSize: 22,
-                                        fontWeight: FontWeight.w300)),
-                          ),
-                          Container(
-                            decoration: const ShapeDecoration(
-                              color: Color.fromARGB(255, 243, 243, 243),
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.all(
-                                    Radius.circular(10.0)),
-                              ),
-                            ),
-                            width: double.infinity,
-                            child: Text(
-                              "c ${DateFormat('HH:mm').format(state.booking.reservationInterval.start)} до ${DateFormat('HH:mm').format(state.booking.reservationInterval.end)}",
-                              style: Theme.of(context)
-                                  .textTheme
-                                  .headlineSmall
-                                  ?.copyWith(color: Colors.black, fontSize: 24),
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
+                    _InfoField(
+                        title: "Время",
+                        body:
+                        'c ${DateFormat('HH:mm').format(
+                            state.booking.reservationInterval
+                                .start)} до ${DateFormat('HH:mm').format(
+                            state.booking.reservationInterval.end)}'),
 
                     ///
                     ///
                     /// КНОПКА ОТМЕНЫ
                     if (state.buttonIsShow)
-                      Padding(
-                          padding: const EdgeInsets.symmetric(
-                              horizontal: 30.0, vertical: 30),
-                          child: AtbElevatedButton(
-                            onPressed: () {
-                              showDialog(
-                                useRootNavigator: false,
-                                context: context,
-                                builder: (_) {
-                                  return BlocProvider.value(
-                                    value: context.read<BookingDetailsBloc>(),
-                                    child: const BookingDeleteDialog(),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceAround,
+                        children: [
+                          Padding(
+                              padding: const EdgeInsets.symmetric(
+                                  horizontal: 30.0, vertical: 30),
+                              child: AtbElevatedButton(
+                                onPressed: () {
+                                  showDialog(
+                                    useRootNavigator: false,
+                                    context: context,
+                                    builder: (_) {
+                                      return BlocProvider.value(
+                                        value: context.read<
+                                            BookingDetailsBloc>(),
+                                        child: const BookingDeleteDialog(),
+                                      );
+                                    },
                                   );
                                 },
-                              );
-                            },
-                            text: "Отменить",
-                          ))
-                    else
-                      const SizedBox.shrink(),
+                                text: "Отменить",
+                              )),
+                        ],
+                      )
                   ],
                 ),
               ),
             ),
           );
         } else if (state is BookingDetailsLoadingState) {
-          return const Scaffold(
-              body: Center(child: CircularProgressIndicator()));
-        } else if (state is BookingDetailsErrorState) {
-          return ErrorWidget(Exception("Error state"));
-        } else if (state is BookingDetailsDeletedState) {
+          return Scaffold(
+              appBar: AppBar(title: const Text('Бронь')),
+              body: Center(
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      const CircularProgressIndicator(color: Colors.grey,),
+                      Text(
+                        "Загружаем",
+                        style: Theme
+                            .of(context)
+                            .textTheme
+                            .headlineSmall
+                            ?.copyWith(
+                            fontSize: 22,
+                            fontWeight: FontWeight.w300),
+                        textAlign: TextAlign.center,
+
+                      ),
+                    ],
+                  )));
+          } else
+              if (state is BookingDetailsErrorState)
+          {
+            return Scaffold(
+              appBar: AppBar(title: const Text('Ошибка при загрузке')),
+              body: Center(
+                  child: Text(
+                    "Не удалось загрузить информацию, проверьте интернет подключение",
+                    style: Theme
+                        .of(context)
+                        .textTheme
+                        .headlineSmall
+                        ?.copyWith(
+                        fontSize: 22,
+                        fontWeight: FontWeight.w300),
+                    textAlign: TextAlign.center,
+
+                  )),
+            );
+          } else if (state is BookingDetailsDeletedState) {
           getPhotoSize() {
             if (state.booking.workspace.photosIds.isEmpty) return 0.0;
             if (state.booking.workspace.photosIds.length == 1) return 250.0;
@@ -529,333 +481,171 @@ class BookingDetailsScreen extends StatelessWidget {
               title: Text("Бронь №${state.booking.id}"),
             ),
             body: SingleChildScrollView(
-              child: Column(
-                children: [
-                  SizedBox(
-                    width: double.infinity,
-                    //height: double.infinity,
-                    child: Padding(
-                      padding: const EdgeInsets.symmetric(vertical: 20),
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.spaceAround,
-                        children: [
-                          ///
-                          ///
-                          /// Фотографии рабочего места.
-                          SizedBox(
-                            height: getPhotoSize(), //getSize(),
-                            child: Padding(
-                              padding: const EdgeInsets.only(bottom: 5.0),
-                              child: Center(
-                                child: ListView.builder(
-                                    shrinkWrap: true,
-                                    scrollDirection: Axis.horizontal,
-                                    itemCount: state
-                                        .booking.workspace.photosIds.length,
-                                    //state.workspace.photos.length,
-                                    itemBuilder: (context, index) {
-                                      return GestureDetector(
-                                        behavior: HitTestBehavior.translucent,
-                                        child: CachedNetworkImage(
-                                          fit: BoxFit.cover,
-                                          imageUrl: AppImageProvider
-                                              .getImageUrlFromImageId(state
-                                                  .booking
-                                                  .workspace
-                                                  .photosIds[index]),
-                                          httpHeaders: NetworkController()
-                                              .getAuthHeader(),
-                                          placeholder: (context, url) =>
-                                              const Center(),
-                                          errorWidget: (context, url, error) =>
-                                              const Icon(Icons.error),
-                                        ),
-                                        onTap: () {
-                                          showDialog(
-                                              useRootNavigator: false,
-                                              context: context,
-                                              builder: (BuildContext context) {
-                                                return GestureDetector(
-                                                  behavior: HitTestBehavior
-                                                      .translucent,
-                                                  onTap: () {
-                                                    int count = 0;
-                                                    Navigator.popUntil(context,
-                                                        (route) {
-                                                      return count++ == 1;
-                                                    });
-                                                  },
-                                                  child: InteractiveViewer(
-                                                    transformationController:
-                                                        TransformationController(),
-                                                    maxScale: 2.0,
-                                                    minScale: 0.1,
-                                                    child: AlertDialog(
-                                                        //clipBehavior: Clip.none,
-                                                        shape: const RoundedRectangleBorder(
-                                                            borderRadius:
-                                                                BorderRadius.all(
-                                                                    Radius.circular(
-                                                                        0.0))),
-                                                        insetPadding:
-                                                            const EdgeInsets
-                                                                    .symmetric(
-                                                                horizontal: 10,
-                                                                vertical: 200),
-                                                        contentPadding:
-                                                            const EdgeInsets
-                                                                    .symmetric(
-                                                                horizontal: 10,
-                                                                vertical: 10),
-                                                        content:
-                                                            CachedNetworkImage(
-                                                          fit: BoxFit.cover,
-                                                          imageUrl: AppImageProvider
-                                                              .getImageUrlFromImageId(state
-                                                                      .booking
-                                                                      .workspace
-                                                                      .photosIds[
-                                                                  index]),
-                                                          httpHeaders:
-                                                              NetworkController()
-                                                                  .getAuthHeader(),
-                                                          placeholder: (context,
-                                                                  url) =>
-                                                              const Center(),
-                                                          errorWidget: (context,
-                                                                  url, error) =>
-                                                              const Icon(
-                                                                  Icons.error),
-                                                        )),
-                                                  ),
-                                                );
-                                              });
-                                        },
-                                      );
-                                    }),
-                              ),
-                            ),
-                          ),
+              child: Padding(
+                padding: const EdgeInsets.symmetric(vertical: 20),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  children: [
 
-                          ///
-                          ///
-                          /// Описание рабочего места
-                          Padding(
-                            padding: const EdgeInsets.symmetric(
-                                horizontal: 30.0, vertical: 5),
-                            child: Column(
-                              children: [
-                                SizedBox(
-                                  width: double.infinity,
-                                  child: Text("Описание",
-                                      textAlign: TextAlign.left,
-                                      style: Theme.of(context)
-                                          .textTheme
-                                          .headlineSmall
-                                          ?.copyWith(
-                                              color: Colors.black54,
-                                              fontSize: 24,
-                                              fontWeight: FontWeight.w300)),
-                                ),
-                                Container(
-                                  height: 0.3,
-                                  color: Colors.black54,
-                                ),
-                                SizedBox(
-                                  width: double.infinity,
-                                  child: Text(
-                                      state.booking.workspace.description,
-                                      style: Theme.of(context)
-                                          .textTheme
-                                          .headlineSmall
-                                          ?.copyWith(
-                                              color: Colors.black,
-                                              fontSize: 23)),
-                                ),
-                              ],
-                            ),
-                          ),
-
-                          ///
-                          ///
-                          ///Название и этаж
-                          Padding(
-                            padding: const EdgeInsets.symmetric(
-                                horizontal: 30.0, vertical: 5),
-                            child: Column(
-                              children: [
-                                SizedBox(
-                                  width: double.infinity,
-                                  child: Text("Место",
-                                      textAlign: TextAlign.left,
-                                      style: Theme.of(context)
-                                          .textTheme
-                                          .headlineSmall
-                                          ?.copyWith(
-                                              color: Colors.black54,
-                                              fontSize: 24,
-                                              fontWeight: FontWeight.w300)),
-                                ),
-                                Container(
-                                  height: 0.3,
-                                  color: Colors.black54,
-                                ),
-                                SizedBox(
-                                  width: double.infinity,
-                                  child: Text(
-                                      "${state.booking.workspace.type.type} ${state.booking.workspace.level} Этаж",
-                                      style: Theme.of(context)
-                                          .textTheme
-                                          .headlineSmall
-                                          ?.copyWith(
-                                              color: Colors.black,
-                                              fontSize: 23)),
-                                ),
-                              ],
-                            ),
-                          ),
-
-                          ///
-                          ///
-                          /// ОФИС
-                          Padding(
-                            padding: const EdgeInsets.symmetric(
-                                horizontal: 30.0, vertical: 5),
-                            child: Column(
-                              children: [
-                                SizedBox(
-                                  width: double.infinity,
-                                  child: Text("Офис",
-                                      textAlign: TextAlign.left,
-                                      style: Theme.of(context)
-                                          .textTheme
-                                          .headlineSmall
-                                          ?.copyWith(
-                                              color: Colors.black54,
-                                              fontSize: 24,
-                                              fontWeight: FontWeight.w300)),
-                                ),
-                                Container(
-                                  height: 0.3,
-                                  color: Colors.black54,
-                                ),
-                                SizedBox(
-                                  width: double.infinity,
-                                  child: Text(
-                                      '${state.booking.cityName} ${state.booking.officeAddress}',
-                                      style: Theme.of(context)
-                                          .textTheme
-                                          .headlineSmall
-                                          ?.copyWith(
-                                              color: Colors.black,
-                                              fontSize: 24)),
-                                ),
-                              ],
-                            ),
-                          ),
-
-                          ///
-                          ///
-                          /// ДАТА
-                          Padding(
-                            padding: const EdgeInsets.symmetric(
-                                horizontal: 30.0, vertical: 5),
-                            child: Column(
-                              children: [
-                                SizedBox(
-                                  width: double.infinity,
-                                  child: Text("Дата",
-                                      textAlign: TextAlign.left,
-                                      style: Theme.of(context)
-                                          .textTheme
-                                          .headlineSmall
-                                          ?.copyWith(
-                                              color: Colors.black54,
-                                              fontSize: 24,
-                                              fontWeight: FontWeight.w300)),
-                                ),
-                                Container(
-                                  height: 0.3,
-                                  color: Colors.black54,
-                                ),
-                                SizedBox(
-                                  width: double.infinity,
-                                  child: Text(
-                                    DateFormat.yMMMMd("ru_RU").format(state
-                                        .booking.reservationInterval.start),
-                                    style: Theme.of(context)
-                                        .textTheme
-                                        .headlineSmall
-                                        ?.copyWith(
-                                            color: Colors.black, fontSize: 24),
+                    ///
+                    ///
+                    /// Фотографии рабочего места.
+                    SizedBox(
+                      height: getPhotoSize(), //getSize(),
+                      child: Padding(
+                        padding: const EdgeInsets.only(bottom: 5.0),
+                        child: Center(
+                          child: ListView.builder(
+                              shrinkWrap: true,
+                              scrollDirection: Axis.horizontal,
+                              itemCount:
+                              state.booking.workspace.photosIds.length,
+                              //state.workspace.photos.length,
+                              itemBuilder: (context, index) {
+                                return GestureDetector(
+                                  behavior: HitTestBehavior.translucent,
+                                  child: CachedNetworkImage(
+                                    fit: BoxFit.cover,
+                                    imageUrl:
+                                    AppImageProvider.getImageUrlFromImageId(
+                                        state.booking.workspace
+                                            .photosIds[index]),
+                                    httpHeaders:
+                                    NetworkController().getAuthHeader(),
+                                    placeholder: (context, url) =>
+                                    const Center(),
+                                    errorWidget: (context, url, error) =>
+                                    const Icon(Icons.error),
                                   ),
-                                ),
-                              ],
-                            ),
-                          ),
-
-                          ///
-                          ///
-                          /// ВРЕМЯ
-                          Padding(
-                            padding: const EdgeInsets.symmetric(
-                                horizontal: 30.0, vertical: 5),
-                            child: Column(
-                              children: [
-                                SizedBox(
-                                  width: double.infinity,
-                                  child: Text("Время",
-                                      textAlign: TextAlign.left,
-                                      style: Theme.of(context)
-                                          .textTheme
-                                          .headlineSmall
-                                          ?.copyWith(
-                                              color: Colors.black54,
-                                              fontSize: 24,
-                                              fontWeight: FontWeight.w300)),
-                                ),
-                                Container(
-                                  height: 0.3,
-                                  color: Colors.black54,
-                                ),
-                                SizedBox(
-                                  width: double.infinity,
-                                  child: Text(
-                                    'c ' +
-                                        DateFormat('HH:mm').format(state.booking
-                                            .reservationInterval.start) +
-                                        " до " +
-                                        DateFormat('HH:mm').format(state
-                                            .booking.reservationInterval.end),
-                                    style: Theme.of(context)
-                                        .textTheme
-                                        .headlineSmall
-                                        ?.copyWith(
-                                            color: Colors.black, fontSize: 24),
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
-                          Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: Text(
-                              "БРОНЬ ОТМЕНЕНА",
-                              textAlign: TextAlign.center,
-                              style: appThemeData.textTheme.displaySmall!
-                                  .copyWith(
-                                      color:
-                                          const Color.fromARGB(255, 72, 0, 0),
-                                      fontSize: 30),
-                            ),
-                          ),
-
-                          /// КНОПКА НАЗАД
-                        ],
+                                  onTap: () {
+                                    showDialog(
+                                        useRootNavigator: false,
+                                        context: context,
+                                        builder: (BuildContext context) {
+                                          return GestureDetector(
+                                            behavior:
+                                            HitTestBehavior.translucent,
+                                            onTap: () {
+                                              int count = 0;
+                                              Navigator.popUntil(context,
+                                                      (route) {
+                                                    return count++ == 1;
+                                                  });
+                                            },
+                                            child: InteractiveViewer(
+                                              transformationController:
+                                              TransformationController(),
+                                              maxScale: 2.0,
+                                              minScale: 0.1,
+                                              child: AlertDialog(
+                                                //clipBehavior: Clip.none,
+                                                  shape:
+                                                  const RoundedRectangleBorder(
+                                                      borderRadius:
+                                                      BorderRadius.all(
+                                                          Radius
+                                                              .circular(
+                                                              0.0))),
+                                                  insetPadding: const EdgeInsets
+                                                      .symmetric(
+                                                      horizontal: 10,
+                                                      vertical: 200),
+                                                  contentPadding:
+                                                  const EdgeInsets
+                                                      .symmetric(
+                                                      horizontal: 10,
+                                                      vertical: 10),
+                                                  content: CachedNetworkImage(
+                                                    fit: BoxFit.cover,
+                                                    imageUrl: AppImageProvider
+                                                        .getImageUrlFromImageId(
+                                                        state
+                                                            .booking
+                                                            .workspace
+                                                            .photosIds[
+                                                        index]),
+                                                    httpHeaders:
+                                                    NetworkController()
+                                                        .getAuthHeader(),
+                                                    placeholder:
+                                                        (context, url) =>
+                                                    const Center(),
+                                                    errorWidget: (context, url,
+                                                        error) =>
+                                                    const Icon(Icons.error),
+                                                  )),
+                                            ),
+                                          );
+                                        });
+                                  },
+                                );
+                              }),
+                        ),
                       ),
                     ),
-                  )
-                ],
+
+                    ///
+                    ///
+                    /// Описание рабочего места
+                    _InfoField(
+                      title: "Описание рабочего места",
+                      body: state.booking.workspace.description,
+                    ),
+
+                    ///
+                    ///
+                    ///Название и этаж
+                    _InfoField(
+                        title: "Место",
+                        body:
+                        "${state.booking.workspace.type.type} ${state.booking
+                            .workspace.level} Этаж"),
+
+                    ///
+                    ///
+                    /// ОФИС
+                    _InfoField(
+                        title: "Офис",
+                        body:
+                        '${state.booking.cityName} ${state.booking
+                            .officeAddress}'),
+
+                    ///
+                    ///
+                    /// ДАТА
+                    _InfoField(
+                      title: "Дата",
+                      body: DateFormat.yMMMMd("ru_RU")
+                          .format(state.booking.reservationInterval.start),
+                    ),
+
+                    ///
+                    ///
+                    /// ВРЕМЯ
+                    _InfoField(
+                        title: "Дата",
+                        body:
+                        'c${DateFormat('HH:mm').format(state.booking
+                            .reservationInterval.start)} до ${DateFormat(
+                            'HH:mm').format(state.booking.reservationInterval
+                            .end)}'),
+
+                    Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Text(
+                        "БРОНЬ ОТМЕНЕНА",
+                        textAlign: TextAlign.center,
+                        style: Theme
+                            .of(context)
+                            .textTheme
+                            .displaySmall!
+                            .copyWith(
+                            color: const Color.fromARGB(255, 72, 0, 0),
+                            fontSize: 30),
+                      ),
+                    ),
+                  ],
+                ),
               ),
             ),
           );

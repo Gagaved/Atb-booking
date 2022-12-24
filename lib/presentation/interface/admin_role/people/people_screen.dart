@@ -3,7 +3,6 @@ import 'dart:async';
 import 'package:atb_booking/data/services/network/network_controller.dart';
 import 'package:atb_booking/logic/admin_role/people/people_page/admin_people_bloc.dart';
 import 'package:atb_booking/logic/user_role/booking/booking_list_bloc/booking_list_bloc.dart';
-import 'package:atb_booking/presentation/constants/styles.dart';
 import 'package:atb_booking/presentation/interface/admin_role/people/admin_person_card.dart';
 import 'package:atb_booking/presentation/interface/auth/auth_screen.dart';
 import 'package:atb_booking/presentation/interface/user_role/people/person_card_widget.dart';
@@ -17,8 +16,8 @@ class AdminPeopleScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Center(
-          child: Text("Люди"),
+        title: const Center(
+          child: Text("      Люди"),
         ),
         actions: [
           IconButton(
@@ -63,15 +62,15 @@ class _PeopleSearchField extends StatelessWidget {
             flex: 2,
             child: TextField(
               textInputAction: TextInputAction.search,
-              decoration: const InputDecoration(
+              decoration: InputDecoration(
                 hintText: "Введите имя...",
                 filled: true,
-                fillColor: Color.fromARGB(255, 238, 238, 238),
-                border: OutlineInputBorder(
+                fillColor: Theme.of(context).backgroundColor,
+                border: const OutlineInputBorder(
                   borderSide: BorderSide.none,
                   borderRadius: BorderRadius.all(Radius.circular(10.0)),
                 ),
-                suffixIcon: Icon(Icons.search),
+                suffixIcon: const Icon(Icons.search),
               ),
               controller: _controller,
               onChanged: (pattern) {
@@ -120,7 +119,7 @@ class _PeopleSearchResultList extends StatelessWidget {
                     padding: const EdgeInsets.all(8.0),
                     child: Text(
                       "Введите имя человека в строку поиска выше",
-                      style: appThemeData.textTheme.headlineMedium,
+                      style: Theme.of(context).textTheme.headlineMedium,
                       textAlign: TextAlign.center,
                     ),
                   ),
@@ -168,7 +167,7 @@ class _PeopleSearchResultList extends StatelessWidget {
                   padding: const EdgeInsets.all(8.0),
                   child: Text(
                     "Ничего не найдено",
-                    style: appThemeData.textTheme.headlineMedium,
+                    style: Theme.of(context).textTheme.headlineMedium,
                     textAlign: TextAlign.center,
                   ),
                 ),

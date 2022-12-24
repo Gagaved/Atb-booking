@@ -4,7 +4,6 @@ import 'package:atb_booking/data/services/image_provider.dart';
 import 'package:atb_booking/data/services/network/network_controller.dart';
 import 'package:atb_booking/data/services/workspace_type_repository.dart';
 import 'package:atb_booking/logic/user_role/booking/locked_plan_bloc/locked_plan_bloc.dart';
-import 'package:atb_booking/presentation/constants/styles.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -141,7 +140,7 @@ class _LevelPlanElementWidget extends StatelessWidget {
                         ? const BorderSide(width: 0, color: Colors.grey)
                         : BorderSide(
                         width: 6 * LockedPlanWidget.SCALE_FACTOR,
-                        color: appThemeData.primaryColor),
+                        color: Theme.of(context).primaryColor),
                     borderRadius:
                     BorderRadius.circular(8 * LockedPlanWidget.SCALE_FACTOR)),
                 shadowColor: Colors.black,

@@ -1,11 +1,6 @@
 import 'package:atb_booking/data/models/feedback.dart';
-import 'package:atb_booking/data/services/image_provider.dart';
-import 'package:atb_booking/data/services/network/network_controller.dart';
-import 'package:atb_booking/logic/admin_role/feedback/admin_feedback_bloc.dart';
 import 'package:atb_booking/logic/admin_role/feedback/feedback_open_card_bloc/feedback_open_card_bloc.dart';
-import 'package:atb_booking/presentation/constants/styles.dart';
 import 'package:atb_booking/presentation/widgets/elevated_button.dart';
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -44,7 +39,7 @@ class _PersonSenderCard extends StatelessWidget {
       if (state is FeedbackOpenCardLoadedState) {
         ///
         ///
-        /// Бронирующий
+        ///
         return Padding(
           padding: const EdgeInsets.symmetric(horizontal: 30.0, vertical: 20),
           child: Column(
@@ -64,7 +59,7 @@ class _PersonSenderCard extends StatelessWidget {
                               fontWeight: FontWeight.w300)),
                 ),
               ),
-              GestureDetector(
+              InkWell(
                   onTap: () {
                     // Navigator.of(context).push(MaterialPageRoute(
                     //     builder: (context) => NewBookingScreen()));
@@ -156,7 +151,7 @@ class _Body extends StatelessWidget {
 class _Message extends StatelessWidget {
   final String message;
 
-  const _Message({super.key, required this.message});
+  const _Message({required this.message});
 
   @override
   Widget build(BuildContext context) {
@@ -180,7 +175,7 @@ class _Message extends StatelessWidget {
                 color: Color.fromARGB(255, 238, 238, 238),
                 borderRadius: BorderRadius.all(Radius.circular(10.0)),
               ),
-              child: Text(message, style: appThemeData.textTheme.bodyMedium)),
+              child: Text(message, style: Theme.of(context).textTheme.bodyMedium)),
         ],
       ),
     );
@@ -189,7 +184,7 @@ class _Message extends StatelessWidget {
 
 class _ButtonDelete extends StatelessWidget {
   FeedbackItem feedback;
-  _ButtonDelete(this.feedback, {super.key});
+  _ButtonDelete(this.feedback);
 
   @override
   Widget build(BuildContext context) {

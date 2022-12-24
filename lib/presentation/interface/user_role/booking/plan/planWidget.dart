@@ -4,7 +4,6 @@ import 'package:atb_booking/data/services/image_provider.dart';
 import 'package:atb_booking/data/services/network/network_controller.dart';
 import 'package:atb_booking/data/services/workspace_type_repository.dart';
 import 'package:atb_booking/logic/user_role/booking/new_booking/new_booking_bloc/plan_bloc/plan_bloc.dart';
-import 'package:atb_booking/presentation/constants/styles.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -76,7 +75,7 @@ class PlanWidget extends StatelessWidget {
                 child: Text(
                   state.title,
                   textAlign: TextAlign.center,
-                  style: appThemeData.textTheme.headlineSmall,
+                  style: Theme.of(context).textTheme.headlineSmall,
                 ),
               ),
             ],
@@ -137,7 +136,7 @@ class PlanWidget extends StatelessWidget {
                 child: Text(
                   state.title,
                   textAlign: TextAlign.center,
-                  style: appThemeData.textTheme.headlineSmall,
+                  style: Theme.of(context).textTheme.headlineSmall,
                 ),
               ),
               Padding(
@@ -222,7 +221,7 @@ class _LevelPlanElementWidget extends StatelessWidget {
                           ? const BorderSide(width: 0, color: Colors.grey)
                           : BorderSide(
                               width: 6 * PlanWidget.SCALE_FACTOR,
-                              color: appThemeData.primaryColor),
+                              color: Theme.of(context).primaryColor),
                       borderRadius:
                           BorderRadius.circular(8 * PlanWidget.SCALE_FACTOR)),
                   shadowColor: Colors.black,
@@ -278,15 +277,15 @@ class _DatePickerWidgetState extends State<_DatePickerWidget> {
           (DateFormat.yMMMMd("ru_RU").format(_selectedDate!)).toString();
     }
     return TextField(
-      decoration: const InputDecoration(
+      decoration: InputDecoration(
         hintText: "Выберите офис",
         filled: true,
-        fillColor: Color.fromARGB(255, 238, 238, 238),
-        border: OutlineInputBorder(
+        fillColor: Theme.of(context).backgroundColor,
+        border: const OutlineInputBorder(
           borderSide: BorderSide.none,
           borderRadius: BorderRadius.all(Radius.circular(10.0)),
         ),
-        suffixIcon: Icon(Icons.calendar_month),
+        suffixIcon: const Icon(Icons.calendar_month),
       ),
       focusNode: AlwaysDisabledFocusNode(),
       controller: _textEditingController,

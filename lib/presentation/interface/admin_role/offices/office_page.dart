@@ -4,7 +4,6 @@ import 'package:atb_booking/logic/admin_role/offices/booking_stats/admin_booking
 import 'package:atb_booking/logic/admin_role/offices/bookings_page/admin_bookings_bloc.dart';
 import 'package:atb_booking/logic/admin_role/offices/office_page/admin_office_page_bloc.dart';
 import 'package:atb_booking/logic/admin_role/offices/offices_screen/admin_offices_bloc.dart';
-import 'package:atb_booking/presentation/constants/styles.dart';
 import 'package:atb_booking/presentation/interface/admin_role/offices/bookings_page.dart';
 import 'package:atb_booking/presentation/interface/admin_role/offices/booking_stats_page.dart';
 import 'package:atb_booking/presentation/interface/admin_role/offices/level_editor_page.dart';
@@ -110,7 +109,7 @@ class OfficePage extends StatelessWidget {
                 child: Text("errorstate"),
               );
             } else if (state is AdminOfficePageInitial) {
-              return Center(
+              return const Center(
                 child: Text("initial state of office page"),
               );
             } else {
@@ -146,7 +145,6 @@ class _OfficeAddress extends StatelessWidget {
               child: Text("Адрес",
                   textAlign: TextAlign.left,
                   style: Theme.of(context).textTheme.headlineSmall?.copyWith(
-                      color: Colors.black54,
                       fontSize: 20,
                       fontWeight: FontWeight.w300)),
             ),
@@ -154,10 +152,10 @@ class _OfficeAddress extends StatelessWidget {
           SizedBox(
             width: double.infinity,
             child: TextField(
-              decoration: const InputDecoration(
+              decoration: InputDecoration(
                 filled: true,
-                fillColor: Color.fromARGB(255, 238, 238, 238),
-                border: OutlineInputBorder(
+                fillColor: Theme.of(context).backgroundColor,
+                border: const OutlineInputBorder(
                   borderSide: BorderSide.none,
                   borderRadius: BorderRadius.all(Radius.circular(10.0)),
                 ),
@@ -177,7 +175,7 @@ class _OfficeAddress extends StatelessWidget {
               style: Theme.of(context)
                   .textTheme
                   .headlineSmall
-                  ?.copyWith(color: Colors.black, fontSize: 20),
+                  ?.copyWith( fontSize: 20),
               maxLines: 4,
               minLines: 1,
               maxLength: 1000,
@@ -222,7 +220,7 @@ class _BookingRange extends StatelessWidget {
                 Text("Дальность \nбронирования в днях",
                     textAlign: TextAlign.right,
                     style: Theme.of(context).textTheme.headlineSmall?.copyWith(
-                        color: Colors.black54,
+
                         fontSize: 20,
                         fontWeight: FontWeight.w300)),
                 const SizedBox(
@@ -231,7 +229,7 @@ class _BookingRange extends StatelessWidget {
                 Container(
                   height: 60,
                   width: 0.3,
-                  color: Colors.black54,
+                  color: Theme.of(context).backgroundColor,
                 )
               ],
             ),
@@ -242,10 +240,10 @@ class _BookingRange extends StatelessWidget {
               padding: const EdgeInsets.only(left: 20),
               child: TextField(
                 textAlign: TextAlign.center,
-                decoration: const InputDecoration(
+                decoration: InputDecoration(
                   filled: true,
-                  fillColor: Color.fromARGB(255, 238, 238, 238),
-                  border: OutlineInputBorder(
+                  fillColor: Theme.of(context).backgroundColor,
+                  border: const OutlineInputBorder(
                     borderSide: BorderSide.none,
                     borderRadius: BorderRadius.all(Radius.circular(10.0)),
                   ),
@@ -272,7 +270,7 @@ class _BookingRange extends StatelessWidget {
                 style: Theme.of(context)
                     .textTheme
                     .headlineSmall
-                    ?.copyWith(color: Colors.black, fontSize: 22),
+                    ?.copyWith( fontSize: 22),
                 //keyboardType: TextInputType.multiline,
               ),
             ),
@@ -305,13 +303,13 @@ class _WorkTimeRange extends StatelessWidget {
                 child: Text("Время работы: c $start до $end",
                     textAlign: TextAlign.left,
                     style: Theme.of(context).textTheme.headlineSmall?.copyWith(
-                        color: Colors.black54,
+
                         fontSize: 20,
                         fontWeight: FontWeight.w300)),
               ),
               Container(
                 height: 0.3,
-                color: Colors.black54,
+                color: Theme.of(context).backgroundColor,
               ),
             ],
           ),
@@ -320,39 +318,39 @@ class _WorkTimeRange extends StatelessWidget {
           padding: const EdgeInsets.symmetric(horizontal: 5.0),
           child: SfRangeSliderTheme(
             data: SfRangeSliderThemeData(
-              activeLabelStyle: appThemeData.textTheme.headlineMedium?.copyWith(
-                  color: Colors.black54,
+              activeLabelStyle: Theme.of(context).textTheme.headlineMedium
+                  ?.copyWith(
                   fontSize: 14,
                   fontStyle: FontStyle.normal),
-              inactiveLabelStyle: appThemeData.textTheme.headlineMedium
+              inactiveLabelStyle: Theme.of(context).textTheme.headlineMedium
                   ?.copyWith(
-                      color: Colors.black54,
-                      fontSize: 14,
-                      fontStyle: FontStyle.normal),
-              tooltipTextStyle: appThemeData.textTheme.headlineMedium?.copyWith(
-                  color: Colors.white,
+
+                  fontSize: 14,
+                  fontStyle: FontStyle.normal),
+              tooltipTextStyle: Theme.of(context).textTheme.headlineMedium
+                  ?.copyWith(
                   fontSize: 14,
                   fontStyle: FontStyle.normal),
               overlappingTooltipStrokeColor: Colors.white,
-              tooltipBackgroundColor: appThemeData.primaryColor,
-              disabledActiveTrackColor: Colors.black38,
-              disabledInactiveTrackColor: Colors.black38,
-              disabledActiveTickColor: Colors.black38,
-              disabledInactiveTickColor: Colors.black38,
-              disabledActiveMinorTickColor: Colors.black38,
-              disabledInactiveMinorTickColor: Colors.black38,
+              tooltipBackgroundColor: Theme.of(context).primaryColor,
+              disabledActiveTrackColor: Colors.grey,
+              disabledInactiveTrackColor: Colors.grey,
+              disabledActiveTickColor: Colors.grey,
+              disabledInactiveTickColor: Colors.grey,
+              disabledActiveMinorTickColor: Colors.grey,
+              disabledInactiveMinorTickColor: Colors.grey,
               disabledActiveDividerColor: Colors.red,
-              disabledInactiveDividerColor: Colors.black38,
-              disabledThumbColor: Colors.black38,
-              activeTrackColor: appThemeData.primaryColor,
-              inactiveTrackColor: Colors.black38,
-              activeTickColor: appThemeData.primaryColor,
-              inactiveTickColor: Colors.black38,
-              activeMinorTickColor: appThemeData.primaryColor,
-              inactiveMinorTickColor: Colors.black38,
-              activeDividerColor: appThemeData.primaryColor,
-              inactiveDividerColor: Colors.black38,
-              thumbColor: appThemeData.primaryColor,
+              disabledInactiveDividerColor: Colors.grey,
+              disabledThumbColor: Colors.grey,
+              activeTrackColor: Theme.of(context).primaryColor,
+              inactiveTrackColor: Colors.grey,
+              activeTickColor: Theme.of(context).primaryColor,
+              inactiveTickColor: Colors.grey,
+              activeMinorTickColor: Theme.of(context).primaryColor,
+              inactiveMinorTickColor: Colors.grey,
+              activeDividerColor: Theme.of(context).primaryColor,
+              inactiveDividerColor: Colors.grey,
+              thumbColor: Theme.of(context).primaryColor,
             ),
             child: SfRangeSlider(
                 showTicks: true,
@@ -426,7 +424,7 @@ class _LevelsList extends StatelessWidget {
             child: Text("Этажи",
                 textAlign: TextAlign.left,
                 style: Theme.of(context).textTheme.headlineSmall?.copyWith(
-                    color: Colors.black54,
+
                     fontSize: 24,
                     fontWeight: FontWeight.w300)),
           ),
@@ -436,7 +434,7 @@ class _LevelsList extends StatelessWidget {
           Container(
             height: 0.3,
             width: double.infinity,
-            color: Colors.black54,
+            color: Theme.of(context).colorScheme.surface
           ),
           ListView.builder(
             physics: const NeverScrollableScrollPhysics(),
@@ -531,7 +529,7 @@ class _DeleteConfirmDialog extends StatelessWidget {
           content: Text(
             'После удаления все созданные брони в этом офисе будут отменены.\n Вы уверены что хотите удалить офис?',
             style: Theme.of(context).textTheme.headlineSmall?.copyWith(
-                color: Colors.black54,
+
                 fontSize: 20,
                 fontWeight: FontWeight.w300),
           ),
@@ -541,7 +539,7 @@ class _DeleteConfirmDialog extends StatelessWidget {
               child: Text(
                 'Отмена',
                 style: Theme.of(context).textTheme.headlineSmall?.copyWith(
-                    color: Colors.black54,
+
                     fontSize: 20,
                     fontWeight: FontWeight.w500),
               ),
@@ -555,7 +553,6 @@ class _DeleteConfirmDialog extends StatelessWidget {
               child: Text(
                 'Удалить',
                 style: Theme.of(context).textTheme.headlineSmall?.copyWith(
-                    color: Colors.black54,
                     fontSize: 20,
                     fontWeight: FontWeight.w500),
               ),
@@ -574,7 +571,7 @@ class _StatisticsButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialButton(
       shape: RoundedRectangleBorder(
-          side: BorderSide(width: 1, color: appThemeData.primaryColor),
+          side: BorderSide(width: 1, color: Theme.of(context).primaryColor),
           borderRadius: BorderRadius.circular(7.0)),
       onPressed: () {
         Navigator.of(context).push(MaterialPageRoute(
@@ -583,19 +580,19 @@ class _StatisticsButton extends StatelessWidget {
                   child: const AdminBookingsStatsPage(),
                 )));
       },
-      color: appThemeData.primaryColor,
+      color: Theme.of(context).primaryColor,
       child: Row(
         children: [
           Text(
             "Статистика",
-            style: appThemeData.textTheme.titleMedium!.copyWith(
+            style: Theme.of(context).textTheme.titleMedium!.copyWith(
               color: Colors.white,
             ),
           ),
           const SizedBox(
             width: 5,
           ),
-          const Icon(Icons.query_stats)
+          const Icon(Icons.query_stats,color: Colors.white,)
         ],
       ),
     );
@@ -609,7 +606,7 @@ class _BookingsButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialButton(
       shape: RoundedRectangleBorder(
-          side: BorderSide(width: 1, color: appThemeData.primaryColor),
+          side: BorderSide(width: 1, color: Theme.of(context).primaryColor),
           borderRadius: BorderRadius.circular(7.0)),
       onPressed: () {
         Navigator.of(context).push(MaterialPageRoute(
@@ -618,19 +615,19 @@ class _BookingsButton extends StatelessWidget {
                   child: AdminBookingsPage(),
                 )));
       },
-      color: appThemeData.primaryColor,
+      color: Theme.of(context).primaryColor,
       child: Row(
         children: [
           Text(
             "Бронирования",
-            style: appThemeData.textTheme.titleMedium!.copyWith(
+            style: Theme.of(context).textTheme.titleMedium!.copyWith(
               color: Colors.white,
             ),
           ),
           const SizedBox(
             width: 5,
           ),
-          const Icon(Icons.cases_outlined)
+          const Icon(Icons.cases_outlined,color: Colors.white,)
         ],
       ),
     );
@@ -648,7 +645,7 @@ class _AddNewLevelButton extends StatelessWidget {
       padding: const EdgeInsets.only(bottom: 20.0),
       child: MaterialButton(
         shape: RoundedRectangleBorder(
-            side: BorderSide(width: 1, color: appThemeData.primaryColor),
+            side: BorderSide(width: 1, color: Theme.of(context).primaryColor),
             borderRadius: BorderRadius.circular(10.0)),
         onPressed: () {
           context
@@ -715,7 +712,7 @@ class _AddNewLevelButton extends StatelessWidget {
           //   ], child: const LevelEditorPage());
           // }));
         },
-        color: appThemeData.primaryColor,
+        color: Theme.of(context).primaryColor,
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 0.0, vertical: 10),
           child: Row(
@@ -723,14 +720,14 @@ class _AddNewLevelButton extends StatelessWidget {
             children: [
               Text(
                 "Добавить новый этаж",
-                style: appThemeData.textTheme.titleMedium!.copyWith(
+                style: Theme.of(context).textTheme.titleMedium!.copyWith(
                   color: Colors.white,
                 ),
               ),
               const SizedBox(
                 width: 5,
               ),
-              const Icon(Icons.add)
+              const Icon(Icons.add,color: Colors.white,)
             ],
           ),
         ),

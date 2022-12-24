@@ -1,6 +1,5 @@
 import 'package:atb_booking/data/services/network/network_controller.dart';
 import 'package:atb_booking/logic/admin_role/feedback/admin_feedback_bloc.dart';
-import 'package:atb_booking/presentation/constants/styles.dart';
 import 'package:atb_booking/presentation/interface/admin_role/feedback/feedback_card.dart';
 import 'package:atb_booking/presentation/interface/auth/auth_screen.dart';
 import 'package:atb_booking/presentation/widgets/elevated_button.dart';
@@ -34,7 +33,7 @@ class AdminFeedbackScreen extends StatelessWidget {
             padding: const EdgeInsets.only(left: 3),
             child: Text(
               'Тип обратной связи',
-              style: appThemeData.textTheme.headlineSmall?.copyWith(
+              style: Theme.of(context).textTheme.headlineSmall?.copyWith(
                   color: Colors.black,
                   fontSize: 21,
                   fontWeight: FontWeight.w300),

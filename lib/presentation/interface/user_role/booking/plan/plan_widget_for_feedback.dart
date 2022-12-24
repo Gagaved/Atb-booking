@@ -3,7 +3,6 @@ import 'package:atb_booking/data/services/image_provider.dart';
 import 'package:atb_booking/data/services/network/network_controller.dart';
 import 'package:atb_booking/logic/admin_role/offices/LevelPlanEditor/level_plan_editor_bloc.dart';
 import 'package:atb_booking/logic/user_role/feedback_bloc/feedback_bloc.dart';
-import 'package:atb_booking/presentation/constants/styles.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -139,7 +138,7 @@ class _LevelPlanEditorElementWidget extends StatelessWidget {
                           ? const BorderSide(width: 0, color: Colors.grey)
                           : BorderSide(
                               width: 6 * FeedbackLevelPlan.SCALE_FACTOR,
-                              color: appThemeData.primaryColor),
+                              color: Theme.of(context).primaryColor),
                       borderRadius: BorderRadius.circular(
                           8 * FeedbackLevelPlan.SCALE_FACTOR)),
                   shadowColor: Colors.black,

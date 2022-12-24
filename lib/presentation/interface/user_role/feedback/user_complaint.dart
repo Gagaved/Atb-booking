@@ -1,5 +1,4 @@
 import 'package:atb_booking/logic/user_role/feedback_bloc/complaint_bloc/complaint_bloc.dart';
-import 'package:atb_booking/presentation/constants/styles.dart';
 import 'package:atb_booking/presentation/widgets/elevated_button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -60,13 +59,13 @@ class _TitleComplaint extends StatelessWidget {
                 Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
               Text(
                 "Пожаловаться на:",
-                style: appThemeData.textTheme.headlineSmall?.copyWith(
-                    color: appThemeData.colorScheme.onSurface, fontSize: 28),
+                style: Theme.of(context).textTheme.headlineSmall?.copyWith(
+                    color: Theme.of(context).colorScheme.onSurface, fontSize: 28),
               ),
               const SizedBox(height: 5),
               Text(
                 state.userPerson.fullName,
-                style: appThemeData.textTheme.headlineSmall
+                style: Theme.of(context).textTheme.headlineSmall
                     ?.copyWith(color: Colors.black, fontSize: 23),
               ),
             ]),
@@ -81,13 +80,13 @@ class _TitleComplaint extends StatelessWidget {
                 Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
               Text(
                 "Пожаловаться на:",
-                style: appThemeData.textTheme.headlineSmall?.copyWith(
-                    color: appThemeData.colorScheme.onSurface, fontSize: 28),
+                style: Theme.of(context).textTheme.headlineSmall?.copyWith(
+                    color: Theme.of(context).colorScheme.onSurface, fontSize: 28),
               ),
               const SizedBox(height: 5),
               Text(
                 "...",
-                style: appThemeData.textTheme.headlineSmall
+                style: Theme.of(context).textTheme.headlineSmall
                     ?.copyWith(color: Colors.black, fontSize: 23),
               ),
             ]),
@@ -99,7 +98,7 @@ class _TitleComplaint extends StatelessWidget {
 }
 
 class _MessageField extends StatelessWidget {
-  const _MessageField({super.key});
+  const _MessageField();
 
   @override
   Widget build(BuildContext context) {
@@ -115,13 +114,11 @@ class _MessageField extends StatelessWidget {
                 child: Text("Сообщение",
                     textAlign: TextAlign.left,
                     style: Theme.of(context).textTheme.headlineSmall?.copyWith(
-                        color: Colors.black54,
+
                         fontSize: 24,
-                        fontWeight: FontWeight.w300)),
-              ),
-              Container(
-                height: 0.3,
-                color: Colors.black54,
+                        fontWeight: FontWeight.w300)
+
+                ),
               ),
               SizedBox(
                 width: double.infinity,
@@ -138,7 +135,7 @@ class _MessageField extends StatelessWidget {
                   style: Theme.of(context)
                       .textTheme
                       .headlineSmall
-                      ?.copyWith(color: Colors.black, fontSize: 20),
+                      ?.copyWith(fontSize: 20),
                   maxLines: 20,
                   minLines: 1,
                   maxLength: 1000,
@@ -167,7 +164,7 @@ class _MessageField extends StatelessWidget {
 }
 
 class _Button extends StatelessWidget {
-  const _Button({super.key});
+  const _Button();
 
   void _submitButton(BuildContext popupContext) async {
     bool _exit = false;
@@ -237,7 +234,7 @@ class _Button extends StatelessWidget {
             return Center(
                 child: ElevatedButton(
               style: ButtonStyle(
-                backgroundColor: MaterialStateProperty.all<Color>(Colors.grey),
+                //backgroundColor: MaterialStateProperty.all<Color>(Colors.grey),
               ),
               onPressed: () {},
               child: SizedBox(
@@ -250,8 +247,8 @@ class _Button extends StatelessWidget {
                         Center(
                             child: Text(
                           "Отправить",
-                          style: appThemeData.textTheme.displayLarge
-                              ?.copyWith(color: Colors.white, fontSize: 20),
+                          // style: Theme.of(context).textTheme.displayLarge
+                          //     ?.copyWith(color: Colors.white, fontSize: 20),
                         )),
                       ],
                     ),

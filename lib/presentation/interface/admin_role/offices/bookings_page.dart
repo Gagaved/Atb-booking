@@ -1,6 +1,4 @@
 import 'package:atb_booking/logic/admin_role/offices/bookings_page/admin_bookings_bloc.dart';
-import 'package:atb_booking/logic/admin_role/offices/bookings_page/admin_bookings_bloc.dart';
-import 'package:atb_booking/presentation/constants/styles.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';
@@ -44,12 +42,12 @@ class _DateRangePickerWidget extends StatelessWidget {
         if (selectedDateTimeRange != null) {
           _textEditingController.text =
           "${DateFormat('dd.MM.yyyy').format(
-              selectedDateTimeRange!.start)} - ${DateFormat('dd.MM.yyyy')
+              selectedDateTimeRange.start)} - ${DateFormat('dd.MM.yyyy')
               .format(selectedDateTimeRange.end)}";
         }
         return TextField(
-          decoration: InputDecoration(
-            border: const OutlineInputBorder(),
+          decoration: const InputDecoration(
+            border: OutlineInputBorder(),
             labelText: _defaultText,
           ),
           focusNode: _AlwaysDisabledFocusNode(),
@@ -61,9 +59,9 @@ class _DateRangePickerWidget extends StatelessWidget {
                 return Theme(
                   data: ThemeData.light().copyWith(
                     colorScheme: ColorScheme.light(
-                      primary: appThemeData.primaryColor,
+                      primary: Theme.of(context).primaryColor,
                       onPrimary: Colors.white,
-                      surface: appThemeData.primaryColor,
+                      surface: Theme.of(context).primaryColor,
                       onSurface: Colors.black,
                     ),
                     dialogBackgroundColor: Colors.white,
@@ -71,8 +69,8 @@ class _DateRangePickerWidget extends StatelessWidget {
                   child: child!,
                 );
               },
-              firstDate: DateTime.now().add(Duration(days: -100)),
-              lastDate: DateTime.now().add(Duration(days: 100)),
+              firstDate: DateTime.now().add(const Duration(days: -100)),
+              lastDate: DateTime.now().add(const Duration(days: 100)),
             );
             if (newDateTimeRange != null) {
               print("add AdminBookingsSelectNewRangeEvent to bloc");
@@ -130,9 +128,9 @@ class _BookingsList extends StatelessWidget {
                   return Column(
                     children: [
                       Card(child: Container(height: 50,),),
-                      if(state.bookings.length-1 == index) Padding(
-                        padding: const EdgeInsets.all(15.0),
-                        child: const Center(child: CircularProgressIndicator(),),
+                      if(state.bookings.length-1 == index) const Padding(
+                        padding: EdgeInsets.all(15.0),
+                        child: Center(child: CircularProgressIndicator(),),
                       )
                     ],
                   );

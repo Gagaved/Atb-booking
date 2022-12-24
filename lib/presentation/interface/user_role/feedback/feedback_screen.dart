@@ -4,7 +4,6 @@ import 'package:atb_booking/data/models/office.dart';
 import 'package:atb_booking/data/services/city_repository.dart';
 import 'package:atb_booking/data/services/office_provider.dart';
 import 'package:atb_booking/logic/user_role/feedback_bloc/feedback_bloc.dart';
-import 'package:atb_booking/presentation/constants/styles.dart';
 import 'package:atb_booking/presentation/interface/user_role/booking/plan/plan_widget_for_feedback.dart';
 import 'package:atb_booking/presentation/widgets/elevated_button.dart';
 import 'package:flutter/material.dart';
@@ -130,20 +129,20 @@ class _TypeField extends StatelessWidget {
                       style: Theme.of(context)
                           .textTheme
                           .headlineSmall
-                          ?.copyWith(color: Colors.black, fontSize: 20),
+                          ?.copyWith( fontSize: 20),
                       // decoration: const InputDecoration(
                       //   border: OutlineInputBorder(),
                       //   labelText: "Выберите тип обращения...",
                       // ),
-                      decoration: const InputDecoration(
+                      decoration:InputDecoration(
                         hintText: "Выберите тип обращения...",
                         filled: true,
-                        fillColor: Color.fromARGB(255, 238, 238, 238),
-                        border: OutlineInputBorder(
+                        fillColor: Theme.of(context).backgroundColor,
+                        border: const OutlineInputBorder(
                           borderSide: BorderSide.none,
                           borderRadius: BorderRadius.all(Radius.circular(10.0)),
                         ),
-                        suffixIcon: Icon(Icons.search),
+                        suffixIcon: Icon(Icons.arrow_drop_down,color: Theme.of(context).primaryColor),
                       ),
                       controller: FeedBackScreen.typeInputController,
                     ),
@@ -202,12 +201,12 @@ class _CityField extends StatelessWidget {
                     style: Theme.of(context)
                         .textTheme
                         .headlineSmall
-                        ?.copyWith(color: Colors.black, fontSize: 20),
-                    decoration: const InputDecoration(
+                        ?.copyWith(fontSize: 20),
+                    decoration: InputDecoration(
                       hintText: "Выберите город",
                       filled: true,
-                      fillColor: Color.fromARGB(255, 238, 238, 238),
-                      border: OutlineInputBorder(
+                      fillColor: Theme.of(context).backgroundColor,
+                      border: const OutlineInputBorder(
                         borderSide: BorderSide.none,
                         borderRadius: BorderRadius.all(Radius.circular(10.0)),
                       ),
@@ -265,12 +264,12 @@ class _OfficeField extends StatelessWidget {
                 style: Theme.of(context)
                     .textTheme
                     .headlineSmall
-                    ?.copyWith(color: Colors.black, fontSize: 20),
-                decoration: const InputDecoration(
+                    ?.copyWith( fontSize: 20),
+                decoration: InputDecoration(
                   hintText: "Выберите офис",
                   filled: true,
-                  fillColor: Color.fromARGB(255, 238, 238, 238),
-                  border: OutlineInputBorder(
+                  fillColor: Theme.of(context).backgroundColor,
+                  border: const OutlineInputBorder(
                     borderSide: BorderSide.none,
                     borderRadius: BorderRadius.all(Radius.circular(10.0)),
                   ),
@@ -329,16 +328,16 @@ class _LevelField extends StatelessWidget {
                 style: Theme.of(context)
                     .textTheme
                     .headlineSmall
-                    ?.copyWith(color: Colors.black, fontSize: 20),
-                decoration: const InputDecoration(
-                  hintText: "Выберите этаж",
+                    ?.copyWith( fontSize: 20),
+                decoration: InputDecoration(
+                  hintText: "Этаж",
                   filled: true,
-                  fillColor: Color.fromARGB(255, 238, 238, 238),
-                  border: OutlineInputBorder(
+                  fillColor: Theme.of(context).backgroundColor,
+                  border: const OutlineInputBorder(
                     borderSide: BorderSide.none,
                     borderRadius: BorderRadius.all(Radius.circular(10.0)),
                   ),
-                  suffixIcon: Icon(Icons.arrow_drop_down),
+                  suffixIcon: const Icon(Icons.arrow_drop_down),
                 ),
                 controller: FeedBackScreen.levelInputController,
               ),
@@ -398,7 +397,6 @@ class _MessageField extends StatelessWidget {
                             .textTheme
                             .headlineSmall
                             ?.copyWith(
-                                color: Colors.black54,
                                 fontSize: 22,
                                 fontWeight: FontWeight.w300)),
                   ),
@@ -406,12 +404,7 @@ class _MessageField extends StatelessWidget {
                     width: double.infinity,
                     child: Container(
                       padding: const EdgeInsets.symmetric(
-                          horizontal: 10, vertical: 8),
-                      decoration: const BoxDecoration(
-                        color: Color.fromARGB(255, 238, 238, 238),
-                        borderRadius: BorderRadius.all(Radius.circular(10.0) //
-                            ),
-                      ),
+                          horizontal: 0, vertical: 8),
                       child: TextField(
                         onChanged: (form) {
                           context
@@ -419,11 +412,11 @@ class _MessageField extends StatelessWidget {
                               .add(FeedbackMessageInputEvent(form));
                         },
                         controller: FeedBackScreen.messageInputController,
-                        decoration: const InputDecoration(
+                        decoration: InputDecoration(
                           hintText: "Введите текст сообщения...",
                           filled: true,
-                          fillColor: Color.fromARGB(255, 238, 238, 238),
-                          border: OutlineInputBorder(
+                          fillColor: Theme.of(context).backgroundColor,
+                          border: const OutlineInputBorder(
                             borderSide: BorderSide.none,
                             borderRadius:
                                 BorderRadius.all(Radius.circular(10.0)),
@@ -433,7 +426,7 @@ class _MessageField extends StatelessWidget {
                         style: Theme.of(context)
                             .textTheme
                             .headlineSmall
-                            ?.copyWith(color: Colors.black, fontSize: 20),
+                            ?.copyWith( fontSize: 20),
                         maxLines: 20,
                         minLines: 1,
                         maxLength: 1000,
@@ -487,7 +480,7 @@ class _Button extends StatelessWidget {
                       "Не удалось отправить сообщение",
                       textAlign: TextAlign.center,
                       style: TextStyle(
-                          color: appThemeData.colorScheme.error),
+                          color: Theme.of(popupContext).colorScheme.error),
                     ),
                   );
                 }

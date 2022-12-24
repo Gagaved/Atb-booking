@@ -71,11 +71,11 @@ class AddingPeopleWidget extends StatelessWidget {
                                       child: Center(
                                           child: Text(
                                         '+${state.selectedUsers.length}',
-                                        style: appThemeData
+                                        style: Theme.of(context)
                                             .textTheme.titleMedium!
                                             .copyWith(
                                                 color:
-                                                    appThemeData.primaryColor),
+                                                Theme.of(context).primaryColor),
                                       )),
                                     )
                                   : null,
@@ -113,7 +113,7 @@ class SearchBar extends StatelessWidget {
       decoration: InputDecoration(
         hintText: "Введите имя...",
         filled: true,
-        fillColor: const Color.fromARGB(255, 238, 238, 238),
+        fillColor: Theme.of(context).backgroundColor,
         border: const OutlineInputBorder(
           borderSide: BorderSide.none,
           borderRadius: BorderRadius.all(Radius.circular(10.0)),
@@ -132,7 +132,7 @@ class SearchBar extends StatelessWidget {
                 children: [
                   Text(
                     "только\nизбранные",
-                    style: appThemeData.textTheme.bodySmall,
+                    style: Theme.of(context).textTheme.bodySmall,
                   ),
                   IconButton(
                     isSelected: state.isFavoriteOn,
@@ -142,10 +142,10 @@ class SearchBar extends StatelessWidget {
                               !(state.isFavoriteOn), _controller.text));
                     },
                     icon: state.isFavoriteOn
-                        ? Icon(Icons.star, color: appThemeData.primaryColor)
+                        ? Icon(Icons.star, color: Theme.of(context).primaryColor)
                         : Icon(
                             Icons.star_border,
-                            color: appThemeData.primaryColor,
+                            color: Theme.of(context).primaryColor,
                           ),
                   ),
                 ],
@@ -295,7 +295,7 @@ class HorizontalPeopleAddedList extends StatelessWidget {
                 return SizedBox(
                   height: 50,
                   child: Card(
-                    color: appThemeData.primaryColor,
+                    color: Theme.of(context).primaryColor,
                     clipBehavior: Clip.antiAlias,
                     child: Center(
                       child: Row(
@@ -304,7 +304,7 @@ class HorizontalPeopleAddedList extends StatelessWidget {
                           Padding(
                             padding: const EdgeInsets.fromLTRB(10.0, 0, 0, 0),
                             child: Text(list[index].fullName,
-                                style: appThemeData.textTheme.titleSmall!
+                                style: Theme.of(context).textTheme.titleSmall!
                                     .copyWith(color: Colors.white)),
                           ),
                           IconButton(
@@ -409,7 +409,7 @@ class AddingPeoplePersonCard extends StatelessWidget {
                               Icons
                                 .check_box_outline_blank,
                               size: 30.0,
-                              color: appThemeData
+                              color: Theme.of(context)
                                 .primaryColor,
                             ),
                           )
@@ -423,12 +423,11 @@ class AddingPeoplePersonCard extends StatelessWidget {
                           color: Colors.white,
                         ),
                         child:
-                        Icon(Icons.star, color: appThemeData.primaryColor))
+                        Icon(Icons.star, color: Theme.of(context).primaryColor))
                         : const SizedBox.shrink()
                   ]
                 ),
                 trailing: IconButton(
-                    color: Colors.black,
                     onPressed: () {
                       FocusScope.of(context).unfocus();
                       _showSimpleDialog(context,user);
@@ -437,7 +436,7 @@ class AddingPeoplePersonCard extends StatelessWidget {
                 title:
                 Text(user.fullName),
                 subtitle:
-                Text(user.email,style: appThemeData.textTheme.bodySmall,),
+                Text(user.email,style: Theme.of(context).textTheme.bodySmall,),
               ),
             ),
           ],
@@ -456,8 +455,8 @@ void _showSimpleDialog(BuildContext contextDialog, User user) {
           child: SimpleDialog(
             title: Text(
               user.fullName,
-              style: appThemeData.textTheme.headlineSmall
-                  ?.copyWith(color: appThemeData.primaryColor),
+              style: Theme.of(context).textTheme.headlineSmall
+                  ?.copyWith(color: Theme.of(context).primaryColor),
             ),
             children: <Widget>[
               SimpleDialogOption(
@@ -470,7 +469,7 @@ void _showSimpleDialog(BuildContext contextDialog, User user) {
                     const Icon(Icons.report_gmailerrorred),
                     const SizedBox(width: 10),
                     Text('Пожаловаться',
-                        style: appThemeData.textTheme.titleMedium),
+                        style: Theme.of(context).textTheme.titleMedium),
                   ],
                 ),
               ),
@@ -496,14 +495,14 @@ void _showSimpleDialog(BuildContext contextDialog, User user) {
                       const Icon(Icons.star),
                       const SizedBox(width: 10),
                       Text('Убрать из избранного',
-                          style: appThemeData.textTheme.titleMedium),
+                          style: Theme.of(context).textTheme.titleMedium),
                     ] else ...[
                       const Icon(
                         Icons.star_border,
                       ),
                       const SizedBox(width: 10),
                       Text('Добавить в избранные',
-                          style: appThemeData.textTheme.titleMedium),
+                          style: Theme.of(context).textTheme.titleMedium),
                     ],
                   ],
                 ),

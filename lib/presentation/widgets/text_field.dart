@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 
-import '../constants/styles.dart';
-
 class AtbTextField extends StatelessWidget{
   final String text;
 
@@ -10,7 +8,7 @@ class AtbTextField extends StatelessWidget{
   Widget build(BuildContext context) {
     return Container(
         decoration: BoxDecoration(
-          color: appThemeData.colorScheme.tertiary,
+          color: Theme.of(context).colorScheme.tertiary,
           borderRadius:
           BorderRadius.circular(10).copyWith(),
         ),

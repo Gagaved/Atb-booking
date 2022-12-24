@@ -4,7 +4,6 @@ import 'package:atb_booking/data/services/network/network_controller.dart';
 import 'package:atb_booking/logic/user_role/booking/new_booking/new_booking_bloc/adding_people_to_booking_bloc/adding_people_to_booking_bloc.dart';
 import 'package:atb_booking/logic/user_role/booking/new_booking/new_booking_bloc/new_booking_bloc.dart';
 import 'package:atb_booking/logic/user_role/booking/new_booking/new_booking_bloc/new_booking_sheet_bloc/new_booking_sheet_bloc.dart';
-import 'package:atb_booking/presentation/constants/styles.dart';
 import 'package:atb_booking/presentation/interface/user_role/booking/new_booking/adding_people_popup.dart';
 import 'package:atb_booking/presentation/interface/user_role/booking/new_booking/new_booking_confirmation_popup.dart';
 import 'package:atb_booking/presentation/widgets/elevated_button.dart';
@@ -40,8 +39,8 @@ class BookingBottomSheet extends StatelessWidget {
               AppBar(
                 title: Text(
                   'Загружаем...',
-                  style: appThemeData.textTheme.labelMedium?.copyWith(
-                      fontSize: 18, color: appThemeData.colorScheme.onSurface),
+                  style: Theme.of(context).textTheme.labelMedium?.copyWith(
+                      fontSize: 18, color: Theme.of(context).colorScheme.onSurface),
                 ),
               ),
               Container(
@@ -64,7 +63,7 @@ class BookingBottomSheet extends StatelessWidget {
                 Text(
                   "Упс, что-то пошло не так...",
                   textAlign: TextAlign.center,
-                  style: appThemeData.textTheme.titleLarge!.copyWith(
+                  style: Theme.of(context).textTheme.titleLarge!.copyWith(
                       color: const Color.fromARGB(255, 49, 41, 0), fontSize: 30),
                 )
               ]));
@@ -105,16 +104,6 @@ class _SheetLoadedStateWidget extends StatelessWidget {
       double getSliderWidth(int sliderType) {
         double width = 0.0;
         if (sliderType == 0) {
-          var diff = ((rangeList[index].end as DateTime)
-                      .millisecondsSinceEpoch -
-                  (rangeList[index].start as DateTime).millisecondsSinceEpoch)
-              .abs();
-          width = ((rangeList[index].end.hour - rangeList[index].start.hour)
-                      .toDouble() *
-                  1.5.toDouble() *
-                  60.toDouble())
-              .toDouble()
-              .abs();
         }
         if (sliderType == 1) {
           var diff = (((rangeList[index].end as DateTime)
@@ -132,7 +121,6 @@ class _SheetLoadedStateWidget extends StatelessWidget {
                   .toDouble()
                   .abs();
         }
-        var newWidth = diff / 132631;
         if (width < 100.0) width = 100;
         if (width > 380.0) {
           width = 380.0;
@@ -200,8 +188,8 @@ class _SheetLoadedStateWidget extends StatelessWidget {
           AppBar(
             title: Text(
               state.workspace.type.type,
-              style: appThemeData.textTheme.labelMedium?.copyWith(
-                  fontSize: 18, color: appThemeData.colorScheme.onSurface),
+              style: Theme.of(context).textTheme.labelMedium?.copyWith(
+                  fontSize: 18, color: Theme.of(context).colorScheme.onSurface),
             ),
             actions: (state.workspace.numberOfWorkspaces>1)?[
               IconButton(
@@ -225,15 +213,15 @@ class _SheetLoadedStateWidget extends StatelessWidget {
                                 width: 30,
                                 height: 30,
                                 decoration: BoxDecoration(
-                                    color: appThemeData.primaryColor,
+                                    color: Theme.of(context).primaryColor,
                                     border: Border.all(
-                                        color: appThemeData.primaryColor),
+                                        color: Theme.of(context).primaryColor),
                                     borderRadius: const BorderRadius.all(
                                         Radius.circular(20))),
                                 child: Center(
                                     child: Text(
                                   '${state.selectedUsers.length}',
-                                  style: appThemeData.textTheme.titleMedium!
+                                  style: Theme.of(context).textTheme.titleMedium!
                                       .copyWith(color: Colors.white),
                                 )),
                               )
@@ -322,7 +310,6 @@ class _SheetLoadedStateWidget extends StatelessWidget {
                             .textTheme
                             .headlineSmall
                             ?.copyWith(
-                                color: Colors.black54,
                                 fontSize: 24,
                                 fontWeight: FontWeight.w300)),
                     Container(
@@ -333,7 +320,7 @@ class _SheetLoadedStateWidget extends StatelessWidget {
                       child: Center(
                         child: Text(
                           state.workspace.description,
-                          style: appThemeData.textTheme.headlineSmall!
+                          style: Theme.of(context).textTheme.headlineSmall!
                               .copyWith(fontSize: 18),
                           textAlign: TextAlign.justify,
                         ),
@@ -348,41 +335,39 @@ class _SheetLoadedStateWidget extends StatelessWidget {
               height: 140,
               child: SfRangeSliderTheme(
                 data: SfRangeSliderThemeData(
-                  activeLabelStyle: appThemeData.textTheme.headlineMedium
+                  activeLabelStyle: Theme.of(context).textTheme.headlineMedium
                       ?.copyWith(
-                          color: Colors.black54,
                           fontSize: 14,
                           fontStyle: FontStyle.normal),
-                  inactiveLabelStyle: appThemeData.textTheme.headlineMedium
+                  inactiveLabelStyle: Theme.of(context).textTheme.headlineMedium
                       ?.copyWith(
-                          color: Colors.black54,
+
                           fontSize: 14,
                           fontStyle: FontStyle.normal),
-                  tooltipTextStyle: appThemeData.textTheme.headlineMedium
+                  tooltipTextStyle: Theme.of(context).textTheme.headlineMedium
                       ?.copyWith(
-                          color: Colors.white,
                           fontSize: 14,
                           fontStyle: FontStyle.normal),
                   overlappingTooltipStrokeColor: Colors.white,
-                  tooltipBackgroundColor: appThemeData.primaryColor,
-                  disabledActiveTrackColor: Colors.black38,
-                  disabledInactiveTrackColor: Colors.black38,
-                  disabledActiveTickColor: Colors.black38,
-                  disabledInactiveTickColor: Colors.black38,
-                  disabledActiveMinorTickColor: Colors.black38,
-                  disabledInactiveMinorTickColor: Colors.black38,
+                  tooltipBackgroundColor: Theme.of(context).primaryColor,
+                  disabledActiveTrackColor: Colors.grey,
+                  disabledInactiveTrackColor: Colors.grey,
+                  disabledActiveTickColor: Colors.grey,
+                  disabledInactiveTickColor: Colors.grey,
+                  disabledActiveMinorTickColor: Colors.grey,
+                  disabledInactiveMinorTickColor: Colors.grey,
                   disabledActiveDividerColor: Colors.red,
-                  disabledInactiveDividerColor: Colors.black38,
-                  disabledThumbColor: Colors.black38,
-                  activeTrackColor: appThemeData.primaryColor,
-                  inactiveTrackColor: Colors.black38,
-                  activeTickColor: appThemeData.primaryColor,
-                  inactiveTickColor: Colors.black38,
-                  activeMinorTickColor: appThemeData.primaryColor,
-                  inactiveMinorTickColor: Colors.black38,
-                  activeDividerColor: appThemeData.primaryColor,
-                  inactiveDividerColor: Colors.black38,
-                  thumbColor: appThemeData.primaryColor,
+                  disabledInactiveDividerColor: Colors.grey,
+                  disabledThumbColor: Colors.grey,
+                  activeTrackColor: Theme.of(context).primaryColor,
+                  inactiveTrackColor: Colors.grey,
+                  activeTickColor: Theme.of(context).primaryColor,
+                  inactiveTickColor: Colors.grey,
+                  activeMinorTickColor: Theme.of(context).primaryColor,
+                  inactiveMinorTickColor: Colors.grey,
+                  activeDividerColor: Theme.of(context).primaryColor,
+                  inactiveDividerColor: Colors.grey,
+                  thumbColor: Theme.of(context).primaryColor,
                 ),
                 child: Center(
                   child: Scrollbar(
@@ -421,11 +406,11 @@ class _SheetLoadedStateWidget extends StatelessWidget {
                   child: Row(
                     children: [
                       Text("Начало: ",
-                          style: appThemeData.textTheme.titleLarge),
+                          style: Theme.of(context).textTheme.titleLarge),
                       Text(
                         DateFormat("HH:mm").format(state
                             .rangeValuesList[state.activeSliderIndex].start),
-                        style: appThemeData.textTheme.titleLarge,
+                        style: Theme.of(context).textTheme.titleLarge,
                       ),
                     ],
                   ),
@@ -438,12 +423,12 @@ class _SheetLoadedStateWidget extends StatelessWidget {
                     children: [
                       Text(
                         "Конец: ",
-                        style: appThemeData.textTheme.titleLarge,
+                        style: Theme.of(context).textTheme.titleLarge,
                       ),
                       Text(
                         DateFormat("HH:mm").format(
                             state.rangeValuesList[state.activeSliderIndex].end),
-                        style: appThemeData.textTheme.titleLarge,
+                        style: Theme.of(context).textTheme.titleLarge,
                       ),
                     ],
                   ),
@@ -486,8 +471,8 @@ class _SheetLoadedEmptyWidget extends StatelessWidget {
         AppBar(
           title: Text(
             state.workspace.type.type,
-            style: appThemeData.textTheme.labelMedium?.copyWith(
-                fontSize: 18, color: appThemeData.colorScheme.onSurface),
+            style: Theme.of(context).textTheme.labelMedium?.copyWith(
+                fontSize: 18, color: Theme.of(context).colorScheme.onSurface),
           ),
         ),
         Container(
@@ -561,7 +546,7 @@ class _SheetLoadedEmptyWidget extends StatelessWidget {
                   child: Center(
                     child: Text(
                       state.workspace.description,
-                      style: appThemeData.textTheme.headlineSmall!
+                      style: Theme.of(context).textTheme.headlineSmall!
                           .copyWith(fontSize: 18),
                     ),
                   ),
@@ -576,7 +561,7 @@ class _SheetLoadedEmptyWidget extends StatelessWidget {
                 child: Text(
                   "Нет доступных окон на это число",
                   textAlign: TextAlign.center,
-                  style: appThemeData.textTheme.displaySmall,
+                  style: Theme.of(context).textTheme.displaySmall,
                 ))),
         Padding(
             padding: const EdgeInsets.fromLTRB(30, 00, 30, 40),

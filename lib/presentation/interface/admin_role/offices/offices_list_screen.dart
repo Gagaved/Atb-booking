@@ -6,7 +6,6 @@ import 'package:atb_booking/logic/admin_role/offices/new_office_page/new_office_
 import 'package:atb_booking/logic/admin_role/offices/offices_screen/admin_offices_bloc.dart';
 import 'package:atb_booking/logic/admin_role/offices/office_page/admin_office_page_bloc.dart';
 import 'package:atb_booking/logic/user_role/booking/booking_list_bloc/booking_list_bloc.dart';
-import 'package:atb_booking/presentation/constants/styles.dart';
 import 'package:atb_booking/presentation/interface/admin_role/offices/new_office_page.dart';
 import 'package:atb_booking/presentation/interface/admin_role/offices/office_page.dart';
 import 'package:atb_booking/presentation/interface/auth/auth_screen.dart';
@@ -22,7 +21,7 @@ class AdminOfficesScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Center(child: Text("Офисы")),
+        title: const Center(child: Text("      Офисы")),
         actions: [
           IconButton(
               onPressed: () {
@@ -84,15 +83,15 @@ class _CityField extends StatelessWidget {
           child: TypeAheadFormField(
             textFieldConfiguration: TextFieldConfiguration(
               textInputAction: TextInputAction.search,
-              decoration: const InputDecoration(
+              decoration: InputDecoration(
                 hintText: "Выберите город...",
                 filled: true,
-                fillColor: Color.fromARGB(255, 238, 238, 238),
-                border: OutlineInputBorder(
+                fillColor: Theme.of(context).backgroundColor,
+                border: const OutlineInputBorder(
                   borderSide: BorderSide.none,
                   borderRadius: BorderRadius.all(Radius.circular(10.0)),
                 ),
-                suffixIcon: Icon(Icons.search),
+                suffixIcon: const Icon(Icons.search),
               ),
               controller: _cityInputController,
             ),
@@ -157,7 +156,7 @@ class _OfficesList extends StatelessWidget {
                     padding: const EdgeInsets.all(8.0),
                     child: Text(
                       "В этом городе пока нет офисов",
-                      style: appThemeData.textTheme.headlineMedium,
+                      style: Theme.of(context).textTheme.headlineMedium,
                       textAlign: TextAlign.center,
                     ),
                   ),
@@ -176,7 +175,7 @@ class _OfficesList extends StatelessWidget {
                 padding: const EdgeInsets.all(8.0),
                 child: Text(
                   "Чтобы добавить офис используйте кнопку ниже",
-                  style: appThemeData.textTheme.headlineMedium,
+                  style: Theme.of(context).textTheme.headlineMedium,
                   textAlign: TextAlign.center,
                 ),
               ),
@@ -259,7 +258,7 @@ class _AddressRow extends StatelessWidget {
         //   borderRadius: BorderRadius.circular(20),
         // ),
         child: Text(officeListItem.address,
-          style: appThemeData.textTheme.bodyMedium!.copyWith(
+          style: Theme.of(context).textTheme.bodyMedium!.copyWith(
               fontWeight: FontWeight.w400),),
       ),
     );
@@ -281,7 +280,7 @@ class _WorkTimeRangeRow extends StatelessWidget {
       padding: const EdgeInsets.all(5.0),
       child: Container(
         child: Text("Работает "+text,
-          style: appThemeData.textTheme.bodyMedium!.copyWith(
+          style: Theme.of(context).textTheme.bodyMedium!.copyWith(
               fontWeight: FontWeight.w400),),
       ),
     );

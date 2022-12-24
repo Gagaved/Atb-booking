@@ -8,7 +8,6 @@ import 'package:atb_booking/logic/user_role/booking/booking_list_bloc/booking_li
 import 'package:atb_booking/logic/user_role/booking/new_booking/new_booking_bloc/new_booking_bloc.dart';
 import 'package:atb_booking/logic/user_role/booking/new_booking/new_booking_bloc/new_booking_sheet_bloc/new_booking_sheet_bloc.dart';
 import 'package:atb_booking/logic/user_role/booking/new_booking/new_booking_bloc/plan_bloc/plan_bloc.dart';
-import 'package:atb_booking/presentation/constants/styles.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -34,12 +33,12 @@ class _FilterButtons extends StatelessWidget {
                 .read<BookingListBloc>()
                 .add(BookingListFilterChangeEvent(index));
           },
-          textStyle: appThemeData.textTheme.titleMedium,
+          textStyle: Theme.of(context).textTheme.titleMedium,
           borderRadius: const BorderRadius.all(Radius.circular(8)),
-          selectedBorderColor: appThemeData.primaryColor,
+          selectedBorderColor: Theme.of(context).primaryColor,
           selectedColor: Colors.white,
-          color: Colors.black,
-          fillColor: appThemeData.primaryColor,
+          //color: Theme.of(context).o,
+          fillColor: Theme.of(context).primaryColor,
           // color: Colors.red[400],
           constraints: const BoxConstraints(
             minHeight: 40.0,
@@ -69,11 +68,14 @@ class BookingScreen extends StatelessWidget {
         builder: (context, state) {
           if (state is BookingListLoadingState) {
             return Padding(
-                padding: const EdgeInsets.fromLTRB(15.0, 0.0, 15.0, 0),
+                padding: const EdgeInsets.fromLTRB(15.0,5.0, 15.0, 0),
                 child: Column(
                   children: const [
                 ShimmerBookingCard(),
-                ShimmerBookingCard(),
+                    Padding(
+                      padding: EdgeInsets.symmetric(vertical: 9.0),
+                      child: ShimmerBookingCard(),
+                    ),
                 ShimmerBookingCard(),
                   ],
                 ));
@@ -113,7 +115,7 @@ class BookingScreen extends StatelessWidget {
                     padding: const EdgeInsets.all(8.0),
                     child: Text(
                       "Чтобы забронировать используйте кнопку ниже",
-                      style: appThemeData.textTheme.headlineMedium,
+                      style: Theme.of(context).textTheme.headlineMedium,
                       textAlign: TextAlign.center,
                     ),
                   ),
@@ -121,7 +123,22 @@ class BookingScreen extends StatelessWidget {
               );
             }
           } else {
-            throw Exception("unexpected state $state");
+            return Center(
+                child: Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Text(
+                    "Не удалось загрузить список пронирований, проверьте интернет подключение",
+                    style: Theme
+                        .of(context)
+                        .textTheme
+                        .headlineSmall
+                        ?.copyWith(
+                        fontSize: 22,
+                        fontWeight: FontWeight.w300),
+                    textAlign: TextAlign.center,
+
+                  ),
+                ));
           }
         },
       ),

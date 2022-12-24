@@ -4,7 +4,6 @@ import 'package:atb_booking/data/services/network/network_controller.dart';
 import 'package:atb_booking/logic/user_role/feedback_bloc/complaint_bloc/complaint_bloc.dart';
 import 'package:atb_booking/logic/user_role/people_bloc/people_bloc.dart';
 import 'package:atb_booking/logic/user_role/people_profile_bloc/people_profile_booking_bloc.dart';
-import 'package:atb_booking/presentation/constants/styles.dart';
 import 'package:atb_booking/presentation/interface/user_role/feedback/user_complaint.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
@@ -21,79 +20,79 @@ class PersonCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Center(
-        child: GestureDetector(
-      onTap: () async {
-        await Navigator.of(context).push(
-          MaterialPageRoute(
-            builder: (context) => BlocProvider.value(
-              value: PeopleProfileBookingBloc()
-                ..add(PeopleProfileBookingLoadEvent(id: user.id)),
-              child: PersonProfileScreen(user),
-            ),
-          ),
-        );
-      },
-      child: Card(
-          semanticContainer: true,
-          elevation: 1,
-          clipBehavior: Clip.antiAliasWithSaveLayer,
-          shape: RoundedRectangleBorder(
-              side: BorderSide(
-                  width: 0, color: appThemeData.colorScheme.tertiary),
-              borderRadius: BorderRadius.circular(12.0)),
-          child: Row(
-            children: <Widget>[
-              Padding(
-                padding: const EdgeInsets.all(10.0),
-                child: Stack(
-                  alignment: AlignmentDirectional.topEnd,
-                  children: [
-                    Padding(
-                      padding: const EdgeInsets.all(5.0),
-                      child: ClipOval(
-                        child: SizedBox(
-                          width: 50,
-                          height: 50,
-                          child: CachedNetworkImage(
-                              fit: BoxFit.cover,
-                              imageUrl: AppImageProvider.getImageUrlFromImageId(
-                                user.avatarImageId,
-                              ),
-                              httpHeaders: NetworkController().getAuthHeader(),
-                              progressIndicatorBuilder:
-                                  (context, url, downloadProgress) => Center(
-                                      child: CircularProgressIndicator(
-                                          value: downloadProgress.progress)),
-                              errorWidget: (context, url, error) =>
-                                  Container()),
-                        ),
-                      ),
+        child: Card(
+            semanticContainer: true,
+            elevation: 1,
+            clipBehavior: Clip.antiAliasWithSaveLayer,
+            shape: RoundedRectangleBorder(
+                side: BorderSide(
+                    width: 0, color: Theme.of(context).colorScheme.tertiary),
+                borderRadius: BorderRadius.circular(12.0)),
+            child: InkWell(
+              onTap: () async {
+                await Navigator.of(context).push(
+                  MaterialPageRoute(
+                    builder: (context) => BlocProvider.value(
+                      value: PeopleProfileBookingBloc()
+                        ..add(PeopleProfileBookingLoadEvent(id: user.id)),
+                      child: PersonProfileScreen(user),
                     ),
-                    user.isFavorite
-                        ? Icon(Icons.star, color: appThemeData.primaryColor)
-                        : const SizedBox.shrink()
-                  ],
-                ),
+                  ),
+                );
+              },
+              child: Row(
+                children: <Widget>[
+                  Padding(
+                    padding: const EdgeInsets.all(10.0),
+                    child: Stack(
+                      alignment: AlignmentDirectional.topEnd,
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.all(5.0),
+                          child: ClipOval(
+                            child: SizedBox(
+                              width: 50,
+                              height: 50,
+                              child: CachedNetworkImage(
+                                  fit: BoxFit.cover,
+                                  imageUrl: AppImageProvider.getImageUrlFromImageId(
+                                    user.avatarImageId,
+                                  ),
+                                  httpHeaders: NetworkController().getAuthHeader(),
+                                  progressIndicatorBuilder:
+                                      (context, url, downloadProgress) => Center(
+                                          child: CircularProgressIndicator(
+                                              value: downloadProgress.progress)),
+                                  errorWidget: (context, url, error) =>
+                                      Container()),
+                            ),
+                          ),
+                        ),
+                        user.isFavorite
+                            ? Icon(Icons.star, color: Theme.of(context).primaryColor)
+                            : const SizedBox.shrink()
+                      ],
+                    ),
+                  ),
+                  Expanded(
+                      child: ListTile(
+                    title: Text(user.fullName,
+                        style: Theme.of(context).textTheme.titleMedium),
+                    subtitle: Text(
+                      user.email,
+                      style: Theme.of(context).textTheme.titleSmall,
+                    ),
+                    trailing: GestureDetector(
+                        onTap: () {
+                          _showSimpleDialog(context, user);
+                        },
+                        child: const Icon(Icons.more_vert)),
+                    dense: true,
+                    minLeadingWidth: 100,
+                  ))
+                ],
               ),
-              Expanded(
-                  child: ListTile(
-                title: Text(user.fullName,
-                    style: appThemeData.textTheme.titleMedium),
-                subtitle: Text(
-                  user.email,
-                  style: appThemeData.textTheme.titleSmall,
-                ),
-                trailing: GestureDetector(
-                    onTap: () {
-                      _showSimpleDialog(context, user);
-                    },
-                    child: const Icon(Icons.more_vert, color: Colors.black)),
-                dense: true,
-                minLeadingWidth: 100,
-              ))
-            ],
-          )),
-    ));
+            )));
   }
 }
 
@@ -107,8 +106,8 @@ class ShimmerPersonCard extends StatelessWidget {
       padding: const EdgeInsets.all(0.0),
       child: Stack(children: [
         Shimmer.fromColors(
-          highlightColor: const Color.fromARGB(66, 220, 220, 220),
-          baseColor: const Color.fromARGB(211, 217, 217, 217),
+          highlightColor:const Color.fromARGB(211, 217, 217, 217),
+          baseColor:  const Color.fromARGB(66, 220, 220, 220),
           child: Card(
               elevation: 0,
               clipBehavior: Clip.antiAlias,
@@ -268,8 +267,8 @@ void _showSimpleDialog(BuildContext contextDialog, User user) {
           child: SimpleDialog(
             title: Text(
               user.fullName,
-              style: appThemeData.textTheme.headlineSmall
-                  ?.copyWith(color: appThemeData.primaryColor),
+              style: Theme.of(context).textTheme.headlineSmall
+                  ?.copyWith(color: Theme.of(context).primaryColor),
             ),
             children: <Widget>[
               SimpleDialogOption(
@@ -291,7 +290,7 @@ void _showSimpleDialog(BuildContext contextDialog, User user) {
                     const Icon(Icons.report_gmailerrorred),
                     const SizedBox(width: 10),
                     Text('Пожаловаться',
-                        style: appThemeData.textTheme.titleMedium),
+                        style: Theme.of(context).textTheme.titleMedium),
                   ],
                 ),
               ),
@@ -317,14 +316,14 @@ void _showSimpleDialog(BuildContext contextDialog, User user) {
                       const Icon(Icons.star),
                       const SizedBox(width: 10),
                       Text('Убрать из избранного',
-                          style: appThemeData.textTheme.titleMedium),
+                          style: Theme.of(context).textTheme.titleMedium),
                     ] else ...[
                       const Icon(
                         Icons.star_border,
                       ),
                       const SizedBox(width: 10),
                       Text('Добавить в избранные',
-                          style: appThemeData.textTheme.titleMedium),
+                          style: Theme.of(context).textTheme.titleMedium),
                     ],
                   ],
                 ),

@@ -4,9 +4,7 @@ import 'package:atb_booking/logic/user_role/booking/new_booking/new_booking_bloc
 import 'package:atb_booking/logic/user_role/booking/new_booking/new_booking_bloc/new_booking_sheet_bloc/new_booking_confirmation_popup_bloc.dart';
 import 'package:atb_booking/logic/user_role/booking/new_booking/new_booking_bloc/new_booking_sheet_bloc/new_booking_sheet_bloc.dart';
 import 'package:atb_booking/logic/user_role/booking/new_booking/new_booking_bloc/plan_bloc/plan_bloc.dart';
-import 'package:atb_booking/logic/user_role/people_profile_bloc/people_profile_booking_bloc.dart';
 import 'package:atb_booking/logic/user_role/profile_bloc/profile_bloc.dart';
-import 'package:atb_booking/presentation/constants/styles.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../booking/booking_list/booking_list_screen.dart';
@@ -73,14 +71,14 @@ class _HomeState extends State<Home> {
                           color: Colors.white,
                         );
                       } else {
-                        return IconThemeData(color: appThemeData.primaryColor);
+                        return IconThemeData(color: Theme.of(context).primaryColor);
                       }
                     }),
-                    indicatorColor: appThemeData.primaryColor,
+                    indicatorColor: Theme.of(context).primaryColor,
                     //surfaceTintColor: Colors.lightGreen,
                   ),
                   child: Container(
-                    color: appThemeData.colorScheme.secondary,
+                    color: Theme.of(context).colorScheme.secondary,
                     child: NavigationBar(
                       selectedIndex: selectedIndex,
                       onDestinationSelected: (index) => setState(() {

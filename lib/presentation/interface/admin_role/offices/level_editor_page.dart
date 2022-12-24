@@ -129,7 +129,7 @@ class _LevelPlanEditor extends StatelessWidget {
                           child: CircularProgressIndicator(
                               value: downloadProgress.progress)),
                   errorWidget: (context, url, error) =>
-                      const Icon(Icons.error)),
+                      const Icon(Icons.error,)),
             ),
           );
           elements.add(backgroundImage);
@@ -225,7 +225,7 @@ class _LevelPlanEditorSelectedElementWidget extends StatelessWidget {
                   shape: RoundedRectangleBorder(
                       side: BorderSide(
                           width: 6 * LevelEditorPage.SCALE_FACTOR,
-                          color: appThemeData.primaryColor),
+                          color: Theme.of(context).primaryColor),
                       borderRadius: BorderRadius.circular(
                           8 * LevelEditorPage.SCALE_FACTOR)),
                   shadowColor: Colors.black,
@@ -711,7 +711,7 @@ class _HorizontalWorkspaceBar extends StatelessWidget {
                     SizedBox(
                       child: Text(
                         types[index].type,
-                        style: appThemeData.textTheme.titleSmall,
+                        style: Theme.of(context).textTheme.titleSmall,
                         textAlign: TextAlign.right,
                       ),
                       width: 120,
@@ -758,7 +758,7 @@ class _DeleteWorkspaceButton extends StatelessWidget {
               child: MaterialButton(
                 shape: RoundedRectangleBorder(
                     side:
-                        BorderSide(width: 0, color: appThemeData.primaryColor),
+                        BorderSide(width: 0, color: Theme.of(context).primaryColor),
                     borderRadius: BorderRadius.circular(7.0)),
                 onPressed: () {
                   showDialog(
@@ -770,14 +770,14 @@ class _DeleteWorkspaceButton extends StatelessWidget {
                         );
                       });
                 },
-                color: appThemeData.primaryColor,
+                color: Theme.of(context).primaryColor,
                 child: Padding(
                   padding: const EdgeInsets.all(8.0),
                   child: Row(
                     children: [
                       Text(
                         "Удалить место",
-                        style: appThemeData.textTheme.titleMedium!.copyWith(
+                        style: Theme.of(context).textTheme.titleMedium!.copyWith(
                           color: Colors.white,
                         ),
                       ),
@@ -814,7 +814,7 @@ class _AddInfoButton extends StatelessWidget {
               return MaterialButton(
                 shape: RoundedRectangleBorder(
                     side:
-                        BorderSide(width: 1, color: appThemeData.primaryColor),
+                        BorderSide(width: 1, color: Theme.of(context).primaryColor),
                     borderRadius: BorderRadius.circular(7.0)),
                 onPressed: () {
                   showModalBottomSheet(
@@ -831,14 +831,14 @@ class _AddInfoButton extends StatelessWidget {
                         );
                       });
                 },
-                color: appThemeData.primaryColor,
+                color: Theme.of(context).primaryColor,
                 child: Padding(
                   padding: const EdgeInsets.all(8.0),
                   child: Row(
                     children: [
                       Text(
                         "Изменить",
-                        style: appThemeData.textTheme.titleMedium!.copyWith(
+                        style: Theme.of(context).textTheme.titleMedium!.copyWith(
                           color: Colors.white,
                         ),
                       ),
@@ -883,7 +883,6 @@ class _TitleUnderPlan extends StatelessWidget {
             child: Text(
               title,
               style: Theme.of(context).textTheme.headlineSmall?.copyWith(
-                  color: Colors.black54,
                   fontSize: 22,
                   fontWeight: FontWeight.w300),
               textAlign: TextAlign.center,
@@ -924,7 +923,7 @@ class _LevelNumberField extends StatelessWidget {
                               .textTheme
                               .headlineSmall
                               ?.copyWith(
-                                  color: Colors.black54,
+
                                   fontSize: 24,
                                   fontWeight: FontWeight.w300)),
                       const SizedBox(
@@ -933,7 +932,7 @@ class _LevelNumberField extends StatelessWidget {
                       Container(
                         height: 60,
                         width: 0.3,
-                        color: Colors.black54,
+                        color: Theme.of(context).colorScheme.surface
                       )
                     ],
                   ),
@@ -943,10 +942,10 @@ class _LevelNumberField extends StatelessWidget {
                   child: Padding(
                     padding: const EdgeInsets.only(left: 10),
                     child: TextField(
-                      decoration: const InputDecoration(
+                      decoration: InputDecoration(
                         filled: true,
-                        fillColor: Color.fromARGB(255, 238, 238, 238),
-                        border: OutlineInputBorder(
+                        fillColor: Theme.of(context).backgroundColor,
+                        border: const OutlineInputBorder(
                           borderSide: BorderSide.none,
                           borderRadius: BorderRadius.all(Radius.circular(10.0)),
                         ),
@@ -963,7 +962,7 @@ class _LevelNumberField extends StatelessWidget {
                       style: Theme.of(context)
                           .textTheme
                           .headlineSmall
-                          ?.copyWith(color: Colors.black, fontSize: 23),
+                          ?.copyWith(fontSize: 23),
                       //keyboardType: TextInputType.multiline,
                     ),
                   ),
@@ -1072,12 +1071,12 @@ class _WorkSpacePhotos extends StatelessWidget {
                                                       borderRadius: const BorderRadius.all(
                                                           Radius.circular(5))),
                                                   width: 100,
-                                                  child: Center(child: Icon(Icons.error)),
+                                                  child: const Center(child: Icon(Icons.error)),
                                                 ),),
                                         clipBehavior: Clip.antiAlias,
                                          shape: RoundedRectangleBorder(
                                              side: BorderSide(
-                                                 width: 0, color: appThemeData.colorScheme.tertiary),
+                                                 width: 0, color: Theme.of(context).colorScheme.tertiary),
                                              borderRadius: BorderRadius.circular(3.0)),
                                       ),
                                       IconButton(
@@ -1090,7 +1089,7 @@ class _WorkSpacePhotos extends StatelessWidget {
                                           icon: Container(
                                               decoration: BoxDecoration(
                                                 color:
-                                                    appThemeData.primaryColor,
+                                                Theme.of(context).primaryColor,
                                                 borderRadius:
                                                     BorderRadius.circular(3),
                                               ),
@@ -1128,14 +1127,14 @@ class _UploadImagePanel extends StatelessWidget {
           MaterialButton(
             padding: EdgeInsets.zero,
             shape: RoundedRectangleBorder(
-                side: BorderSide(width: 1, color: appThemeData.primaryColor),
+                side: BorderSide(width: 1, color: Theme.of(context).primaryColor),
                 borderRadius: BorderRadius.circular(7.0)),
             onPressed: () {
               context.read<LevelPlanEditorBloc>().add(
                   LevelPlanEditorAddImageToWorkspaceButtonEvent(
                       ImageSource.gallery));
             },
-            color: appThemeData.primaryColor,
+            color: Theme.of(context).primaryColor,
             child: Container(
               width: 200,
               height: 40,
@@ -1145,7 +1144,7 @@ class _UploadImagePanel extends StatelessWidget {
                   children: [
                     Text(
                       "Выбрать из галереи",
-                      style: appThemeData.textTheme.titleMedium!
+                      style: Theme.of(context).textTheme.titleMedium!
                           .copyWith(color: Colors.white, fontSize: 15),
                     ),
                     const Icon(Icons.image)
@@ -1157,14 +1156,14 @@ class _UploadImagePanel extends StatelessWidget {
           MaterialButton(
             padding: EdgeInsets.zero,
             shape: RoundedRectangleBorder(
-                side: BorderSide(width: 1, color: appThemeData.primaryColor),
+                side: BorderSide(width: 1, color: Theme.of(context).primaryColor),
                 borderRadius: BorderRadius.circular(7.0)),
             onPressed: () {
               context.read<LevelPlanEditorBloc>().add(
                   LevelPlanEditorAddImageToWorkspaceButtonEvent(
                       ImageSource.camera));
             },
-            color: appThemeData.primaryColor,
+            color: Theme.of(context).primaryColor,
             child: Container(
               width: 200,
               height: 40,
@@ -1174,7 +1173,7 @@ class _UploadImagePanel extends StatelessWidget {
                   children: [
                     Text(
                       "Сделать фото",
-                      style: appThemeData.textTheme.titleMedium!
+                      style: Theme.of(context).textTheme.titleMedium!
                           .copyWith(color: Colors.white, fontSize: 15),
                     ),
                     const Icon(Icons.add_a_photo)
@@ -1219,7 +1218,6 @@ class _DescriptionWorkspaceField extends StatelessWidget {
                             .textTheme
                             .headlineSmall
                             ?.copyWith(
-                                color: Colors.black54,
                                 fontSize: 20,
                                 fontWeight: FontWeight.w300)),
                   ),
@@ -1227,10 +1225,10 @@ class _DescriptionWorkspaceField extends StatelessWidget {
                 Container(
                   width: double.infinity,
                   child: TextField(
-                    decoration: const InputDecoration(
+                    decoration: InputDecoration(
                       filled: true,
-                      fillColor: Color.fromARGB(255, 238, 238, 238),
-                      border: OutlineInputBorder(
+                      fillColor: Theme.of(context).backgroundColor,
+                      border: const OutlineInputBorder(
                         borderSide: BorderSide.none,
                         borderRadius: BorderRadius.all(Radius.circular(10.0)),
                       ),
@@ -1245,7 +1243,7 @@ class _DescriptionWorkspaceField extends StatelessWidget {
                     style: Theme.of(context)
                         .textTheme
                         .headlineSmall
-                        ?.copyWith(color: Colors.black, fontSize: 22),
+                        ?.copyWith( fontSize: 22),
                     maxLines: 4,
                     minLines: 2,
                     maxLength: 1000,
@@ -1296,7 +1294,7 @@ class _NumberOfWorkspacesField extends StatelessWidget {
                                 .textTheme
                                 .headlineSmall
                                 ?.copyWith(
-                                    color: Colors.black54,
+
                                     fontSize: 20,
                                     fontWeight: FontWeight.w300)),
                         const SizedBox(
@@ -1305,7 +1303,6 @@ class _NumberOfWorkspacesField extends StatelessWidget {
                         Container(
                           height: 60,
                           width: 0.3,
-                          color: Colors.black54,
                         ),
                         const SizedBox(
                           width: 30,
@@ -1318,10 +1315,10 @@ class _NumberOfWorkspacesField extends StatelessWidget {
                     child: Padding(
                       padding: const EdgeInsets.only(left: 10),
                       child: TextField(
-                        decoration: const InputDecoration(
+                        decoration: InputDecoration(
                           filled: true,
-                          fillColor: Color.fromARGB(255, 238, 238, 238),
-                          border: OutlineInputBorder(
+                          fillColor: Theme.of(context).backgroundColor,
+                          border: const OutlineInputBorder(
                             borderSide: BorderSide.none,
                             borderRadius: BorderRadius.all(Radius.circular(10.0)),
                           ),
@@ -1337,7 +1334,7 @@ class _NumberOfWorkspacesField extends StatelessWidget {
                         style: Theme.of(context)
                             .textTheme
                             .headlineSmall
-                            ?.copyWith(color: Colors.black, fontSize: 23),
+                            ?.copyWith( fontSize: 23),
                         //keyboardType: TextInputType.multiline,
                       ),
                     ),
@@ -1392,7 +1389,7 @@ class _ActiveStatusAndButton extends StatelessWidget {
                       Container(
                         height: 60,
                         width: 0.3,
-                        color: Colors.black54,
+                        color:Theme.of(context).colorScheme.surface
                       ),
                       Container(
                         width: 30,
@@ -1406,7 +1403,7 @@ class _ActiveStatusAndButton extends StatelessWidget {
                     padding: EdgeInsets.zero,
                     shape: RoundedRectangleBorder(
                         side: BorderSide(
-                            width: 0, color: appThemeData.primaryColor),
+                            width: 0, color: Theme.of(context).primaryColor),
                         borderRadius: BorderRadius.circular(7.0)),
                     onPressed: () {
                       if (workspace.isActive) {
@@ -1425,10 +1422,10 @@ class _ActiveStatusAndButton extends StatelessWidget {
                             .add(LevelPlanEditorChangeActiveStatusEvent());
                       }
                     },
-                    color: appThemeData.primaryColor,
+                    color: Theme.of(context).primaryColor,
                     child: Text(
                       !workspace.isActive ? "Активировать" : "Деактивировать",
-                      style: appThemeData.textTheme.titleMedium!.copyWith(
+                      style: Theme.of(context).textTheme.titleMedium!.copyWith(
                         color: Colors.white,
                       ),
                     ),
@@ -1455,7 +1452,7 @@ class _DeleteLevelConfirmationPopup extends StatelessWidget {
       content: Text(
         'После удаления все созданные брони на этом этаже будут отменены.\nВы уверены что хотите удалить этаж?',
         style: Theme.of(context).textTheme.headlineSmall?.copyWith(
-            color: Colors.black54, fontSize: 20, fontWeight: FontWeight.w300),
+             fontSize: 20, fontWeight: FontWeight.w300),
       ),
       actions: <Widget>[
         TextButton(
@@ -1466,7 +1463,7 @@ class _DeleteLevelConfirmationPopup extends StatelessWidget {
           child: Text(
             'Отмена',
             style: Theme.of(context).textTheme.headlineSmall?.copyWith(
-                color: Colors.black54,
+
                 fontSize: 20,
                 fontWeight: FontWeight.w500),
           ),
@@ -1478,7 +1475,7 @@ class _DeleteLevelConfirmationPopup extends StatelessWidget {
           child: Text(
             'Удалить',
             style: Theme.of(context).textTheme.headlineSmall?.copyWith(
-                color: Colors.black54,
+
                 fontSize: 20,
                 fontWeight: FontWeight.w500),
           ),
@@ -1498,7 +1495,7 @@ class _DeleteWorkspaceConfirmationPopup extends StatelessWidget {
       content: Text(
         'После удаления все созданные брони этого места будут отменены.\nВы уверены что хотите удалить это место?',
         style: Theme.of(context).textTheme.headlineSmall?.copyWith(
-            color: Colors.black54, fontSize: 20, fontWeight: FontWeight.w300),
+            fontSize: 20, fontWeight: FontWeight.w300),
       ),
       actions: <Widget>[
         TextButton(
@@ -1508,7 +1505,6 @@ class _DeleteWorkspaceConfirmationPopup extends StatelessWidget {
           child: Text(
             'Отмена',
             style: Theme.of(context).textTheme.headlineSmall?.copyWith(
-                color: Colors.black54,
                 fontSize: 20,
                 fontWeight: FontWeight.w500),
           ),
@@ -1523,7 +1519,6 @@ class _DeleteWorkspaceConfirmationPopup extends StatelessWidget {
           child: Text(
             'Удалить',
             style: Theme.of(context).textTheme.headlineSmall?.copyWith(
-                color: Colors.black54,
                 fontSize: 20,
                 fontWeight: FontWeight.w500),
           ),
@@ -1543,7 +1538,7 @@ class _DeactivateWorkplaceConfirmationPopup extends StatelessWidget {
       content: Text(
         'Все созданные брони на это место будут отменены и создать новые бронирования на это место будет нельзя,\nВы уверены что хотите деактивировать рабочее место?',
         style: Theme.of(context).textTheme.headlineSmall?.copyWith(
-            color: Colors.black54, fontSize: 19, fontWeight: FontWeight.w300),
+          fontSize: 19, fontWeight: FontWeight.w300),
       ),
       actions: <Widget>[
         TextButton(
@@ -1553,7 +1548,7 @@ class _DeactivateWorkplaceConfirmationPopup extends StatelessWidget {
           child: Text(
             'Отмена',
             style: Theme.of(context).textTheme.headlineSmall?.copyWith(
-                color: Colors.black54,
+
                 fontSize: 18,
                 fontWeight: FontWeight.w500),
           ),
@@ -1568,7 +1563,7 @@ class _DeactivateWorkplaceConfirmationPopup extends StatelessWidget {
           child: Text(
             'Деактивировать',
             style: Theme.of(context).textTheme.headlineSmall?.copyWith(
-                color: Colors.black54,
+
                 fontSize: 18,
                 fontWeight: FontWeight.w500),
           ),
@@ -1592,14 +1587,14 @@ class _UploadBackgroundImageButton extends StatelessWidget {
               return MaterialButton(
                 shape: RoundedRectangleBorder(
                     side:
-                        BorderSide(width: 1, color: appThemeData.primaryColor),
+                        BorderSide(width: 1, color: Theme.of(context).primaryColor),
                     borderRadius: BorderRadius.circular(7.0)),
                 onPressed: () {
                   context
                       .read<LevelPlanEditorBloc>()
                       .add(LevelPlanEditorChangeBackgroundButtonEvent());
                 },
-                color: appThemeData.primaryColor,
+                color: Theme.of(context).primaryColor,
                 child: Padding(
                   padding: const EdgeInsets.all(8.0),
                   child: Wrap(
@@ -1608,7 +1603,7 @@ class _UploadBackgroundImageButton extends StatelessWidget {
                       Text(
                         "Изменить изображение\n"
                         "на заднем плане",
-                        style: appThemeData.textTheme.titleMedium!.copyWith(
+                        style: Theme.of(context).textTheme.titleMedium!.copyWith(
                           color: Colors.white,
                         ),
                         textAlign: TextAlign.right,
@@ -1616,7 +1611,7 @@ class _UploadBackgroundImageButton extends StatelessWidget {
                       const SizedBox(
                         width: 5,
                       ),
-                      const Icon(Icons.image)
+                      const Icon(Icons.image,color: Colors.white,)
                     ],
                   ),
                 ),

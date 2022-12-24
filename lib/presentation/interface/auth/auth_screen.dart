@@ -1,7 +1,6 @@
 import 'package:atb_booking/logic/auth_bloc/auth_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import '../../constants/styles.dart';
 import '../../widgets/elevated_button.dart';
 
 class Auth extends StatelessWidget {
@@ -31,7 +30,7 @@ class Auth extends StatelessWidget {
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Expanded(flex: 1, child: _AuthTitle()),
+                    const Expanded(flex: 1, child: _AuthTitle()),
                     Expanded(
                       flex: 2,
                       child: _FormWidget(
@@ -117,11 +116,11 @@ class __FormWidgetState extends State<_FormWidget> {
                   TextField(
                     controller: _loginTextController,
                     obscureText: false,
-                    decoration: const InputDecoration(
+                    decoration: InputDecoration(
                       hintText: "Логин",
                       filled: true,
-                      fillColor: Color.fromARGB(255, 238, 238, 238),
-                      border: OutlineInputBorder(
+                      fillColor: Theme.of(context).backgroundColor,
+                      border: const OutlineInputBorder(
                         borderSide: BorderSide.none,
                         borderRadius: BorderRadius.all(Radius.circular(10.0)),
                       ),
@@ -132,11 +131,11 @@ class __FormWidgetState extends State<_FormWidget> {
                   TextField(
                     obscureText: true,
                     controller: _passwordTextController,
-                    decoration: const InputDecoration(
+                    decoration: InputDecoration(
                       hintText: "Пароль",
                       filled: true,
-                      fillColor: Color.fromARGB(255, 238, 238, 238),
-                      border: OutlineInputBorder(
+                      fillColor: Theme.of(context).backgroundColor,
+                      border: const OutlineInputBorder(
                         borderSide: BorderSide.none,
                         borderRadius: BorderRadius.all(Radius.circular(10.0)),
                       ),
@@ -151,7 +150,7 @@ class __FormWidgetState extends State<_FormWidget> {
                     Text(
                       _errorTextLogin,
                       style: TextStyle(
-                          color: appThemeData.colorScheme.error, fontSize: 17),
+                          color: Theme.of(context).colorScheme.error, fontSize: 17),
                     ),
                     const SizedBox(height: 5)
                   ]
@@ -161,7 +160,7 @@ class __FormWidgetState extends State<_FormWidget> {
                     Text(
                       _errorTextInput,
                       style: TextStyle(
-                          color: appThemeData.colorScheme.error, fontSize: 17),
+                          color: Theme.of(context).colorScheme.error, fontSize: 17),
                     ),
                     const SizedBox(height: 5)
                   ]
@@ -170,7 +169,7 @@ class __FormWidgetState extends State<_FormWidget> {
                     Text(
                       state.message,
                       style: TextStyle(
-                          color: appThemeData.colorScheme.error, fontSize: 17),
+                          color: Theme.of(context).colorScheme.error, fontSize: 17),
                     ),
                     const SizedBox(height: 5)
                   ],

@@ -1,9 +1,9 @@
 import 'package:atb_booking/data/models/city.dart';
 import 'package:atb_booking/data/models/level_plan.dart';
 import 'package:atb_booking/data/models/office.dart';
+import 'package:atb_booking/data/services/city_provider.dart';
 import 'package:atb_booking/logic/user_role/booking/new_booking/new_booking_bloc/new_booking_bloc.dart';
 import 'package:atb_booking/logic/user_role/booking/new_booking/new_booking_bloc/new_booking_sheet_bloc/new_booking_sheet_bloc.dart';
-import 'package:atb_booking/presentation/constants/styles.dart';
 import 'package:atb_booking/presentation/interface/user_role/booking/plan/planWidget.dart';
 import 'package:atb_booking/presentation/widgets/elevated_button.dart';
 import 'package:dropdown_search/dropdown_search.dart';
@@ -102,23 +102,29 @@ class _CityField extends StatelessWidget {
           return Padding(
             padding: const EdgeInsets.symmetric(horizontal: 30.0, vertical: 10),
             child: TypeAheadFormField(
+              noItemsFoundBuilder: (context){
+                return Flexible(child:
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Text("Не удалось найти город с таким именем",style: Theme.of(context).textTheme.bodyMedium,),
+                ),);
+              },
               textFieldConfiguration: TextFieldConfiguration(
-                decoration: const InputDecoration(
+                decoration: InputDecoration(
                   hintText: "Выберите город",
                   filled: true,
-                  fillColor: Color.fromARGB(255, 238, 238, 238),
-                  border: OutlineInputBorder(
+                  fillColor: Theme.of(context).backgroundColor,
+                  border: const OutlineInputBorder(
                     borderSide: BorderSide.none,
                     borderRadius: BorderRadius.all(Radius.circular(10.0)),
                   ),
-                  suffixIcon: Icon(Icons.search),
+                  suffixIcon: const Icon(Icons.search),
                 ),
                 controller: _cityInputController,
               ),
               suggestionsCallback: (pattern) {
                 // при нажатии на поле
-                return (state as NewBookingFirstState)
-                    .futureCityList; //CityRepository().getAllCities();
+                return CityProvider().getCitiesByName(pattern); //CityRepository().getAllCities();
               },
               itemBuilder: (context, City suggestion) {
                 return ListTile(
@@ -137,7 +143,7 @@ class _CityField extends StatelessWidget {
                 //todo _selectedCity = suggestion;
               },
               validator: (value) =>
-                  value!.isEmpty ? 'Please select a city' : null,
+                  value!.isEmpty ? 'Введите город' : null,
               //onSaved: (value) => this._selectedCity = value,
             ),
           );
@@ -162,12 +168,27 @@ class _OfficeField extends StatelessWidget {
           if (state is NewBookingSecondState) {
             _officeInputController.text = state.labelOffice;
             return TypeAheadFormField(
+              noItemsFoundBuilder: (context){
+                return Flexible(child:
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Text("Не удалось найти офис с таким адерсом",style: Theme.of(context).textTheme.bodyMedium,),
+                ),);
+              },
+              errorBuilder: (context,er){
+                return Flexible(child:
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Text("Не удалось загрузить, проверьте интернет соеденение.",style: Theme.of(context).textTheme.bodyMedium,),
+                ),);
+
+              },
               textFieldConfiguration: TextFieldConfiguration(
-                decoration: const InputDecoration(
+                decoration: InputDecoration(
                   hintText: "Выберите офис",
                   filled: true,
-                  fillColor: Color.fromARGB(255, 238, 238, 238),
-                  border: OutlineInputBorder(
+                  fillColor: Theme.of(context).backgroundColor,
+                  border: const OutlineInputBorder(
                     borderSide: BorderSide.none,
                     borderRadius: BorderRadius.all(Radius.circular(10.0)),
                   ),
@@ -229,12 +250,12 @@ class _LevelField extends StatelessWidget {
                         .add(NewBookingLevelFormEvent(level));
                   }
                 },
-                dropdownDecoratorProps: const DropDownDecoratorProps(
+                dropdownDecoratorProps: DropDownDecoratorProps(
                   dropdownSearchDecoration: InputDecoration(
                     hintText: "Введите имя...",
                     filled: true,
-                    fillColor: Color.fromARGB(255, 238, 238, 238),
-                    border: OutlineInputBorder(
+                    fillColor: Theme.of(context).backgroundColor,
+                    border: const OutlineInputBorder(
                       borderSide: BorderSide.none,
                       borderRadius: BorderRadius.all(Radius.circular(10.0)),
                     ),
@@ -249,7 +270,7 @@ class _LevelField extends StatelessWidget {
                   if (level != null) {
                     return Text(
                       "${level.number} Этаж",
-                      style: appThemeData.textTheme.titleMedium!
+                      style: Theme.of(context).textTheme.titleMedium!
                           .copyWith(fontWeight: FontWeight.w500),
                     );
                   } else {

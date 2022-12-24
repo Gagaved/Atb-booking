@@ -1,7 +1,6 @@
 import 'package:atb_booking/data/models/user.dart';
 import 'package:atb_booking/data/services/image_provider.dart';
 import 'package:atb_booking/data/services/network/network_controller.dart';
-import 'package:atb_booking/presentation/constants/styles.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 
@@ -47,7 +46,7 @@ class AddedFeedbackPeopleCard extends StatelessWidget {
               title: Text(user.fullName),
               subtitle: Text(
                 user.email,
-                style: appThemeData.textTheme.bodySmall,
+                style: Theme.of(context).textTheme.bodySmall,
               ),
             ),
           ),

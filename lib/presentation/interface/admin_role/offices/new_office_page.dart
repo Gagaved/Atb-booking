@@ -3,7 +3,6 @@ import 'package:atb_booking/data/services/city_provider.dart';
 import 'package:atb_booking/logic/admin_role/offices/new_office_page/new_office_page_bloc.dart';
 import 'package:atb_booking/logic/admin_role/offices/office_page/admin_office_page_bloc.dart';
 import 'package:atb_booking/logic/admin_role/offices/offices_screen/admin_offices_bloc.dart';
-import 'package:atb_booking/presentation/constants/styles.dart';
 import 'package:atb_booking/presentation/interface/admin_role/offices/office_page.dart';
 import 'package:atb_booking/presentation/widgets/elevated_button.dart';
 import 'package:flutter/material.dart';
@@ -92,15 +91,15 @@ class _CityField extends StatelessWidget {
             textFieldConfiguration: TextFieldConfiguration(
               controller: cityInputController,
               textInputAction: TextInputAction.search,
-              decoration: const InputDecoration(
+              decoration: InputDecoration(
                 hintText: "Выберите город...",
                 filled: true,
-                fillColor: Color.fromARGB(255, 238, 238, 238),
-                border: OutlineInputBorder(
+                fillColor: Theme.of(context).backgroundColor,
+                border: const OutlineInputBorder(
                   borderSide: BorderSide.none,
                   borderRadius: BorderRadius.all(Radius.circular(10.0)),
                 ),
-                suffixIcon: Icon(Icons.search),
+                suffixIcon: const Icon(Icons.search),
               ),
             ),
 
@@ -162,17 +161,17 @@ class _OfficeAddress extends StatelessWidget {
             child: Text("Адрес",
                 textAlign: TextAlign.left,
                 style: Theme.of(context).textTheme.headlineSmall?.copyWith(
-                    color: Colors.black54,
+
                     fontSize: 20,
                     fontWeight: FontWeight.w300)),
           ),
           SizedBox(
             width: double.infinity,
             child: TextField(
-              decoration: const InputDecoration(
+              decoration: InputDecoration(
                 filled: true,
-                fillColor: Color.fromARGB(255, 238, 238, 238),
-                border: OutlineInputBorder(
+                fillColor: Theme.of(context).backgroundColor,
+                border: const OutlineInputBorder(
                   borderSide: BorderSide.none,
                   borderRadius: BorderRadius.all(Radius.circular(10.0)),
                 ),
@@ -192,7 +191,7 @@ class _OfficeAddress extends StatelessWidget {
               style: Theme.of(context)
                   .textTheme
                   .headlineSmall
-                  ?.copyWith(color: Colors.black, fontSize: 20),
+                  ?.copyWith( fontSize: 20),
               maxLines: 2,
               minLines: 1,
               maxLength: 1000,
@@ -237,7 +236,7 @@ class _BookingRange extends StatelessWidget {
                 Text("Дальность \nбронирования в днях",
                     textAlign: TextAlign.right,
                     style: Theme.of(context).textTheme.headlineSmall?.copyWith(
-                        color: Colors.black54,
+
                         fontSize: 20,
                         fontWeight: FontWeight.w300)),
                 const SizedBox(
@@ -246,7 +245,6 @@ class _BookingRange extends StatelessWidget {
                 Container(
                   height: 60,
                   width: 0.3,
-                  color: Colors.black54,
                 )
               ],
             ),
@@ -256,10 +254,10 @@ class _BookingRange extends StatelessWidget {
             child: Padding(
               padding: const EdgeInsets.only(left: 10),
               child: TextField(
-                decoration: const InputDecoration(
+                decoration: InputDecoration(
                   filled: true,
-                  fillColor: Color.fromARGB(255, 238, 238, 238),
-                  border: OutlineInputBorder(
+                  fillColor: Theme.of(context).backgroundColor,
+                  border: const OutlineInputBorder(
                     borderSide: BorderSide.none,
                     borderRadius: BorderRadius.all(Radius.circular(10.0)),
                   ),
@@ -281,7 +279,7 @@ class _BookingRange extends StatelessWidget {
                 style: Theme.of(context)
                     .textTheme
                     .headlineSmall
-                    ?.copyWith(color: Colors.black, fontSize: 23),
+                    ?.copyWith( fontSize: 23),
                 //keyboardType: TextInputType.multiline,
               ),
             ),
@@ -314,13 +312,13 @@ class _WorkTimeRange extends StatelessWidget {
                   child: Text("Время работы офиса",
                       textAlign: TextAlign.left,
                       style: Theme.of(context).textTheme.headlineSmall?.copyWith(
-                          color: Colors.black54,
+
                           fontSize: 24,
                           fontWeight: FontWeight.w300)),
                 ),
                 Container(
                   height: 0.3,
-                  color: Colors.black54,
+                  color: Theme.of(context).colorScheme.surface,
                 ),
               ],
             ),
@@ -329,39 +327,39 @@ class _WorkTimeRange extends StatelessWidget {
             padding: const EdgeInsets.symmetric(horizontal: 5.0),
             child: SfRangeSliderTheme(
               data: SfRangeSliderThemeData(
-                activeLabelStyle: appThemeData.textTheme.headlineMedium?.copyWith(
-                    color: Colors.black54,
-                    fontSize: 14,
-                    fontStyle: FontStyle.normal),
-                inactiveLabelStyle: appThemeData.textTheme.headlineMedium
+                activeLabelStyle: Theme.of(context).textTheme.headlineMedium
                     ?.copyWith(
-                    color: Colors.black54,
                     fontSize: 14,
                     fontStyle: FontStyle.normal),
-                tooltipTextStyle: appThemeData.textTheme.headlineMedium?.copyWith(
-                    color: Colors.white,
+                inactiveLabelStyle: Theme.of(context).textTheme.headlineMedium
+                    ?.copyWith(
+
+                    fontSize: 14,
+                    fontStyle: FontStyle.normal),
+                tooltipTextStyle: Theme.of(context).textTheme.headlineMedium
+                    ?.copyWith(
                     fontSize: 14,
                     fontStyle: FontStyle.normal),
                 overlappingTooltipStrokeColor: Colors.white,
-                tooltipBackgroundColor: appThemeData.primaryColor,
-                disabledActiveTrackColor: Colors.black38,
-                disabledInactiveTrackColor: Colors.black38,
-                disabledActiveTickColor: Colors.black38,
-                disabledInactiveTickColor: Colors.black38,
-                disabledActiveMinorTickColor: Colors.black38,
-                disabledInactiveMinorTickColor: Colors.black38,
+                tooltipBackgroundColor: Theme.of(context).primaryColor,
+                disabledActiveTrackColor: Colors.grey,
+                disabledInactiveTrackColor: Colors.grey,
+                disabledActiveTickColor: Colors.grey,
+                disabledInactiveTickColor: Colors.grey,
+                disabledActiveMinorTickColor: Colors.grey,
+                disabledInactiveMinorTickColor: Colors.grey,
                 disabledActiveDividerColor: Colors.red,
-                disabledInactiveDividerColor: Colors.black38,
-                disabledThumbColor: Colors.black38,
-                activeTrackColor: appThemeData.primaryColor,
-                inactiveTrackColor: Colors.black38,
-                activeTickColor: appThemeData.primaryColor,
-                inactiveTickColor: Colors.black38,
-                activeMinorTickColor: appThemeData.primaryColor,
-                inactiveMinorTickColor: Colors.black38,
-                activeDividerColor: appThemeData.primaryColor,
-                inactiveDividerColor: Colors.black38,
-                thumbColor: appThemeData.primaryColor,
+                disabledInactiveDividerColor: Colors.grey,
+                disabledThumbColor: Colors.grey,
+                activeTrackColor: Theme.of(context).primaryColor,
+                inactiveTrackColor: Colors.grey,
+                activeTickColor: Theme.of(context).primaryColor,
+                inactiveTickColor: Colors.grey,
+                activeMinorTickColor: Theme.of(context).primaryColor,
+                inactiveMinorTickColor: Colors.grey,
+                activeDividerColor: Theme.of(context).primaryColor,
+                inactiveDividerColor: Colors.grey,
+                thumbColor: Theme.of(context).primaryColor,
               ),
               child: SfRangeSlider(
                   showTicks: true,

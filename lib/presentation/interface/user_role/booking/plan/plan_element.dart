@@ -1,8 +1,6 @@
 
 import 'package:atb_booking/data/models/workspace.dart';
-import 'package:atb_booking/data/models/workspace_type.dart';
 import 'package:atb_booking/logic/user_role/booking/new_booking/new_booking_bloc/plan_bloc/plan_bloc.dart';
-import 'package:atb_booking/presentation/constants/styles.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 
@@ -39,7 +37,7 @@ class PlanElementWidget extends StatelessWidget {
                 side: !isSelect?
                 BorderSide(
                     width: 0.2, color: Colors.black):
-                    BorderSide(width: 4,color: appThemeData.primaryColor),
+                    BorderSide(width: 4,color: Theme.of(context).primaryColor),
                 borderRadius: BorderRadius.circular(12.0)),
             shadowColor: !isActive
                 ? Colors.grey

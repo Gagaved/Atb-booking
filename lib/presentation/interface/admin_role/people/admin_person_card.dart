@@ -1,11 +1,8 @@
 import 'package:atb_booking/data/models/user.dart';
 import 'package:atb_booking/data/services/image_provider.dart';
 import 'package:atb_booking/data/services/network/network_controller.dart';
-import 'package:atb_booking/logic/admin_role/people/people_page/admin_people_bloc.dart';
 import 'package:atb_booking/logic/admin_role/people/person_booking_list/admin_person_booking_list_bloc.dart';
-import 'package:atb_booking/presentation/constants/styles.dart';
 import 'package:atb_booking/presentation/interface/admin_role/people/person_booking_list.dart';
-import 'package:atb_booking/presentation/interface/user_role/feedback/feedback_screen.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -35,7 +32,7 @@ class AdminPersonCard extends StatelessWidget {
           clipBehavior: Clip.antiAliasWithSaveLayer,
           shape: RoundedRectangleBorder(
               side: BorderSide(
-                  width: 0, color: appThemeData.colorScheme.tertiary),
+                  width: 0, color: Theme.of(context).colorScheme.tertiary),
               borderRadius: BorderRadius.circular(12.0)),
           child: Row(
             children: <Widget>[
@@ -71,10 +68,10 @@ class AdminPersonCard extends StatelessWidget {
               Expanded(
                   child: ListTile(
                 title: Text(user.fullName,
-                    style: appThemeData.textTheme.titleMedium),
+                    style: Theme.of(context).textTheme.titleMedium),
                 subtitle: Text(
                   user.email,
-                  style: appThemeData.textTheme.titleSmall,
+                  style: Theme.of(context).textTheme.titleSmall,
                 ),
                 dense: true,
                 minLeadingWidth: 100,
