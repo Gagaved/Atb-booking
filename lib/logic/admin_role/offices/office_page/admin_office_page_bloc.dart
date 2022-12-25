@@ -3,8 +3,6 @@ import 'package:atb_booking/data/models/office.dart';
 import 'package:atb_booking/data/services/level_plan_provider.dart';
 import 'package:atb_booking/data/services/office_provider.dart';
 import 'package:atb_booking/data/services/office_repository.dart';
-import 'package:atb_booking/logic/admin_role/offices/LevelPlanEditor/level_plan_editor_bloc.dart';
-import 'package:atb_booking/presentation/interface/admin_role/offices/level_editor_page.dart';
 import 'package:bloc/bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -39,7 +37,7 @@ class AdminOfficePageBloc
         address = office!.address;
         bookingRange = office!.maxBookingRangeInDays;
         workTimeRange = office!.workTimeRange;
-        emit(AdminOfficePageLoadedState(address!, bookingRange!, workTimeRange!,
+        emit(AdminOfficePageLoadedState(office!.id, address!, bookingRange!, workTimeRange!,
             isSaveButtonActive(), levels!));
       } catch (_) {
         print(_);
@@ -55,7 +53,7 @@ class AdminOfficePageBloc
         bookingRange = office!.maxBookingRangeInDays;
         workTimeRange = office!.workTimeRange;
         print("emit loaded state after reload ");
-        emit(AdminOfficePageLoadedState(address!, bookingRange!, workTimeRange!,
+        emit(AdminOfficePageLoadedState(office!.id,address!, bookingRange!, workTimeRange!,
             isSaveButtonActive(), levels!));
       } catch (_) {
         print("emit error state after reload ");
@@ -65,13 +63,13 @@ class AdminOfficePageBloc
 
     on<AdminOfficeDeleteEvent>((event, emit) async {
       try {
-        emit(AdminOfficePageDeleteLoadingState(address!, bookingRange!,
+        emit(AdminOfficePageDeleteLoadingState(office!.id,address!, bookingRange!,
             workTimeRange!, isSaveButtonActive(), levels!));
         await OfficeProvider().deleteOfficeById(office!.id);
-        emit(AdminOfficePageDeleteSuccessState(address!, bookingRange!,
+        emit(AdminOfficePageDeleteSuccessState(office!.id,address!, bookingRange!,
             workTimeRange!, isSaveButtonActive(), levels!));
       } catch (_) {
-        emit(AdminOfficePageDeleteErrorState(address!, bookingRange!,
+        emit(AdminOfficePageDeleteErrorState(office!.id,address!, bookingRange!,
             workTimeRange!, isSaveButtonActive(), levels!));
       }
     });
@@ -86,10 +84,10 @@ class AdminOfficePageBloc
       try {
         int createdLevelId =
             await LevelProvider().createLevel(office!.id, number);
-        emit(AdminOfficePageSuccessCreateLevelState(address!, bookingRange!,
+        emit(AdminOfficePageSuccessCreateLevelState(office!.id,address!, bookingRange!,
             workTimeRange!, isSaveButtonActive(), levels!, createdLevelId));
       } catch (_) {
-        AdminOfficePageErrorCreateLevelState(
+        AdminOfficePageErrorCreateLevelState(office!.id,
           address!,
           bookingRange!,
           workTimeRange!,
@@ -103,7 +101,7 @@ class AdminOfficePageBloc
     on<AdminOfficeAddressChangeEvent>((event, emit) {
       address = event.address;
       print("emit loaded state");
-      emit(AdminOfficePageLoadedState(address!, bookingRange!, workTimeRange!,
+      emit(AdminOfficePageLoadedState(office!.id,address!, bookingRange!, workTimeRange!,
           isSaveButtonActive(), levels!));
 
       /// эмитить не нужно потом что textfield изменяется сам. контроллер - статик
@@ -122,7 +120,7 @@ class AdminOfficePageBloc
       try {
         await OfficeProvider().changeOffice(newOfficeData);
         office = newOfficeData;
-        emit(AdminOfficePageLoadedState(address!, bookingRange!, workTimeRange!,
+        emit(AdminOfficePageLoadedState(office!.id,address!, bookingRange!, workTimeRange!,
             isSaveButtonActive(), levels!));
       } catch (_) {
         print(_);
@@ -130,12 +128,12 @@ class AdminOfficePageBloc
       }
     });
     on<AdminOfficePageUpdateFieldsEvent>((event, emit) {
-      emit(AdminOfficePageLoadedState(address!, bookingRange!, workTimeRange!,
+      emit(AdminOfficePageLoadedState(office!.id,address!, bookingRange!, workTimeRange!,
           isSaveButtonActive(), levels!));
     });
     on<AdminOfficePageWorkRangeChangeEvent>((event, emit) {
       workTimeRange = event.newWorkTimeRange;
-      emit(AdminOfficePageLoadedState(address!, bookingRange!, workTimeRange!,
+      emit(AdminOfficePageLoadedState(office!.id,address!, bookingRange!, workTimeRange!,
           isSaveButtonActive(), levels!));
     });
   }

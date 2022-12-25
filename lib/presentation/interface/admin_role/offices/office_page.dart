@@ -318,21 +318,21 @@ class _WorkTimeRange extends StatelessWidget {
           padding: const EdgeInsets.symmetric(horizontal: 5.0),
           child: SfRangeSliderTheme(
             data: SfRangeSliderThemeData(
-              activeLabelStyle: Theme.of(context).textTheme.headlineMedium
+              activeLabelStyle: Theme.of(context).textTheme.bodyLarge
                   ?.copyWith(
                   fontSize: 14,
                   fontStyle: FontStyle.normal),
-              inactiveLabelStyle: Theme.of(context).textTheme.headlineMedium
+              inactiveLabelStyle: Theme.of(context).textTheme.bodyMedium
                   ?.copyWith(
 
                   fontSize: 14,
                   fontStyle: FontStyle.normal),
-              tooltipTextStyle: Theme.of(context).textTheme.headlineMedium
+              tooltipTextStyle: Theme.of(context).textTheme.bodyLarge
                   ?.copyWith(
                   fontSize: 14,
                   fontStyle: FontStyle.normal),
-              overlappingTooltipStrokeColor: Colors.white,
-              tooltipBackgroundColor: Theme.of(context).primaryColor,
+              overlappingTooltipStrokeColor: Theme.of(context).primaryColor,
+              tooltipBackgroundColor: Theme.of(context).colorScheme.surface,
               disabledActiveTrackColor: Colors.grey,
               disabledInactiveTrackColor: Colors.grey,
               disabledActiveTickColor: Colors.grey,
@@ -569,6 +569,9 @@ class _StatisticsButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    return BlocBuilder<AdminOfficePageBloc, AdminOfficePageState>(
+  builder: (context, state) {
+    if(state is AdminOfficePageLoadedState){
     return MaterialButton(
       shape: RoundedRectangleBorder(
           side: BorderSide(width: 1, color: Theme.of(context).primaryColor),
@@ -576,7 +579,7 @@ class _StatisticsButton extends StatelessWidget {
       onPressed: () {
         Navigator.of(context).push(MaterialPageRoute(
             builder: (context) => BlocProvider<AdminBookingStatsBloc>(
-                  create: (context) => AdminBookingStatsBloc(),
+                  create: (context) => AdminBookingStatsBloc(state.officeId),
                   child: const AdminBookingsStatsPage(),
                 )));
       },
@@ -595,7 +598,11 @@ class _StatisticsButton extends StatelessWidget {
           const Icon(Icons.query_stats,color: Colors.white,)
         ],
       ),
-    );
+    );}else{
+      return const SizedBox.shrink();
+    }
+  },
+);
   }
 }
 
@@ -604,6 +611,9 @@ class _BookingsButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    return BlocBuilder<AdminOfficePageBloc, AdminOfficePageState>(
+  builder: (context, state) {
+    if(state is AdminOfficePageLoadedState){
     return MaterialButton(
       shape: RoundedRectangleBorder(
           side: BorderSide(width: 1, color: Theme.of(context).primaryColor),
@@ -611,7 +621,7 @@ class _BookingsButton extends StatelessWidget {
       onPressed: () {
         Navigator.of(context).push(MaterialPageRoute(
             builder: (context) => BlocProvider<AdminBookingsBloc>(
-                  create: (context) => AdminBookingsBloc(),
+                  create: (context) => AdminBookingsBloc(state.officeId),
                   child: AdminBookingsPage(),
                 )));
       },
@@ -630,7 +640,11 @@ class _BookingsButton extends StatelessWidget {
           const Icon(Icons.cases_outlined,color: Colors.white,)
         ],
       ),
-    );
+    );}else{
+      return const SizedBox.shrink();
+    }
+  },
+);
   }
 }
 

@@ -14,5 +14,9 @@ class AdminBookingStatsLoadingState extends AdminBookingStatsState{
   const AdminBookingStatsLoadingState(super.selectedDateTimeRange);
 }
 class AdminBookingStatsLoadedState extends AdminBookingStatsState{
-  const AdminBookingStatsLoadedState(super.selectedDateTimeRange);
+  const AdminBookingStatsLoadedState(super.selectedDateTimeRange, this.stats);
+  final List<OfficeBookingStatsItem> stats;
+}
+class AdminBookingStatsErrorState extends AdminBookingStatsState{
+  const AdminBookingStatsErrorState(super.selectedDateTimeRange);
 }

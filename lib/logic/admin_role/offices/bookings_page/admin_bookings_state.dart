@@ -11,9 +11,8 @@ class AdminBookingsInitialState extends AdminBookingsState {
   AdminBookingsInitialState(super.selectedDateTimeRange);
 }
 
-class AdminBookingsLoadingState extends AdminBookingsState {
-  AdminBookingsLoadingState(super.selectedDateTimeRange, this.bookings);
-  final List<Booking> bookings;
+class AdminBookingsLoadingState extends AdminBookingsLoadedState {
+  AdminBookingsLoadingState(super.selectedDateTimeRange, super.bookings);
 }
 
 class AdminBookingsLoadedState extends AdminBookingsState {

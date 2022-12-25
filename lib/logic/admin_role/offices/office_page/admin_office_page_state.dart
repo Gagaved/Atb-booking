@@ -8,27 +8,28 @@ class AdminOfficePageInitial extends AdminOfficePageState {}
 class AdminOfficePageLoadingState extends AdminOfficePageState {}
 
 class AdminOfficePageLoadedState extends AdminOfficePageState {
+  final int officeId;
   final String address;
   final int bookingRange;
   final DateTimeRange workTimeRange;
   final bool isSaveButtonActive;
   final List<LevelListItem> levels;
 
-  AdminOfficePageLoadedState(this.address, this.bookingRange,
+  AdminOfficePageLoadedState(this.officeId, this.address, this.bookingRange,
       this.workTimeRange, this.isSaveButtonActive, this.levels);
 }
 
 class AdminOfficePageDeleteSuccessState extends AdminOfficePageLoadedState {
-  AdminOfficePageDeleteSuccessState(super.address, super.bookingRange,
+  AdminOfficePageDeleteSuccessState(super.officeId,super.address, super.bookingRange,
       super.workTimeRange, super.isSaveButtonActive, super.levels);
 }
 class AdminOfficePageDeleteLoadingState extends AdminOfficePageLoadedState {
-  AdminOfficePageDeleteLoadingState(super.address, super.bookingRange,
+  AdminOfficePageDeleteLoadingState(super.officeId,super.address, super.bookingRange,
       super.workTimeRange, super.isSaveButtonActive, super.levels);
 }
 
 class AdminOfficePageDeleteErrorState extends AdminOfficePageLoadedState {
-  AdminOfficePageDeleteErrorState(super.address, super.bookingRange,
+  AdminOfficePageDeleteErrorState(super.officeId,super.address, super.bookingRange,
       super.workTimeRange, super.isSaveButtonActive, super.levels);
 }
 
@@ -36,10 +37,10 @@ class AdminOfficePageErrorState extends AdminOfficePageState {}
 
 class AdminOfficePageSuccessCreateLevelState extends AdminOfficePageLoadedState{
   final int levelId;
-  AdminOfficePageSuccessCreateLevelState(super.address, super.bookingRange, super.workTimeRange, super.isSaveButtonActive, super.levels, this.levelId);
+  AdminOfficePageSuccessCreateLevelState(super.officeId,super.address, super.bookingRange, super.workTimeRange, super.isSaveButtonActive, super.levels, this.levelId);
 
 }
 class AdminOfficePageErrorCreateLevelState extends AdminOfficePageLoadedState {
-  AdminOfficePageErrorCreateLevelState(super.address, super.bookingRange,
+  AdminOfficePageErrorCreateLevelState(super.officeId,super.address, super.bookingRange,
       super.workTimeRange, super.isSaveButtonActive, super.levels);
 }

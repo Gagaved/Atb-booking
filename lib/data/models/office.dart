@@ -33,3 +33,15 @@ class Office {
   }
 
 }
+
+class OfficeBookingStatsItem {
+  final int workspace;
+  final int meetingRoom;
+  final DateTime date;
+
+  OfficeBookingStatsItem(this.workspace, this.meetingRoom, this.date);
+  OfficeBookingStatsItem.fromJson(Map<String, dynamic> json)
+      : workspace = json['workspace'],
+        meetingRoom = json['meetingRoom'],
+        date = DateTime.parse(json['date']).toLocal();
+}
