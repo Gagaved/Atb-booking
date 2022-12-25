@@ -20,8 +20,7 @@ class AdminFeedbackScreen extends StatelessWidget {
               onPressed: () {
                 Navigator.pushReplacement(context,
                     MaterialPageRoute(builder: (context) => const Auth()));
-                NetworkController()
-                    .exitFromApp(); //todo вынести в блок как эвент и ждать
+                NetworkController().exitFromApp();
               },
               icon: const Icon(Icons.logout, size: 28))
         ],
@@ -30,11 +29,11 @@ class AdminFeedbackScreen extends StatelessWidget {
         padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 20),
         child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
           Padding(
-            padding: const EdgeInsets.only(left: 3),
+            padding: const EdgeInsets.only(left: 3, bottom: 5),
             child: Text(
               'Тип обратной связи',
               style: Theme.of(context).textTheme.headlineSmall?.copyWith(
-                  color: Colors.black,
+                  //color: Colors.black,
                   fontSize: 21,
                   fontWeight: FontWeight.w300),
             ),
@@ -62,9 +61,9 @@ class _DropdownButtonType extends StatelessWidget {
               Container(
                 padding:
                     const EdgeInsets.symmetric(horizontal: 10, vertical: 2),
-                decoration: const BoxDecoration(
-                  color: Color.fromARGB(255, 238, 238, 238),
-                  borderRadius: BorderRadius.all(Radius.circular(10.0) //
+                decoration: BoxDecoration(
+                  color: Theme.of(context).backgroundColor,
+                  borderRadius: const BorderRadius.all(Radius.circular(10.0) //
                       ),
                 ),
                 child: DropdownButton<String>(
@@ -101,9 +100,9 @@ class _DropdownButtonType extends StatelessWidget {
               Container(
                 padding:
                     const EdgeInsets.symmetric(horizontal: 10, vertical: 2),
-                decoration: const BoxDecoration(
-                  color: Color.fromARGB(255, 238, 238, 238),
-                  borderRadius: BorderRadius.all(Radius.circular(10.0) //
+                decoration: BoxDecoration(
+                  color: Theme.of(context).backgroundColor,
+                  borderRadius: const BorderRadius.all(Radius.circular(10.0) //
                       ),
                 ),
                 child: DropdownButton<String>(
@@ -140,9 +139,9 @@ class _DropdownButtonType extends StatelessWidget {
               Container(
                 padding:
                     const EdgeInsets.symmetric(horizontal: 10, vertical: 2),
-                decoration: const BoxDecoration(
-                  color: Color.fromARGB(255, 238, 238, 238),
-                  borderRadius: BorderRadius.all(Radius.circular(10.0) //
+                decoration: BoxDecoration(
+                  color: Theme.of(context).backgroundColor,
+                  borderRadius: const BorderRadius.all(Radius.circular(10.0) //
                       ),
                 ),
                 child: DropdownButton<String>(

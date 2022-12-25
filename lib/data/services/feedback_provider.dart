@@ -13,9 +13,11 @@ class FeedbackProvider {
       int? officeLevelId,
       int? workplaceId,
       int? guiltyId) async {
+
+    int id = await SecurityStorage().getIdStorage();
     var uri = Uri.http(
       NetworkController().getUrl(),
-      '/api/feedbacks',
+      '/api/feedbacks/$id',
     );
 
     DateTime date = DateTime.now().toUtc();
@@ -63,9 +65,10 @@ class FeedbackProvider {
     headers = await NetworkController().getAuthHeader();
     headers["Content-type"] = 'application/json';
 
+    int id = await SecurityStorage().getIdStorage();
     /// Сам запрос
     var uri = Uri.http(
-        NetworkController().getUrl(), '/api/feedbacks', queryParameters);
+        NetworkController().getUrl(), '/api/feedbacks/all/$id', queryParameters);
     var response = await http.get(uri, headers: headers);
 
     /// Проверка

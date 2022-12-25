@@ -5,6 +5,7 @@ import 'package:atb_booking/logic/user_role/feedback_bloc/feedback_bloc.dart';
 import 'package:atb_booking/logic/user_role/profile_bloc/profile_bloc.dart';
 import 'package:atb_booking/presentation/interface/auth/auth_screen.dart';
 import 'package:atb_booking/presentation/interface/user_role/feedback/feedback_screen.dart';
+import 'package:atb_booking/presentation/interface/user_role/profile/pdf_file_list.dart';
 import 'package:atb_booking/presentation/widgets/elevated_button.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/gestures.dart';
@@ -44,19 +45,18 @@ class ProfileScreen extends StatelessWidget {
               icon: const Icon(Icons.logout, size: 28))
         ],
         title: const Center(
-          child: Text("     Профиль"),
+          child: Text("Профиль"),
         ),
+        centerTitle: true,
       ),
       body: BlocConsumer<ProfileBloc, ProfileState>(
-        listener: (context, state) {
-          // TODO: implement listener
-        },
+        listener: (context, state) {},
         builder: (context, state) {
           if (state is ProfileLoadedState) {
             return SingleChildScrollView(
               child: Column(
                 children: [
-                  const SizedBox(height: 35),
+                  const SizedBox(height: 20),
                   _UserTitle(
                     avatar: CachedNetworkImage(
                         fit: BoxFit.cover,
@@ -71,19 +71,15 @@ class ProfileScreen extends StatelessWidget {
                         errorWidget: (context, url, error) => Container()),
                     userName: state.userPerson.fullName,
                   ),
-                  const SizedBox(height: 55),
+                  const SizedBox(height: 15),
                   _UserInfo(
                     email: state.userPerson.email,
                     number: state.userPerson.phone,
                     job: state.userPerson.jobTitle,
                   ),
-                  const SizedBox(height: 65),
-                  GestureDetector(
-                      onTap: () {
-                        _bubbleTransition(context);
-                      },
-                      child: const _UserBubbleButton()),
-                  const SizedBox(height: 20)
+                  const SizedBox(height: 25),
+                  _UserBubbleButton(),
+                  const SizedBox(height: 15)
                 ],
               ),
             );
@@ -97,7 +93,7 @@ class ProfileScreen extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 const Text(
-                    'Ой...  Неудалось загрузить.\n Попробуйте еще раз...',
+                    'Ой...  Не удалось загрузить.\n Попробуйте еще раз...',
                     style: TextStyle(fontSize: 30)),
                 AtbElevatedButton(
                     onPressed: () {
@@ -158,17 +154,6 @@ class _UserInfo extends StatelessWidget {
       child: Column(children: [
         _RowForInfo(
           title: "E-MAIL",
-          body: job,
-          titleStyle: Theme.of(context)
-              .textTheme
-              .headlineSmall!
-              .copyWith(fontSize: 22, fontWeight: FontWeight.w300),
-          bodyStyle:
-              Theme.of(context).textTheme.headlineSmall!.copyWith(fontSize: 23),
-        ),
-        const SizedBox(height: 15),
-        _RowForInfo(
-          title: "Должность",
           body: email,
           titleStyle: Theme.of(context)
               .textTheme
@@ -177,7 +162,18 @@ class _UserInfo extends StatelessWidget {
           bodyStyle:
               Theme.of(context).textTheme.headlineSmall!.copyWith(fontSize: 23),
         ),
-        const SizedBox(height: 15),
+        const SizedBox(height: 8),
+        _RowForInfo(
+          title: "Должность",
+          body: job,
+          titleStyle: Theme.of(context)
+              .textTheme
+              .headlineSmall!
+              .copyWith(fontSize: 22, fontWeight: FontWeight.w300),
+          bodyStyle:
+              Theme.of(context).textTheme.headlineSmall!.copyWith(fontSize: 23),
+        ),
+        const SizedBox(height: 8),
         _RowForInfo(
           title: "Телефон",
           body: number,
@@ -217,6 +213,7 @@ class _RowForInfo extends StatelessWidget {
               style: titleStyle,
             ),
             Container(
+                padding: EdgeInsets.symmetric(horizontal: 10, vertical: 1),
                 decoration: ShapeDecoration(
                   color: Theme.of(context).backgroundColor,
                   shape: const RoundedRectangleBorder(
@@ -239,10 +236,23 @@ class _UserBubbleButton extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 30),
       child: Column(
-        children: const [
-          _UserBubbleBtn(
-              title: "Обратная связь",
-              subTitle: "Пожаловаться или оставить отзыв"),
+        children: [
+          GestureDetector(
+            onTap: () {
+              _bubbleTransition(context);
+            },
+            child: const _UserBubbleBtn(
+                title: "Обратная связь",
+                subTitle: "Пожаловаться или оставить отзыв"),
+          ),
+          const SizedBox(height: 25),
+          GestureDetector(
+            onTap: () {
+              _openPDFList(context);
+            },
+            child: const _UserBubbleBtn(
+                title: "Информация", subTitle: "Инструкции и рекомендации"),
+          ),
         ],
       ),
     );
@@ -282,7 +292,6 @@ class _UserBubbleBtn extends StatelessWidget {
           Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
             Text(
               title,
-              //style: const TextStyle(color: Colors.black, fontSize: 17),
             ),
             const SizedBox(
               height: 5,
@@ -297,4 +306,11 @@ class _UserBubbleBtn extends StatelessWidget {
       ),
     );
   }
+}
+
+/// OPEN PDF List
+
+void _openPDFList(BuildContext context) {
+  Navigator.of(context)
+      .push(MaterialPageRoute(builder: ((context) => PDFListPage())));
 }
