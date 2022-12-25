@@ -43,9 +43,9 @@ class BookingBottomSheet extends StatelessWidget {
                       fontSize: 18, color: Theme.of(context).colorScheme.onSurface),
                 ),
               ),
-              Container(
+              const SizedBox(
                 height: 300,
-                child: const Center(
+                child: Center(
                   child: SizedBox(
                     height: 50,
                     width: 50,
@@ -77,7 +77,7 @@ class BookingBottomSheet extends StatelessWidget {
 
 class _SheetLoadedStateWidget extends StatelessWidget {
   final NewBookingSheetLoadedState state;
-  static ScrollController _sliderListScrollController = ScrollController();
+  static final ScrollController _sliderListScrollController = ScrollController();
 
   const _SheetLoadedStateWidget({required this.state});
 
@@ -208,7 +208,7 @@ class _SheetLoadedStateWidget extends StatelessWidget {
                     child: Row(
                       children: [
                         const Icon(Icons.person_add_rounded),
-                        state.selectedUsers.length != 0
+                        state.selectedUsers.isNotEmpty
                             ? Container(
                                 width: 30,
                                 height: 30,
@@ -235,7 +235,7 @@ class _SheetLoadedStateWidget extends StatelessWidget {
           ///
           ///
           /// ФОТКИ
-          Container(
+          SizedBox(
             height: getSize(), //getSize(),
             child: Center(
               child: ListView.builder(
@@ -335,21 +335,20 @@ class _SheetLoadedStateWidget extends StatelessWidget {
               height: 140,
               child: SfRangeSliderTheme(
                 data: SfRangeSliderThemeData(
-                  activeLabelStyle: Theme.of(context).textTheme.headlineMedium
+                  activeLabelStyle: Theme.of(context).textTheme.bodyLarge
                       ?.copyWith(
-                          fontSize: 14,
-                          fontStyle: FontStyle.normal),
-                  inactiveLabelStyle: Theme.of(context).textTheme.headlineMedium
+                      fontSize: 14,
+                      fontStyle: FontStyle.normal),
+                  inactiveLabelStyle: Theme.of(context).textTheme.bodyMedium
                       ?.copyWith(
-
-                          fontSize: 14,
-                          fontStyle: FontStyle.normal),
-                  tooltipTextStyle: Theme.of(context).textTheme.headlineMedium
+                      fontSize: 14,
+                      fontStyle: FontStyle.normal),
+                  tooltipTextStyle: Theme.of(context).textTheme.bodyLarge
                       ?.copyWith(
-                          fontSize: 14,
-                          fontStyle: FontStyle.normal),
-                  overlappingTooltipStrokeColor: Colors.white,
-                  tooltipBackgroundColor: Theme.of(context).primaryColor,
+                      fontSize: 14,
+                      fontStyle: FontStyle.normal),
+                  overlappingTooltipStrokeColor: Theme.of(context).primaryColor,
+                  tooltipBackgroundColor: Theme.of(context).colorScheme.surface,
                   disabledActiveTrackColor: Colors.grey,
                   disabledInactiveTrackColor: Colors.grey,
                   disabledActiveTickColor: Colors.grey,
@@ -374,18 +373,16 @@ class _SheetLoadedStateWidget extends StatelessWidget {
                     thickness: 10,
                     controller: _sliderListScrollController,
                     thumbVisibility: true,
-                    child: Container(
-                      child: ListView.builder(
-                        //physics: NeverScrollableScrollPhysics(),
-                        controller: _sliderListScrollController,
-                        primary: false,
-                        scrollDirection: Axis.horizontal,
-                        shrinkWrap: true,
-                        itemCount: state.rangeValuesList.length,
-                        itemBuilder: (context, index) {
-                          return Center(child: getSliderNEW(index, state));
-                        },
-                      ),
+                    child: ListView.builder(
+                      //physics: NeverScrollableScrollPhysics(),
+                      controller: _sliderListScrollController,
+                      primary: false,
+                      scrollDirection: Axis.horizontal,
+                      shrinkWrap: true,
+                      itemCount: state.rangeValuesList.length,
+                      itemBuilder: (context, index) {
+                        return Center(child: getSliderNEW(index, state));
+                      },
                     ),
                   ),
                 ),
@@ -475,7 +472,7 @@ class _SheetLoadedEmptyWidget extends StatelessWidget {
                 fontSize: 18, color: Theme.of(context).colorScheme.onSurface),
           ),
         ),
-        Container(
+        SizedBox(
           height: getSize(), //getSize(),
           child: ListView.builder(
               shrinkWrap: true,
@@ -541,7 +538,7 @@ class _SheetLoadedEmptyWidget extends StatelessWidget {
             child: Scrollbar(
               thumbVisibility: false,
               child: SingleChildScrollView(
-                child: Container(
+                child: SizedBox(
                   height: 120,
                   child: Center(
                     child: Text(

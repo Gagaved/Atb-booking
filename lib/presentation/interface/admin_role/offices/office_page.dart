@@ -324,7 +324,6 @@ class _WorkTimeRange extends StatelessWidget {
                   fontStyle: FontStyle.normal),
               inactiveLabelStyle: Theme.of(context).textTheme.bodyMedium
                   ?.copyWith(
-
                   fontSize: 14,
                   fontStyle: FontStyle.normal),
               tooltipTextStyle: Theme.of(context).textTheme.bodyLarge

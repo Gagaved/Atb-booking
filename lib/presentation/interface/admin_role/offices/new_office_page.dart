@@ -327,21 +327,20 @@ class _WorkTimeRange extends StatelessWidget {
             padding: const EdgeInsets.symmetric(horizontal: 5.0),
             child: SfRangeSliderTheme(
               data: SfRangeSliderThemeData(
-                activeLabelStyle: Theme.of(context).textTheme.headlineMedium
+                activeLabelStyle: Theme.of(context).textTheme.bodyLarge
                     ?.copyWith(
                     fontSize: 14,
                     fontStyle: FontStyle.normal),
-                inactiveLabelStyle: Theme.of(context).textTheme.headlineMedium
-                    ?.copyWith(
-
-                    fontSize: 14,
-                    fontStyle: FontStyle.normal),
-                tooltipTextStyle: Theme.of(context).textTheme.headlineMedium
+                inactiveLabelStyle: Theme.of(context).textTheme.bodyMedium
                     ?.copyWith(
                     fontSize: 14,
                     fontStyle: FontStyle.normal),
-                overlappingTooltipStrokeColor: Colors.white,
-                tooltipBackgroundColor: Theme.of(context).primaryColor,
+                tooltipTextStyle: Theme.of(context).textTheme.bodyLarge
+                    ?.copyWith(
+                    fontSize: 14,
+                    fontStyle: FontStyle.normal),
+                overlappingTooltipStrokeColor: Theme.of(context).primaryColor,
+                tooltipBackgroundColor: Theme.of(context).colorScheme.surface,
                 disabledActiveTrackColor: Colors.grey,
                 disabledInactiveTrackColor: Colors.grey,
                 disabledActiveTickColor: Colors.grey,

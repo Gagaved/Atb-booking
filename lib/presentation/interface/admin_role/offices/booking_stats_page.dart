@@ -11,7 +11,9 @@ class AdminBookingsStatsPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text("Статистика по офису"),),
+      appBar: AppBar(
+        title: const Text("Статистика по офису"),
+      ),
       body: Column(
         children: [
           Padding(
@@ -26,7 +28,6 @@ class AdminBookingsStatsPage extends StatelessWidget {
     );
   }
 }
-
 
 class _DateRangePickerWidget extends StatelessWidget {
   _DateRangePickerWidget({required this.onChanged});
@@ -61,18 +62,7 @@ class _DateRangePickerWidget extends StatelessWidget {
             DateTimeRange? newDateTimeRange = await showDateRangePicker(
               context: context,
               builder: (context, child) {
-                return Theme(
-                  data: ThemeData.light().copyWith(
-                    colorScheme: ColorScheme.light(
-                      primary: Theme.of(context).primaryColor,
-                      onPrimary: Colors.white,
-                      surface: Theme.of(context).primaryColor,
-                      onSurface: Colors.black,
-                    ),
-                    dialogBackgroundColor: Colors.white,
-                  ),
-                  child: child!,
-                );
+                return child!;
               },
               firstDate: DateTime.now().add(const Duration(days: -100)),
               lastDate: DateTime.now().add(const Duration(days: 100)),
@@ -98,53 +88,93 @@ class _Charts extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<AdminBookingStatsBloc, AdminBookingStatsState>(
-  builder: (context, state) {
-    if(state is AdminBookingStatsLoadedState){
-      DateFormat format;
-      if(state.selectedDateTimeRange!.duration.inDays<60){
-        format = DateFormat.MMMd("ru_RU");
-      }else{
-        format = DateFormat.MMM("ru_RU");
-      }
-    return SfCartesianChart(
-        // Initialize category axis
-        primaryYAxis: NumericAxis(
-            rangePadding: ChartRangePadding.additional,
-            title: AxisTitle(
-                text: 'Число бронирований',
-                textStyle: const TextStyle(
-                    fontSize: 16,
-                    fontWeight: FontWeight.w300
-                )
-            )
-        ),
-        primaryXAxis: DateTimeAxis(
-          //minorTicksPerInterval: 10,
-            dateFormat: format,
-        ),
-        legend: Legend(
-          position: LegendPosition.bottom,
-            isVisible: true,
-            // Border color and border width of legend
-        ),
-        series: <CartesianSeries>[
-          ColumnSeries<OfficeBookingStatsItem, DateTime>(
-              name:'Рабочие места',
-              dataSource: state.stats,
-              xValueMapper: (OfficeBookingStatsItem data, _) => data.date,
-              yValueMapper: (OfficeBookingStatsItem data, _) => data.workspace),
-          ColumnSeries<OfficeBookingStatsItem, DateTime>(
-              name:'Переговорки',
-              color: Theme.of(context).primaryColor,
-              dataSource: state.stats,
-              xValueMapper: (OfficeBookingStatsItem data, _) => data.date,
-              yValueMapper: (OfficeBookingStatsItem data, _) => data.meetingRoom)
-        ]);
-    }else{
-      return CircularProgressIndicator(color: Colors.grey,);
-    }
-  },
-);
+      builder: (context, state) {
+        if (state is AdminBookingStatsLoadedState) {
+          DateFormat format;
+          if (state.selectedDateTimeRange!.duration.inDays < 60) {
+            format = DateFormat.MMMd("ru_RU");
+          } else {
+            format = DateFormat.MMM("ru_RU");
+          }
+          return SfCartesianChart(
+              // Initialize category axis
+              primaryYAxis: NumericAxis(
+                  rangePadding: ChartRangePadding.additional,
+                  title: AxisTitle(
+                      text: 'Число бронирований',
+                      textStyle: const TextStyle(
+                          fontSize: 16, fontWeight: FontWeight.w300))),
+              primaryXAxis: DateTimeAxis(
+                //minorTicksPerInterval: 10,
+                dateFormat: format,
+              ),
+              legend: Legend(
+                position: LegendPosition.bottom,
+                isVisible: true,
+                // Border color and border width of legend
+              ),
+              series: <CartesianSeries>[
+                ColumnSeries<OfficeBookingStatsItem, DateTime>(
+                    name: 'Рабочие места',
+                    dataSource: state.stats,
+                    xValueMapper: (OfficeBookingStatsItem data, _) => data.date,
+                    yValueMapper: (OfficeBookingStatsItem data, _) =>
+                        data.workspace),
+                ColumnSeries<OfficeBookingStatsItem, DateTime>(
+                    name: 'Переговорки',
+                    color: Theme.of(context).primaryColor,
+                    dataSource: state.stats,
+                    xValueMapper: (OfficeBookingStatsItem data, _) => data.date,
+                    yValueMapper: (OfficeBookingStatsItem data, _) =>
+                        data.meetingRoom)
+              ]);
+        } else if (state is AdminBookingStatsInitial) {
+          return Expanded(
+              child: Center(
+            child: Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Text(
+                "Для просмотра статистики выберите диапазон выше",
+                style: Theme.of(context).textTheme.headlineMedium,
+                textAlign: TextAlign.center,
+              ),
+            ),
+          ));
+        } else if (state is AdminBookingStatsLoadingState) {
+          return Center(
+              child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              const CircularProgressIndicator(
+                color: Colors.grey,
+              ),
+              Text(
+                "Загружаем",
+                style: Theme.of(context)
+                    .textTheme
+                    .headlineSmall
+                    ?.copyWith(fontSize: 22, fontWeight: FontWeight.w300),
+                textAlign: TextAlign.center,
+              ),
+            ],
+          ));
+        } else if (state is AdminBookingStatsErrorState) {
+          return Expanded(
+              child: Center(
+            child: Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Text(
+                "Не удалось загрузить. Проверьте интернет соеденение.",
+                style: Theme.of(context).textTheme.headlineMedium,
+                textAlign: TextAlign.center,
+              ),
+            ),
+          ));
+        } else {
+          throw ErrorWidget(Exception("unexpected state: $state"));
+        }
+      },
+    );
   }
 }
 

@@ -1,15 +1,14 @@
-import 'package:atb_booking/data/models/booking.dart';
 import 'package:atb_booking/data/models/user.dart';
 import 'package:atb_booking/data/services/image_provider.dart';
 import 'package:atb_booking/data/services/network/network_controller.dart';
 import 'package:atb_booking/logic/admin_role/people/person_booking_list/admin_person_booking_list_bloc.dart';
 import 'package:atb_booking/logic/user_role/booking/booking_details_bloc/booking_details_bloc.dart';
 import 'package:atb_booking/presentation/constants/styles.dart';
-import 'package:atb_booking/presentation/interface/user_role/booking/booking_details/booking_details_screen.dart';
+import 'package:atb_booking/presentation/interface/admin_role/bookings/admin_booking_card.dart';
+import 'package:atb_booking/presentation/interface/admin_role/bookings/booking_details_screen.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:intl/intl.dart';
 
 class _PersonInfoWidget extends StatelessWidget {
   @override
@@ -176,7 +175,7 @@ class _BookingList extends StatelessWidget {
                               child: const BookingDetailsScreen(),
                             )));
                   },
-                  child: _BookingCard(bookingData),
+                  child: AdminBookingCard(bookingData),
                 );
               },
             ),
@@ -217,67 +216,5 @@ class _BookingList extends StatelessWidget {
         ));
       }
     });
-  }
-}
-
-class _BookingCard extends StatelessWidget {
-  final Booking booking;
-
-  const _BookingCard(this.booking);
-
-  @override
-  Widget build(BuildContext context) {
-    return Center(
-        child: Card(
-            clipBehavior: Clip.antiAliasWithSaveLayer,
-            elevation: 1,
-            shape: RoundedRectangleBorder(
-                side: const BorderSide(
-                    width: 0.3),
-                borderRadius: BorderRadius.circular(12.0)),
-            child: Padding(
-              padding: const EdgeInsets.all(5.0),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceAround,
-                children: [
-                  Expanded(
-                    flex: 12,
-                    child: Center(
-                      child: ListTile(
-                        contentPadding: const EdgeInsets.only(left: 10),
-                        title: Text(
-                          booking.workspace.type.type,
-                          style: Theme.of(context).textTheme.titleMedium,
-                        ),
-                        subtitle: Text(
-                          'c ' +
-                              DateFormat('HH:mm')
-                                  .format(booking.reservationInterval.start) +
-                              " до " +
-                              DateFormat('HH:mm')
-                                  .format(booking.reservationInterval.end) +
-                              '\n' +
-                              DateFormat.yMMMMd("ru_RU")
-                                  .format(booking.reservationInterval.start),
-                          style: Theme.of(context).textTheme.titleMedium,
-                        ),
-                        //trailing: trailing ? Icon(Icons.cancel, color: Colors.black) : null,
-                      ),
-                    ),
-                  ),
-                  Expanded(
-                      flex: 12,
-                      child: Center(
-                        child: ListTile(
-                          contentPadding: EdgeInsets.zero,
-                          title: Text(booking.cityName,
-                              style: Theme.of(context).textTheme.titleMedium),
-                          subtitle: Text(booking.officeAddress,
-                              style: Theme.of(context).textTheme.titleMedium),
-                        ),
-                      ))
-                ],
-              ),
-            )));
   }
 }
