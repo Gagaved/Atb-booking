@@ -1,6 +1,9 @@
 import 'package:atb_booking/data/services/image_provider.dart';
 import 'package:atb_booking/data/services/network/network_controller.dart';
+import 'package:atb_booking/logic/admin_role/offices/bookings_page/admin_bookings_bloc.dart';
+import 'package:atb_booking/logic/admin_role/people/person_booking_list/admin_person_booking_list_bloc.dart';
 import 'package:atb_booking/logic/user_role/booking/booking_details_bloc/booking_details_bloc.dart';
+import 'package:atb_booking/logic/user_role/booking/booking_list_bloc/booking_list_bloc.dart';
 import 'package:atb_booking/logic/user_role/booking/locked_plan_bloc/locked_plan_bloc.dart';
 import 'package:atb_booking/presentation/interface/admin_role/bookings/booking_delete_confirmation_popup.dart';
 import 'package:atb_booking/presentation/interface/admin_role/people/admin_person_card.dart';
@@ -20,33 +23,46 @@ class _InfoField extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 30.0, vertical: 5),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Text(title,
-              textAlign: TextAlign.left,
-              style: Theme
-                  .of(context)
-                  .textTheme
-                  .headlineSmall
-                  ?.copyWith(fontSize: 24, fontWeight: FontWeight.w300)),
-          Container(
-            decoration: BoxDecoration(
-              color: Theme
-                  .of(context)
-                  .backgroundColor,
-              borderRadius: const BorderRadius.all(Radius.circular(10.0)),
-            ),
-            child: Text(body,
-                style: Theme
-                    .of(context)
+    return WillPopScope(
+      onWillPop: () async {
+        // try {
+        //   context
+        //       .read<AdminPersonBookingListBloc>()
+        //       .add(AdminPersonBookingLoadBookingsEvent());
+        // } catch (e) {
+        //   print(e);
+        // }
+        // try {
+        //   context.read<AdminBookingsBloc>().add(AdminBookingsUpdateEvent());
+        // } catch (e) {
+        //   print(e);
+        // }
+        return true;
+      },
+      child: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 30.0, vertical: 5),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(title,
+                textAlign: TextAlign.left,
+                style: Theme.of(context)
                     .textTheme
                     .headlineSmall
-                    ?.copyWith(fontSize: 23)),
-          ),
-        ],
+                    ?.copyWith(fontSize: 24, fontWeight: FontWeight.w300)),
+            Container(
+              decoration: BoxDecoration(
+                color: Theme.of(context).backgroundColor,
+                borderRadius: const BorderRadius.all(Radius.circular(10.0)),
+              ),
+              child: Text(body,
+                  style: Theme.of(context)
+                      .textTheme
+                      .headlineSmall
+                      ?.copyWith(fontSize: 23)),
+            ),
+          ],
+        ),
       ),
     );
   }
@@ -76,7 +92,6 @@ class BookingDetailsScreen extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.start,
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-
                     ///
                     ///
                     /// Фотографии рабочего места.
@@ -89,7 +104,7 @@ class BookingDetailsScreen extends StatelessWidget {
                               shrinkWrap: true,
                               scrollDirection: Axis.horizontal,
                               itemCount:
-                              state.booking.workspace.photosIds.length,
+                                  state.booking.workspace.photosIds.length,
                               //state.workspace.photos.length,
                               itemBuilder: (context, index) {
                                 return GestureDetector(
@@ -97,15 +112,15 @@ class BookingDetailsScreen extends StatelessWidget {
                                   child: CachedNetworkImage(
                                     fit: BoxFit.cover,
                                     imageUrl:
-                                    AppImageProvider.getImageUrlFromImageId(
-                                        state.booking.workspace
-                                            .photosIds[index]),
+                                        AppImageProvider.getImageUrlFromImageId(
+                                            state.booking.workspace
+                                                .photosIds[index]),
                                     httpHeaders:
-                                    NetworkController().getAuthHeader(),
+                                        NetworkController().getAuthHeader(),
                                     placeholder: (context, url) =>
-                                    const Center(),
+                                        const Center(),
                                     errorWidget: (context, url, error) =>
-                                    const Icon(Icons.error),
+                                        const Icon(Icons.error),
                                   ),
                                   onTap: () {
                                     showDialog(
@@ -114,55 +129,55 @@ class BookingDetailsScreen extends StatelessWidget {
                                         builder: (BuildContext context) {
                                           return GestureDetector(
                                             behavior:
-                                            HitTestBehavior.translucent,
+                                                HitTestBehavior.translucent,
                                             onTap: () {
                                               int count = 0;
                                               Navigator.popUntil(context,
-                                                      (route) {
-                                                    return count++ == 1;
-                                                  });
+                                                  (route) {
+                                                return count++ == 1;
+                                              });
                                             },
                                             child: InteractiveViewer(
                                               transformationController:
-                                              TransformationController(),
+                                                  TransformationController(),
                                               maxScale: 2.0,
                                               minScale: 0.1,
                                               child: AlertDialog(
-                                                //clipBehavior: Clip.none,
+                                                  //clipBehavior: Clip.none,
                                                   shape:
-                                                  const RoundedRectangleBorder(
-                                                      borderRadius:
-                                                      BorderRadius.all(
-                                                          Radius
-                                                              .circular(
-                                                              0.0))),
+                                                      const RoundedRectangleBorder(
+                                                          borderRadius:
+                                                              BorderRadius.all(
+                                                                  Radius
+                                                                      .circular(
+                                                                          0.0))),
                                                   insetPadding: const EdgeInsets
-                                                      .symmetric(
+                                                          .symmetric(
                                                       horizontal: 10,
                                                       vertical: 200),
                                                   contentPadding:
-                                                  const EdgeInsets
-                                                      .symmetric(
-                                                      horizontal: 10,
-                                                      vertical: 10),
+                                                      const EdgeInsets
+                                                              .symmetric(
+                                                          horizontal: 10,
+                                                          vertical: 10),
                                                   content: CachedNetworkImage(
                                                     fit: BoxFit.cover,
                                                     imageUrl: AppImageProvider
                                                         .getImageUrlFromImageId(
-                                                        state
-                                                            .booking
-                                                            .workspace
-                                                            .photosIds[
-                                                        index]),
+                                                            state
+                                                                    .booking
+                                                                    .workspace
+                                                                    .photosIds[
+                                                                index]),
                                                     httpHeaders:
-                                                    NetworkController()
-                                                        .getAuthHeader(),
+                                                        NetworkController()
+                                                            .getAuthHeader(),
                                                     placeholder:
                                                         (context, url) =>
-                                                    const Center(),
+                                                            const Center(),
                                                     errorWidget: (context, url,
-                                                        error) =>
-                                                    const Icon(Icons.error),
+                                                            error) =>
+                                                        const Icon(Icons.error),
                                                   )),
                                             ),
                                           );
@@ -184,9 +199,7 @@ class BookingDetailsScreen extends StatelessWidget {
                           shape: RoundedRectangleBorder(
                               side: BorderSide(
                                   width: 0,
-                                  color: Theme
-                                      .of(context)
-                                      .primaryColor),
+                                  color: Theme.of(context).primaryColor),
                               borderRadius: BorderRadius.circular(7.0)),
                           onPressed: () {
                             showDialog(
@@ -195,52 +208,49 @@ class BookingDetailsScreen extends StatelessWidget {
                                   return AlertDialog(
                                       shape: RoundedRectangleBorder(
                                           borderRadius:
-                                          BorderRadius.circular(00.0)),
+                                              BorderRadius.circular(00.0)),
                                       insetPadding: const EdgeInsets.symmetric(
                                           horizontal: 00, vertical: 00),
                                       titlePadding: const EdgeInsets.symmetric(
                                           horizontal: 00, vertical: 00),
                                       contentPadding:
-                                      const EdgeInsets.symmetric(
-                                          horizontal: 00, vertical: 00),
+                                          const EdgeInsets.symmetric(
+                                              horizontal: 00, vertical: 00),
                                       clipBehavior: Clip.none,
                                       content: SizedBox(
                                           width: double.infinity,
                                           height:
-                                          MediaQuery
-                                              .of(context)
-                                              .size
-                                              .width,
+                                              MediaQuery.of(context).size.width,
                                           child: BlocProvider.value(
                                             value: LockedPlanBloc(),
                                             child: const LockedPlanWidget(),
                                           )));
                                 });
                           },
-                          color: Theme
-                              .of(context)
-                              .primaryColor,
+                          color: Theme.of(context).primaryColor,
                           child: Container(
                             height: 50,
                             child: Row(
                               children: [
                                 Text(
                                   (state.booking.guests != null &&
-                                      state.booking.guests!.isNotEmpty)
+                                          state.booking.guests!.isNotEmpty)
                                       ? "Показать\nна плане"
                                       : "Показать на плане",
-                                  style: Theme
-                                      .of(context)
+                                  style: Theme.of(context)
                                       .textTheme
                                       .titleMedium!
                                       .copyWith(
-                                    color: Colors.white,
-                                  ),
+                                        color: Colors.white,
+                                      ),
                                 ),
                                 const SizedBox(
                                   width: 5,
                                 ),
-                                const Icon(Icons.place, color: Colors.white,)
+                                const Icon(
+                                  Icons.place,
+                                  color: Colors.white,
+                                )
                               ],
                             ),
                           ),
@@ -251,9 +261,7 @@ class BookingDetailsScreen extends StatelessWidget {
                             shape: RoundedRectangleBorder(
                                 side: BorderSide(
                                     width: 0,
-                                    color: Theme
-                                        .of(context)
-                                        .primaryColor),
+                                    color: Theme.of(context).primaryColor),
                                 borderRadius: BorderRadius.circular(7.0)),
                             onPressed: () {
                               showDialog(
@@ -265,9 +273,7 @@ class BookingDetailsScreen extends StatelessWidget {
                                     );
                                   });
                             },
-                            color: Theme
-                                .of(context)
-                                .primaryColor,
+                            color: Theme.of(context).primaryColor,
                             child: Container(
                               height: 50,
                               child: Row(
@@ -275,20 +281,21 @@ class BookingDetailsScreen extends StatelessWidget {
                                 children: [
                                   Text(
                                     "Гости",
-                                    style: Theme
-                                        .of(context)
+                                    style: Theme.of(context)
                                         .textTheme
                                         .titleMedium!
                                         .copyWith(
-                                      color: Colors.white,
-                                    ),
+                                          color: Colors.white,
+                                        ),
                                     textAlign: TextAlign.end,
                                   ),
                                   const SizedBox(
                                     width: 5,
                                   ),
                                   const Icon(
-                                    Icons.people, color: Colors.white,),
+                                    Icons.people,
+                                    color: Colors.white,
+                                  ),
                                   Container(
                                     width: 30,
                                     height: 30,
@@ -299,17 +306,14 @@ class BookingDetailsScreen extends StatelessWidget {
                                             Radius.circular(20))),
                                     child: Center(
                                         child: Text(
-                                          state.booking.guests!.length
-                                              .toString(),
-                                          style: Theme
-                                              .of(context)
-                                              .textTheme
-                                              .titleMedium!
-                                              .copyWith(
-                                              color: Theme
-                                                  .of(context)
+                                      state.booking.guests!.length.toString(),
+                                      style: Theme.of(context)
+                                          .textTheme
+                                          .titleMedium!
+                                          .copyWith(
+                                              color: Theme.of(context)
                                                   .primaryColor),
-                                        )),
+                                    )),
                                   )
                                 ],
                               ),
@@ -332,13 +336,12 @@ class BookingDetailsScreen extends StatelessWidget {
                               width: double.infinity,
                               child: Text("Бронирующий",
                                   textAlign: TextAlign.left,
-                                  style: Theme
-                                      .of(context)
+                                  style: Theme.of(context)
                                       .textTheme
                                       .headlineSmall
                                       ?.copyWith(
-                                      fontSize: 22,
-                                      fontWeight: FontWeight.w300)),
+                                          fontSize: 22,
+                                          fontWeight: FontWeight.w300)),
                             ),
                             Container(
                               height: 0.3,
@@ -364,8 +367,7 @@ class BookingDetailsScreen extends StatelessWidget {
                     _InfoField(
                         title: "Место",
                         body:
-                        "${state.booking.workspace.type.type} ${state.booking
-                            .workspace.level} Этаж"),
+                            "${state.booking.workspace.type.type} ${state.booking.workspace.level} Этаж"),
 
                     ///
                     ///
@@ -373,8 +375,7 @@ class BookingDetailsScreen extends StatelessWidget {
                     _InfoField(
                         title: "Офис",
                         body:
-                        '${state.booking.cityName} ${state.booking
-                            .officeAddress}'),
+                            '${state.booking.cityName} ${state.booking.officeAddress}'),
 
                     ///
                     ///
@@ -391,39 +392,50 @@ class BookingDetailsScreen extends StatelessWidget {
                     _InfoField(
                         title: "Время",
                         body:
-                        'c ${DateFormat('HH:mm').format(
-                            state.booking.reservationInterval
-                                .start)} до ${DateFormat('HH:mm').format(
-                            state.booking.reservationInterval.end)}'),
+                            'c ${DateFormat('HH:mm').format(state.booking.reservationInterval.start)} до ${DateFormat('HH:mm').format(state.booking.reservationInterval.end)}'),
 
                     ///
                     ///
                     /// КНОПКА ОТМЕНЫ
 
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceAround,
-                        children: [
-                          Padding(
-                              padding: const EdgeInsets.symmetric(
-                                  horizontal: 30.0, vertical: 30),
-                              child: AtbElevatedButton(
-                                onPressed: () {
-                                  showDialog(
-                                    useRootNavigator: false,
-                                    context: context,
-                                    builder: (_) {
-                                      return BlocProvider.value(
-                                        value: context.read<
-                                            BookingDetailsBloc>(),
-                                        child: const BookingDeleteDialog(),
-                                      );
-                                    },
-                                  );
-                                },
-                                text: "Отменить",
-                              )),
-                        ],
-                      )
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceAround,
+                      children: [
+                        Padding(
+                            padding: const EdgeInsets.symmetric(
+                                horizontal: 30.0, vertical: 30),
+                            child: AtbElevatedButton(
+                              onPressed: ()async {
+                                bool? wasDelete = await showDialog<bool>(
+                                  useRootNavigator: false,
+                                  context: context,
+                                  builder: (_) {
+                                    return BlocProvider.value(
+                                      value: context.read<BookingDetailsBloc>(),
+                                      child: const BookingDeleteDialog(),
+                                    );
+                                  },
+                                );
+                                if(wasDelete!){
+                                  Navigator.of(context).pop();
+                                try {
+                                  context
+                                      .read<AdminPersonBookingListBloc>()
+                                      .add(AdminPersonBookingLoadBookingsEvent());
+                                } catch (e) {
+                                  print(e);
+                                }
+                                try {
+                                  context.read<AdminBookingsBloc>().add(AdminBookingsUpdateEvent());
+                                } catch (e) {
+                                  print(e);
+                                }
+                                }
+                              },
+                              text: "Отменить",
+                            )),
+                      ],
+                    )
                   ],
                 ),
               ),
@@ -434,43 +446,35 @@ class BookingDetailsScreen extends StatelessWidget {
               appBar: AppBar(title: const Text('Бронь')),
               body: Center(
                   child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      const CircularProgressIndicator(color: Colors.grey,),
-                      Text(
-                        "Загружаем",
-                        style: Theme
-                            .of(context)
-                            .textTheme
-                            .headlineSmall
-                            ?.copyWith(
-                            fontSize: 22,
-                            fontWeight: FontWeight.w300),
-                        textAlign: TextAlign.center,
-
-                      ),
-                    ],
-                  )));
-          } else
-              if (state is BookingDetailsErrorState)
-          {
-            return Scaffold(
-              appBar: AppBar(title: const Text('Ошибка при загрузке')),
-              body: Center(
-                  child: Text(
-                    "Не удалось загрузить информацию, проверьте интернет подключение",
-                    style: Theme
-                        .of(context)
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  const CircularProgressIndicator(
+                    color: Colors.grey,
+                  ),
+                  Text(
+                    "Загружаем",
+                    style: Theme.of(context)
                         .textTheme
                         .headlineSmall
-                        ?.copyWith(
-                        fontSize: 22,
-                        fontWeight: FontWeight.w300),
+                        ?.copyWith(fontSize: 22, fontWeight: FontWeight.w300),
                     textAlign: TextAlign.center,
-
-                  )),
-            );
-          } else if (state is BookingDetailsDeletedState) {
+                  ),
+                ],
+              )));
+        } else if (state is BookingDetailsErrorState) {
+          return Scaffold(
+            appBar: AppBar(title: const Text('Ошибка при загрузке')),
+            body: Center(
+                child: Text(
+              "Не удалось загрузить информацию, проверьте интернет подключение",
+              style: Theme.of(context)
+                  .textTheme
+                  .headlineSmall
+                  ?.copyWith(fontSize: 22, fontWeight: FontWeight.w300),
+              textAlign: TextAlign.center,
+            )),
+          );
+        } else if (state is BookingDetailsDeletedState) {
           getPhotoSize() {
             if (state.booking.workspace.photosIds.isEmpty) return 0.0;
             if (state.booking.workspace.photosIds.length == 1) return 250.0;
@@ -487,7 +491,6 @@ class BookingDetailsScreen extends StatelessWidget {
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
                   children: [
-
                     ///
                     ///
                     /// Фотографии рабочего места.
@@ -500,7 +503,7 @@ class BookingDetailsScreen extends StatelessWidget {
                               shrinkWrap: true,
                               scrollDirection: Axis.horizontal,
                               itemCount:
-                              state.booking.workspace.photosIds.length,
+                                  state.booking.workspace.photosIds.length,
                               //state.workspace.photos.length,
                               itemBuilder: (context, index) {
                                 return GestureDetector(
@@ -508,15 +511,15 @@ class BookingDetailsScreen extends StatelessWidget {
                                   child: CachedNetworkImage(
                                     fit: BoxFit.cover,
                                     imageUrl:
-                                    AppImageProvider.getImageUrlFromImageId(
-                                        state.booking.workspace
-                                            .photosIds[index]),
+                                        AppImageProvider.getImageUrlFromImageId(
+                                            state.booking.workspace
+                                                .photosIds[index]),
                                     httpHeaders:
-                                    NetworkController().getAuthHeader(),
+                                        NetworkController().getAuthHeader(),
                                     placeholder: (context, url) =>
-                                    const Center(),
+                                        const Center(),
                                     errorWidget: (context, url, error) =>
-                                    const Icon(Icons.error),
+                                        const Icon(Icons.error),
                                   ),
                                   onTap: () {
                                     showDialog(
@@ -525,55 +528,55 @@ class BookingDetailsScreen extends StatelessWidget {
                                         builder: (BuildContext context) {
                                           return GestureDetector(
                                             behavior:
-                                            HitTestBehavior.translucent,
+                                                HitTestBehavior.translucent,
                                             onTap: () {
                                               int count = 0;
                                               Navigator.popUntil(context,
-                                                      (route) {
-                                                    return count++ == 1;
-                                                  });
+                                                  (route) {
+                                                return count++ == 1;
+                                              });
                                             },
                                             child: InteractiveViewer(
                                               transformationController:
-                                              TransformationController(),
+                                                  TransformationController(),
                                               maxScale: 2.0,
                                               minScale: 0.1,
                                               child: AlertDialog(
-                                                //clipBehavior: Clip.none,
+                                                  //clipBehavior: Clip.none,
                                                   shape:
-                                                  const RoundedRectangleBorder(
-                                                      borderRadius:
-                                                      BorderRadius.all(
-                                                          Radius
-                                                              .circular(
-                                                              0.0))),
+                                                      const RoundedRectangleBorder(
+                                                          borderRadius:
+                                                              BorderRadius.all(
+                                                                  Radius
+                                                                      .circular(
+                                                                          0.0))),
                                                   insetPadding: const EdgeInsets
-                                                      .symmetric(
+                                                          .symmetric(
                                                       horizontal: 10,
                                                       vertical: 200),
                                                   contentPadding:
-                                                  const EdgeInsets
-                                                      .symmetric(
-                                                      horizontal: 10,
-                                                      vertical: 10),
+                                                      const EdgeInsets
+                                                              .symmetric(
+                                                          horizontal: 10,
+                                                          vertical: 10),
                                                   content: CachedNetworkImage(
                                                     fit: BoxFit.cover,
                                                     imageUrl: AppImageProvider
                                                         .getImageUrlFromImageId(
-                                                        state
-                                                            .booking
-                                                            .workspace
-                                                            .photosIds[
-                                                        index]),
+                                                            state
+                                                                    .booking
+                                                                    .workspace
+                                                                    .photosIds[
+                                                                index]),
                                                     httpHeaders:
-                                                    NetworkController()
-                                                        .getAuthHeader(),
+                                                        NetworkController()
+                                                            .getAuthHeader(),
                                                     placeholder:
                                                         (context, url) =>
-                                                    const Center(),
+                                                            const Center(),
                                                     errorWidget: (context, url,
-                                                        error) =>
-                                                    const Icon(Icons.error),
+                                                            error) =>
+                                                        const Icon(Icons.error),
                                                   )),
                                             ),
                                           );
@@ -599,8 +602,7 @@ class BookingDetailsScreen extends StatelessWidget {
                     _InfoField(
                         title: "Место",
                         body:
-                        "${state.booking.workspace.type.type} ${state.booking
-                            .workspace.level} Этаж"),
+                            "${state.booking.workspace.type.type} ${state.booking.workspace.level} Этаж"),
 
                     ///
                     ///
@@ -608,8 +610,7 @@ class BookingDetailsScreen extends StatelessWidget {
                     _InfoField(
                         title: "Офис",
                         body:
-                        '${state.booking.cityName} ${state.booking
-                            .officeAddress}'),
+                            '${state.booking.cityName} ${state.booking.officeAddress}'),
 
                     ///
                     ///
@@ -626,23 +627,19 @@ class BookingDetailsScreen extends StatelessWidget {
                     _InfoField(
                         title: "Дата",
                         body:
-                        'c${DateFormat('HH:mm').format(state.booking
-                            .reservationInterval.start)} до ${DateFormat(
-                            'HH:mm').format(state.booking.reservationInterval
-                            .end)}'),
+                            'c${DateFormat('HH:mm').format(state.booking.reservationInterval.start)} до ${DateFormat('HH:mm').format(state.booking.reservationInterval.end)}'),
 
                     Padding(
                       padding: const EdgeInsets.all(8.0),
                       child: Text(
                         "БРОНЬ ОТМЕНЕНА",
                         textAlign: TextAlign.center,
-                        style: Theme
-                            .of(context)
+                        style: Theme.of(context)
                             .textTheme
                             .displaySmall!
                             .copyWith(
-                            color: const Color.fromARGB(255, 72, 0, 0),
-                            fontSize: 30),
+                                color: const Color.fromARGB(255, 72, 0, 0),
+                                fontSize: 30),
                       ),
                     ),
                   ],

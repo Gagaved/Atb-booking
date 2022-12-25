@@ -23,37 +23,33 @@ class BookingDeleteDialog extends StatelessWidget {
           actions: <Widget>[
             TextButton(
               onPressed: () {
-                Navigator.pop(context, 'Cancel');
+                Navigator.pop(context, false);
               },
               child: Text(
-                'Отмена',
+                'назад',
                 style: Theme.of(context).textTheme.headlineSmall?.copyWith(
                     fontSize: 20,
                     fontWeight: FontWeight.w500),
               ),
             ),
             TextButton(
-              onPressed: () {
-                context
-                    .read<BookingDetailsBloc>()
-                    .add(BookingDetailsDeleteEvent());
-                int count = 3;
-                Navigator.popUntil(context, (route) {
-                  count--;
-                  return count == 0;
-                });
-
-              },
+              onPressed: () => Navigator.pop(
+                context,
+                true,
+              ),
               child: Text(
-                'Отменить',
+                'Подтвердить',
                 style: Theme.of(context).textTheme.headlineSmall?.copyWith(
                     fontSize: 20,
                     fontWeight: FontWeight.w500),
+
               ),
             ),
           ],
         );
-      } else {
+      } else if(state is BookingDetailsDeletedState){
+        return Center(child: CircularProgressIndicator(color: Colors.grey,));
+      }else {
         throw ErrorWidget((Exception("unexpected state: $state")));
       }
     });

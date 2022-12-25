@@ -1469,9 +1469,10 @@ class _DeleteLevelConfirmationPopup extends StatelessWidget {
           ),
         ),
         TextButton(
-          onPressed: () {
-            Navigator.pop(context, true);
-          },
+          onPressed: () => Navigator.pop(
+            context,
+            true,
+          ),
           child: Text(
             'Удалить',
             style: Theme.of(context).textTheme.headlineSmall?.copyWith(

@@ -85,7 +85,7 @@ var appThemeData = ThemeData(
     ),
     colorScheme: const ColorScheme(
         shadow: Colors.black26,
-        primary: Color.fromARGB(255, 204, 204, 204),
+        primary: Color.fromARGB(255, 91, 91, 91),
         secondary: Color.fromARGB(255, 255, 255, 255),
         brightness: Brightness.light,
         onPrimary: Color.fromARGB(255, 0, 0, 0),

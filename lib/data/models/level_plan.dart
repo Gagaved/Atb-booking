@@ -32,7 +32,6 @@ class Level {
     //json['id'] = id;
     json["number"] = number;
     json["planId"] = planId;
-    //todo вроде как тут не нужно конвертировать в json воркспейсы, мы их передаем в другом запросе
     return json;
   }
 }

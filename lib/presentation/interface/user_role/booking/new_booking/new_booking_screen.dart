@@ -2,6 +2,7 @@ import 'package:atb_booking/data/models/city.dart';
 import 'package:atb_booking/data/models/level_plan.dart';
 import 'package:atb_booking/data/models/office.dart';
 import 'package:atb_booking/data/services/city_provider.dart';
+import 'package:atb_booking/data/services/office_provider.dart';
 import 'package:atb_booking/logic/user_role/booking/new_booking/new_booking_bloc/new_booking_bloc.dart';
 import 'package:atb_booking/logic/user_role/booking/new_booking/new_booking_bloc/new_booking_sheet_bloc/new_booking_sheet_bloc.dart';
 import 'package:atb_booking/presentation/interface/user_role/booking/plan/planWidget.dart';
@@ -102,6 +103,7 @@ class _CityField extends StatelessWidget {
           return Padding(
             padding: const EdgeInsets.symmetric(horizontal: 30.0, vertical: 10),
             child: TypeAheadFormField(
+
               noItemsFoundBuilder: (context){
                 return Flexible(child:
                 Padding(
@@ -109,6 +111,12 @@ class _CityField extends StatelessWidget {
                   child: Text("Не удалось найти город с таким именем",style: Theme.of(context).textTheme.bodyMedium,),
                 ),);
               },
+              errorBuilder: (context,er){
+                return Flexible(child:
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Text("Не удалось загрузить, проверьте интернет соеденение.",style: Theme.of(context).textTheme.bodyMedium,),
+                ),);},
               textFieldConfiguration: TextFieldConfiguration(
                 decoration: InputDecoration(
                   hintText: "Выберите город",
@@ -135,6 +143,7 @@ class _CityField extends StatelessWidget {
                 // при вводи чего то в форму
                 return suggestionsBox;
               },
+
               onSuggestionSelected: (City suggestion) {
                 _cityInputController.text = suggestion.name;
                 context
@@ -168,6 +177,7 @@ class _OfficeField extends StatelessWidget {
           if (state is NewBookingSecondState) {
             _officeInputController.text = state.labelOffice;
             return TypeAheadFormField(
+
               noItemsFoundBuilder: (context){
                 return Flexible(child:
                 Padding(
@@ -196,7 +206,8 @@ class _OfficeField extends StatelessWidget {
                 controller: _officeInputController,
               ),
               suggestionsCallback: (pattern) {
-                return (state).futureOfficeList;
+                //return (state).futureOfficeList;
+                return OfficeProvider().getOfficesByCityId(context.read<NewBookingBloc>().selectedCity!.id);
               },
               itemBuilder: (context, Office suggestion) {
                 return ListTile(

@@ -104,12 +104,18 @@ class _SheetLoadedStateWidget extends StatelessWidget {
       double getSliderWidth(int sliderType) {
         double width = 0.0;
         if (sliderType == 0) {
+          width = (((rangeList[index].end.minute - rangeList[index].start.minute)
+              .toDouble() *
+              4.toDouble().abs())
+              .abs() +
+              ((rangeList[index].end.hour - rangeList[index].start.hour)
+                  .toDouble() *
+                  1.5.toDouble() *
+                  30.toDouble())
+                  .toDouble()
+                  .abs())*1.5;
         }
         if (sliderType == 1) {
-          var diff = (((rangeList[index].end as DateTime)
-                      .millisecondsSinceEpoch -
-                  (rangeList[index].start as DateTime).millisecondsSinceEpoch))
-              .abs();
           width = ((rangeList[index].end.minute - rangeList[index].start.minute)
                           .toDouble() *
                       4.toDouble().abs())
@@ -121,7 +127,7 @@ class _SheetLoadedStateWidget extends StatelessWidget {
                   .toDouble()
                   .abs();
         }
-        if (width < 100.0) width = 100;
+        if (width < 150.0) width = 150;
         if (width > 380.0) {
           width = 380.0;
         }

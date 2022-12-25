@@ -109,6 +109,19 @@ class _CityField extends StatelessWidget {
               // при вводи чего то в форму
               return suggestionsBox;
             },
+            errorBuilder: (context,er){
+              return Flexible(child:
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Text("Не удалось загрузить, проверьте интернет соеденение.",style: Theme.of(context).textTheme.bodyMedium,),
+              ),);},
+            noItemsFoundBuilder: (context){
+              return Flexible(child:
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Text("Не удалось найти город с таким именем",style: Theme.of(context).textTheme.bodyMedium,),
+              ),);
+            },
             onSuggestionSelected: (City suggestion) {
               _cityInputController.text = suggestion.name;
               context

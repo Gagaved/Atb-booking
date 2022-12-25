@@ -39,7 +39,8 @@ class _PersonInfoWidget extends StatelessWidget {
                           user.avatarImageId,
                         ),
                         httpHeaders: NetworkController().getAuthHeader(),
-                        progressIndicatorBuilder:(context,_,__)=>const SizedBox.shrink(),
+                        progressIndicatorBuilder: (context, _, __) =>
+                            const SizedBox.shrink(),
                         errorWidget: (context, url, error) => Container()),
                   ),
                 ),
@@ -147,7 +148,8 @@ class _BookingList extends StatelessWidget {
               padding: const EdgeInsets.all(8.0),
               child: Container(
                 child: Center(
-                  child: Text("У этого пользователя нет активных броней",
+                  child: Text(
+                    "У этого пользователя нет активных броней",
                     style: Theme.of(context)
                         .textTheme
                         .headlineSmall
@@ -169,10 +171,13 @@ class _BookingList extends StatelessWidget {
                 return GestureDetector(
                   onTap: () {
                     Navigator.of(context).push(MaterialPageRoute(
-                        builder: (context) => BlocProvider<BookingDetailsBloc>(
-                              create: (_) =>
-                                  BookingDetailsBloc(bookingData.id, true),
-                              child: const BookingDetailsScreen(),
+                        builder: (_) => BlocProvider.value(
+                              value: context.read<AdminPersonBookingListBloc>(),
+                              child: BlocProvider<BookingDetailsBloc>(
+                                create: (_) =>
+                                    BookingDetailsBloc(bookingData.id, true),
+                                child: const BookingDetailsScreen(),
+                              ),
                             )));
                   },
                   child: AdminBookingCard(bookingData),

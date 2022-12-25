@@ -33,10 +33,20 @@ class AdminBookingsBloc extends Bloc<AdminBookingsEvent, AdminBookingsState> {
         List<Booking> newPageBookings = await OfficeProvider().getBookingsRangeByOfficeId(_officeId,_selectedDateTimeRange!,_page+1);
         _page++;
         _loadedBookings.addAll(newPageBookings);
-        print("emit after load next page: $_page");
         emit(AdminBookingsLoadedState(_selectedDateTimeRange, _loadedBookings));
       } catch (_) {
         emit(AdminBookingsLoadedState(_selectedDateTimeRange, _loadedBookings));
+      }
+    });
+    on<AdminBookingsUpdateEvent>((event, emit) async {
+      emit(AdminBookingsLoadingState(_selectedDateTimeRange,_loadedBookings));
+      try {
+        _page = 0;
+        List<Booking> newPageBookings = await OfficeProvider().getBookingsRangeByOfficeId(_officeId,_selectedDateTimeRange!,_page);
+        _loadedBookings.addAll(newPageBookings);
+        emit(AdminBookingsLoadedState(_selectedDateTimeRange, _loadedBookings));
+      } catch (_) {
+        emit(AdminBookingsErrorState(_selectedDateTimeRange));
       }
     });
   }

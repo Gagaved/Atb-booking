@@ -8,3 +8,4 @@ class AdminBookingsSelectNewRangeEvent extends AdminBookingsEvent{
   AdminBookingsSelectNewRangeEvent(this.newRange);
 }
 class AdminBookingsLoadNextPageEvent extends AdminBookingsEvent {}
+class AdminBookingsUpdateEvent extends AdminBookingsEvent{}
