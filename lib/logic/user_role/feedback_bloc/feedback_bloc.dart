@@ -13,7 +13,7 @@ part 'feedback_state.dart';
 
 class FeedbackBloc extends Bloc<FeedbackEvent, FeedbackState> {
   static Future<List<String>> getFutureTypeList(String? str) async {
-    List<String> type = ["Отзыв", "Жалоба"];
+    List<String> type = ["Отзыв", "Жалоба на место"];
     return type;
   }
 
@@ -264,7 +264,7 @@ class FeedbackBloc extends Bloc<FeedbackEvent, FeedbackState> {
         int? workplaceId = null;
         int? guiltyId = null;
 
-        if (selectedType == "Жалоба") {
+        if (selectedType == "Жалоба на место") {
           feedbackTypeId = 3;
           officeId = selectedOffice!.id;
         }
@@ -431,7 +431,7 @@ class FeedbackBloc extends Bloc<FeedbackEvent, FeedbackState> {
         selectedLevelId = selectedLevel!.id;
       }
 
-      if (selectedType == "Жалоба") {
+      if (selectedType == "Жалоба на место") {
         feedbackTypeId = 3;
         officeId = selectedOffice!.id;
       }
@@ -455,7 +455,7 @@ class FeedbackBloc extends Bloc<FeedbackEvent, FeedbackState> {
             message));
 
         await FeedbackProvider().createFeedbackMessage(message, feedbackTypeId,
-            officeId, selectedLevelId, workplaceId, guiltyId);
+            officeId, selectedLevelId, listOfPlanElements![selectedElementIndex!].id, guiltyId);
 
         emit(FeedbackSuccessState(
             typeFieldVisible!,

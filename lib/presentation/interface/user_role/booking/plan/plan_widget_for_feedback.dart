@@ -1,4 +1,4 @@
-  import 'package:atb_booking/data/models/workspace.dart';
+import 'package:atb_booking/data/models/workspace.dart';
 import 'package:atb_booking/data/services/image_provider.dart';
 import 'package:atb_booking/data/services/network/network_controller.dart';
 import 'package:atb_booking/logic/admin_role/offices/LevelPlanEditor/level_plan_editor_bloc.dart';
@@ -68,9 +68,9 @@ class FeedbackLevelPlan extends StatelessWidget {
                     _transformationController.value.getMaxScaleOnAxis()));
           }
         }
+        ///кидаем наверх плана выбранный
         if (selectedElem != null) elements.add(selectedElem);
 
-        ///кидаем наверх плана выбранный
         print("____________");
         return InteractiveViewer(
           minScale: 0.3,

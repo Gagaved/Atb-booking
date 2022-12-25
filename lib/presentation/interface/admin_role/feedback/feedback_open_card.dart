@@ -1,7 +1,9 @@
 import 'package:atb_booking/data/models/feedback.dart';
 import 'package:atb_booking/data/services/feedback_provider.dart';
 import 'package:atb_booking/logic/admin_role/feedback/feedback_open_card_bloc/feedback_open_card_bloc.dart';
+import 'package:atb_booking/logic/admin_role/offices/LevelPlanEditor/level_plan_editor_bloc.dart';
 import 'package:atb_booking/logic/user_role/people_profile_bloc/people_profile_booking_bloc.dart';
+import 'package:atb_booking/presentation/interface/admin_role/offices/level_editor_page.dart';
 import 'package:atb_booking/presentation/interface/user_role/people/person_profile_screen.dart';
 import 'package:atb_booking/presentation/widgets/elevated_button.dart';
 import 'package:flutter/material.dart';
@@ -275,6 +277,72 @@ class _PlanComplaint extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container();
+    return BlocBuilder<FeedbackOpenCardBloc, FeedbackOpenCardState>(
+      builder: (context, state) {
+        if (state is FeedbackOpenCardLoadedState) {
+          return Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 35),
+            child: MaterialButton(
+              shape: RoundedRectangleBorder(
+                  side: BorderSide(
+                      width: 0, color: Theme.of(context).primaryColor),
+                  borderRadius: BorderRadius.circular(7.0)),
+              onPressed: () {
+                Navigator.of(context).push(PageRouteBuilder(
+                  pageBuilder: (_, animation, secondaryAnimation) =>
+                      MultiBlocProvider(providers: [
+                    BlocProvider<LevelPlanEditorBloc>(
+                      create: (_) => LevelPlanEditorBloc()
+                        ..add(LevelPlanEditorLoadWorkspacesFromServerEvent(
+                            state.feedback.officeLevelId!,
+                            state.feedback.workplaceId)),
+                    ),
+                  ], child: const LevelEditorPage()),
+                  transitionsBuilder:
+                      (context, animation, secondaryAnimation, child) {
+                    const begin = Offset(1.0, 0.0);
+                    const end = Offset.zero;
+                    const curve = Curves.ease;
+
+                    var tween = Tween(begin: begin, end: end)
+                        .chain(CurveTween(curve: curve));
+
+                    return SlideTransition(
+                      position: animation.drive(tween),
+                      child: child,
+                    );
+                  },
+                ));
+              },
+              color: Theme.of(context).primaryColor,
+              child: Container(
+                padding: EdgeInsets.symmetric(horizontal: 5, vertical: 2),
+                height: 40,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Text(
+                      "Показать в редакторе",
+                      style: Theme.of(context).textTheme.titleMedium!.copyWith(
+                            color: Colors.white,
+                          ),
+                    ),
+                    const SizedBox(
+                      width: 5,
+                    ),
+                    const Icon(
+                      Icons.place,
+                      color: Colors.white,
+                    )
+                  ],
+                ),
+              ),
+            ),
+          );
+        } else {
+          return Container();
+        }
+      },
+    );
   }
 }

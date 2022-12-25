@@ -67,8 +67,9 @@ class LevelPlanEditorChangeActiveStatusEvent extends LevelPlanEditorEvent {}
 
 class LevelPlanEditorLoadWorkspacesFromServerEvent extends LevelPlanEditorEvent{
   final int levelId;
+  final int? preselectWorkspaceId;
 
-  LevelPlanEditorLoadWorkspacesFromServerEvent(this.levelId);
+  LevelPlanEditorLoadWorkspacesFromServerEvent(this.levelId, [this.preselectWorkspaceId]);
 }
 class LevelPlanEditorSendChangesToServerEvent extends LevelPlanEditorEvent{
 

@@ -1,4 +1,3 @@
-
 import 'package:atb_booking/data/models/workspace.dart';
 import 'package:atb_booking/data/models/workspace_type.dart';
 import 'package:atb_booking/data/services/image_provider.dart';
@@ -20,7 +19,11 @@ class LevelEditorPage extends StatelessWidget {
     SCALE_FACTOR = MediaQuery.of(pageContext).size.width / 1000.0;
     return WillPopScope(
       onWillPop: () async {
-        pageContext.read<AdminOfficePageBloc>().add(OfficePageReloadEvent());
+        try {
+          pageContext.read<AdminOfficePageBloc>().add(OfficePageReloadEvent());
+        } catch (_) {
+        }
+
         return true;
       },
       child: Scaffold(
@@ -128,8 +131,9 @@ class _LevelPlanEditor extends StatelessWidget {
                       Center(
                           child: CircularProgressIndicator(
                               value: downloadProgress.progress)),
-                  errorWidget: (context, url, error) =>
-                      const Icon(Icons.error,)),
+                  errorWidget: (context, url, error) => const Icon(
+                        Icons.error,
+                      )),
             ),
           );
           elements.add(backgroundImage);
@@ -757,8 +761,8 @@ class _DeleteWorkspaceButton extends StatelessWidget {
               padding: const EdgeInsets.all(5.0),
               child: MaterialButton(
                 shape: RoundedRectangleBorder(
-                    side:
-                        BorderSide(width: 0, color: Theme.of(context).primaryColor),
+                    side: BorderSide(
+                        width: 0, color: Theme.of(context).primaryColor),
                     borderRadius: BorderRadius.circular(7.0)),
                 onPressed: () {
                   showDialog(
@@ -777,14 +781,18 @@ class _DeleteWorkspaceButton extends StatelessWidget {
                     children: [
                       Text(
                         "Удалить место",
-                        style: Theme.of(context).textTheme.titleMedium!.copyWith(
-                          color: Colors.white,
-                        ),
+                        style:
+                            Theme.of(context).textTheme.titleMedium!.copyWith(
+                                  color: Colors.white,
+                                ),
                       ),
                       const SizedBox(
                         width: 5,
                       ),
-                      const Icon(Icons.delete,color: Colors.white,)
+                      const Icon(
+                        Icons.delete,
+                        color: Colors.white,
+                      )
                     ],
                   ),
                 ),
@@ -813,8 +821,8 @@ class _AddInfoButton extends StatelessWidget {
             if (state.selectedElementIndex != null) {
               return MaterialButton(
                 shape: RoundedRectangleBorder(
-                    side:
-                        BorderSide(width: 1, color: Theme.of(context).primaryColor),
+                    side: BorderSide(
+                        width: 1, color: Theme.of(context).primaryColor),
                     borderRadius: BorderRadius.circular(7.0)),
                 onPressed: () {
                   showModalBottomSheet(
@@ -838,14 +846,18 @@ class _AddInfoButton extends StatelessWidget {
                     children: [
                       Text(
                         "Изменить",
-                        style: Theme.of(context).textTheme.titleMedium!.copyWith(
-                          color: Colors.white,
-                        ),
+                        style:
+                            Theme.of(context).textTheme.titleMedium!.copyWith(
+                                  color: Colors.white,
+                                ),
                       ),
                       const SizedBox(
                         width: 5,
                       ),
-                      const Icon(Icons.featured_play_list,color: Colors.white,)
+                      const Icon(
+                        Icons.featured_play_list,
+                        color: Colors.white,
+                      )
                     ],
                   ),
                 ),
@@ -860,6 +872,7 @@ class _AddInfoButton extends StatelessWidget {
     );
   }
 }
+
 class _TitleUnderPlan extends StatelessWidget {
   const _TitleUnderPlan({Key? key}) : super(key: key);
 
@@ -882,9 +895,10 @@ class _TitleUnderPlan extends StatelessWidget {
           return Container(
             child: Text(
               title,
-              style: Theme.of(context).textTheme.headlineSmall?.copyWith(
-                  fontSize: 22,
-                  fontWeight: FontWeight.w300),
+              style: Theme.of(context)
+                  .textTheme
+                  .headlineSmall
+                  ?.copyWith(fontSize: 22, fontWeight: FontWeight.w300),
               textAlign: TextAlign.center,
             ),
           );
@@ -923,17 +937,14 @@ class _LevelNumberField extends StatelessWidget {
                               .textTheme
                               .headlineSmall
                               ?.copyWith(
-
-                                  fontSize: 24,
-                                  fontWeight: FontWeight.w300)),
+                                  fontSize: 24, fontWeight: FontWeight.w300)),
                       const SizedBox(
                         width: 5,
                       ),
                       Container(
-                        height: 60,
-                        width: 0.3,
-                        color: Theme.of(context).colorScheme.surface
-                      )
+                          height: 60,
+                          width: 0.3,
+                          color: Theme.of(context).colorScheme.surface)
                     ],
                   ),
                 ),
@@ -1029,7 +1040,7 @@ class _WorkSpacePhotos extends StatelessWidget {
             height: 200,
             child: state.selectedWorkspacePhotosIds.isNotEmpty
                 ? Scrollbar(
-              thumbVisibility: true,
+                    thumbVisibility: true,
                     child: ListView.builder(
                         scrollDirection: Axis.horizontal,
                         itemCount: state.selectedWorkspacePhotosIds.length,
@@ -1042,42 +1053,49 @@ class _WorkSpacePhotos extends StatelessWidget {
                                 child: Stack(
                                     alignment: Alignment.topRight,
                                     children: [
-                                       Card(
+                                      Card(
                                         child: CachedNetworkImage(
-                                            fit: BoxFit.contain,
-                                            imageUrl: AppImageProvider
-                                                .getImageUrlFromImageId(state
-                                                        .selectedWorkspacePhotosIds[
-                                                    index]),
-                                            httpHeaders: NetworkController()
-                                                .getAuthHeader(),
-                                            progressIndicatorBuilder: (context,
-                                                    url, downloadProgress) =>
-                                                Container(
-                                                  width: 100,
-                                                  child: Center(
-                                                      child:
-                                                          CircularProgressIndicator(
-                                                              value:
-                                                                  downloadProgress
-                                                                      .progress)),
-                                                ),
-                                            errorWidget: (context, url, error) =>
-                                                Container(
-                                                  decoration: BoxDecoration(
-                                                      color: const Color.fromARGB(
-                                                          255, 225, 225, 225),
-                                                      border: Border.all(color: Colors.white),
-                                                      borderRadius: const BorderRadius.all(
-                                                          Radius.circular(5))),
-                                                  width: 100,
-                                                  child: const Center(child: Icon(Icons.error)),
-                                                ),),
+                                          fit: BoxFit.contain,
+                                          imageUrl: AppImageProvider
+                                              .getImageUrlFromImageId(state
+                                                      .selectedWorkspacePhotosIds[
+                                                  index]),
+                                          httpHeaders: NetworkController()
+                                              .getAuthHeader(),
+                                          progressIndicatorBuilder: (context,
+                                                  url, downloadProgress) =>
+                                              Container(
+                                            width: 100,
+                                            child: Center(
+                                                child:
+                                                    CircularProgressIndicator(
+                                                        value: downloadProgress
+                                                            .progress)),
+                                          ),
+                                          errorWidget: (context, url, error) =>
+                                              Container(
+                                            decoration: BoxDecoration(
+                                                color: const Color.fromARGB(
+                                                    255, 225, 225, 225),
+                                                border: Border.all(
+                                                    color: Colors.white),
+                                                borderRadius:
+                                                    const BorderRadius.all(
+                                                        Radius.circular(5))),
+                                            width: 100,
+                                            child: const Center(
+                                                child: Icon(Icons.error)),
+                                          ),
+                                        ),
                                         clipBehavior: Clip.antiAlias,
-                                         shape: RoundedRectangleBorder(
-                                             side: BorderSide(
-                                                 width: 0, color: Theme.of(context).colorScheme.tertiary),
-                                             borderRadius: BorderRadius.circular(3.0)),
+                                        shape: RoundedRectangleBorder(
+                                            side: BorderSide(
+                                                width: 0,
+                                                color: Theme.of(context)
+                                                    .colorScheme
+                                                    .tertiary),
+                                            borderRadius:
+                                                BorderRadius.circular(3.0)),
                                       ),
                                       IconButton(
                                           onPressed: () {
@@ -1088,8 +1106,8 @@ class _WorkSpacePhotos extends StatelessWidget {
                                           },
                                           icon: Container(
                                               decoration: BoxDecoration(
-                                                color:
-                                                Theme.of(context).primaryColor,
+                                                color: Theme.of(context)
+                                                    .primaryColor,
                                                 borderRadius:
                                                     BorderRadius.circular(3),
                                               ),
@@ -1127,7 +1145,8 @@ class _UploadImagePanel extends StatelessWidget {
           MaterialButton(
             padding: EdgeInsets.zero,
             shape: RoundedRectangleBorder(
-                side: BorderSide(width: 1, color: Theme.of(context).primaryColor),
+                side:
+                    BorderSide(width: 1, color: Theme.of(context).primaryColor),
                 borderRadius: BorderRadius.circular(7.0)),
             onPressed: () {
               context.read<LevelPlanEditorBloc>().add(
@@ -1144,10 +1163,15 @@ class _UploadImagePanel extends StatelessWidget {
                   children: [
                     Text(
                       "Выбрать из галереи",
-                      style: Theme.of(context).textTheme.titleMedium!
+                      style: Theme.of(context)
+                          .textTheme
+                          .titleMedium!
                           .copyWith(color: Colors.white, fontSize: 15),
                     ),
-                    const Icon(Icons.image,color: Colors.white,)
+                    const Icon(
+                      Icons.image,
+                      color: Colors.white,
+                    )
                   ],
                 ),
               ),
@@ -1156,7 +1180,8 @@ class _UploadImagePanel extends StatelessWidget {
           MaterialButton(
             padding: EdgeInsets.zero,
             shape: RoundedRectangleBorder(
-                side: BorderSide(width: 1, color: Theme.of(context).primaryColor),
+                side:
+                    BorderSide(width: 1, color: Theme.of(context).primaryColor),
                 borderRadius: BorderRadius.circular(7.0)),
             onPressed: () {
               context.read<LevelPlanEditorBloc>().add(
@@ -1173,10 +1198,15 @@ class _UploadImagePanel extends StatelessWidget {
                   children: [
                     Text(
                       "Сделать фото",
-                      style: Theme.of(context).textTheme.titleMedium!
+                      style: Theme.of(context)
+                          .textTheme
+                          .titleMedium!
                           .copyWith(color: Colors.white, fontSize: 15),
                     ),
-                    const Icon(Icons.add_a_photo,color: Colors.white,)
+                    const Icon(
+                      Icons.add_a_photo,
+                      color: Colors.white,
+                    )
                   ],
                 ),
               ),
@@ -1218,8 +1248,7 @@ class _DescriptionWorkspaceField extends StatelessWidget {
                             .textTheme
                             .headlineSmall
                             ?.copyWith(
-                                fontSize: 20,
-                                fontWeight: FontWeight.w300)),
+                                fontSize: 20, fontWeight: FontWeight.w300)),
                   ),
                 ),
                 Container(
@@ -1243,7 +1272,7 @@ class _DescriptionWorkspaceField extends StatelessWidget {
                     style: Theme.of(context)
                         .textTheme
                         .headlineSmall
-                        ?.copyWith( fontSize: 22),
+                        ?.copyWith(fontSize: 22),
                     maxLines: 4,
                     minLines: 2,
                     maxLength: 1000,
@@ -1294,9 +1323,7 @@ class _NumberOfWorkspacesField extends StatelessWidget {
                                 .textTheme
                                 .headlineSmall
                                 ?.copyWith(
-
-                                    fontSize: 20,
-                                    fontWeight: FontWeight.w300)),
+                                    fontSize: 20, fontWeight: FontWeight.w300)),
                         const SizedBox(
                           width: 5,
                         ),
@@ -1320,7 +1347,8 @@ class _NumberOfWorkspacesField extends StatelessWidget {
                           fillColor: Theme.of(context).backgroundColor,
                           border: const OutlineInputBorder(
                             borderSide: BorderSide.none,
-                            borderRadius: BorderRadius.all(Radius.circular(10.0)),
+                            borderRadius:
+                                BorderRadius.all(Radius.circular(10.0)),
                           ),
                         ),
                         keyboardType: TextInputType.number,
@@ -1334,7 +1362,7 @@ class _NumberOfWorkspacesField extends StatelessWidget {
                         style: Theme.of(context)
                             .textTheme
                             .headlineSmall
-                            ?.copyWith( fontSize: 23),
+                            ?.copyWith(fontSize: 23),
                         //keyboardType: TextInputType.multiline,
                       ),
                     ),
@@ -1387,10 +1415,9 @@ class _ActiveStatusAndButton extends StatelessWidget {
                         width: 5,
                       ),
                       Container(
-                        height: 60,
-                        width: 0.3,
-                        color:Theme.of(context).colorScheme.surface
-                      ),
+                          height: 60,
+                          width: 0.3,
+                          color: Theme.of(context).colorScheme.surface),
                       Container(
                         width: 30,
                       )
@@ -1426,8 +1453,8 @@ class _ActiveStatusAndButton extends StatelessWidget {
                     child: Text(
                       !workspace.isActive ? "Активировать" : "Деактивировать",
                       style: Theme.of(context).textTheme.titleMedium!.copyWith(
-                        color: Colors.white,
-                      ),
+                            color: Colors.white,
+                          ),
                     ),
                   ),
                 ),
@@ -1451,8 +1478,10 @@ class _DeleteLevelConfirmationPopup extends StatelessWidget {
       title: const Text('Удалить этаж?'),
       content: Text(
         'После удаления все созданные брони на этом этаже будут отменены.\nВы уверены что хотите удалить этаж?',
-        style: Theme.of(context).textTheme.headlineSmall?.copyWith(
-             fontSize: 20, fontWeight: FontWeight.w300),
+        style: Theme.of(context)
+            .textTheme
+            .headlineSmall
+            ?.copyWith(fontSize: 20, fontWeight: FontWeight.w300),
       ),
       actions: <Widget>[
         TextButton(
@@ -1462,10 +1491,10 @@ class _DeleteLevelConfirmationPopup extends StatelessWidget {
           ),
           child: Text(
             'Отмена',
-            style: Theme.of(context).textTheme.headlineSmall?.copyWith(
-
-                fontSize: 20,
-                fontWeight: FontWeight.w500),
+            style: Theme.of(context)
+                .textTheme
+                .headlineSmall
+                ?.copyWith(fontSize: 20, fontWeight: FontWeight.w500),
           ),
         ),
         TextButton(
@@ -1474,10 +1503,10 @@ class _DeleteLevelConfirmationPopup extends StatelessWidget {
           },
           child: Text(
             'Удалить',
-            style: Theme.of(context).textTheme.headlineSmall?.copyWith(
-
-                fontSize: 20,
-                fontWeight: FontWeight.w500),
+            style: Theme.of(context)
+                .textTheme
+                .headlineSmall
+                ?.copyWith(fontSize: 20, fontWeight: FontWeight.w500),
           ),
         ),
       ],
@@ -1494,8 +1523,10 @@ class _DeleteWorkspaceConfirmationPopup extends StatelessWidget {
       title: const Text('Удалить место?'),
       content: Text(
         'После удаления все созданные брони этого места будут отменены.\nВы уверены что хотите удалить это место?',
-        style: Theme.of(context).textTheme.headlineSmall?.copyWith(
-            fontSize: 20, fontWeight: FontWeight.w300),
+        style: Theme.of(context)
+            .textTheme
+            .headlineSmall
+            ?.copyWith(fontSize: 20, fontWeight: FontWeight.w300),
       ),
       actions: <Widget>[
         TextButton(
@@ -1504,9 +1535,10 @@ class _DeleteWorkspaceConfirmationPopup extends StatelessWidget {
           },
           child: Text(
             'Отмена',
-            style: Theme.of(context).textTheme.headlineSmall?.copyWith(
-                fontSize: 20,
-                fontWeight: FontWeight.w500),
+            style: Theme.of(context)
+                .textTheme
+                .headlineSmall
+                ?.copyWith(fontSize: 20, fontWeight: FontWeight.w500),
           ),
         ),
         TextButton(
@@ -1518,9 +1550,10 @@ class _DeleteWorkspaceConfirmationPopup extends StatelessWidget {
           },
           child: Text(
             'Удалить',
-            style: Theme.of(context).textTheme.headlineSmall?.copyWith(
-                fontSize: 20,
-                fontWeight: FontWeight.w500),
+            style: Theme.of(context)
+                .textTheme
+                .headlineSmall
+                ?.copyWith(fontSize: 20, fontWeight: FontWeight.w500),
           ),
         ),
       ],
@@ -1537,8 +1570,10 @@ class _DeactivateWorkplaceConfirmationPopup extends StatelessWidget {
       title: const Text('Деактивировать?'),
       content: Text(
         'Все созданные брони на это место будут отменены и создать новые бронирования на это место будет нельзя,\nВы уверены что хотите деактивировать рабочее место?',
-        style: Theme.of(context).textTheme.headlineSmall?.copyWith(
-          fontSize: 19, fontWeight: FontWeight.w300),
+        style: Theme.of(context)
+            .textTheme
+            .headlineSmall
+            ?.copyWith(fontSize: 19, fontWeight: FontWeight.w300),
       ),
       actions: <Widget>[
         TextButton(
@@ -1547,10 +1582,10 @@ class _DeactivateWorkplaceConfirmationPopup extends StatelessWidget {
           },
           child: Text(
             'Отмена',
-            style: Theme.of(context).textTheme.headlineSmall?.copyWith(
-
-                fontSize: 18,
-                fontWeight: FontWeight.w500),
+            style: Theme.of(context)
+                .textTheme
+                .headlineSmall
+                ?.copyWith(fontSize: 18, fontWeight: FontWeight.w500),
           ),
         ),
         TextButton(
@@ -1562,10 +1597,10 @@ class _DeactivateWorkplaceConfirmationPopup extends StatelessWidget {
           },
           child: Text(
             'Деактивировать',
-            style: Theme.of(context).textTheme.headlineSmall?.copyWith(
-
-                fontSize: 18,
-                fontWeight: FontWeight.w500),
+            style: Theme.of(context)
+                .textTheme
+                .headlineSmall
+                ?.copyWith(fontSize: 18, fontWeight: FontWeight.w500),
           ),
         ),
       ],
@@ -1586,8 +1621,8 @@ class _UploadBackgroundImageButton extends StatelessWidget {
             if (state.selectedElementIndex == null) {
               return MaterialButton(
                 shape: RoundedRectangleBorder(
-                    side:
-                        BorderSide(width: 1, color: Theme.of(context).primaryColor),
+                    side: BorderSide(
+                        width: 1, color: Theme.of(context).primaryColor),
                     borderRadius: BorderRadius.circular(7.0)),
                 onPressed: () {
                   context
@@ -1603,15 +1638,19 @@ class _UploadBackgroundImageButton extends StatelessWidget {
                       Text(
                         "Изменить изображение\n"
                         "на заднем плане",
-                        style: Theme.of(context).textTheme.titleMedium!.copyWith(
-                          color: Colors.white,
-                        ),
+                        style:
+                            Theme.of(context).textTheme.titleMedium!.copyWith(
+                                  color: Colors.white,
+                                ),
                         textAlign: TextAlign.right,
                       ),
                       const SizedBox(
                         width: 5,
                       ),
-                      const Icon(Icons.image,color: Colors.white,)
+                      const Icon(
+                        Icons.image,
+                        color: Colors.white,
+                      )
                     ],
                   ),
                 ),

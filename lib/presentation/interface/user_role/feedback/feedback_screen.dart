@@ -74,7 +74,24 @@ class FeedBackScreen extends StatelessWidget {
                         builder: (context, state) {
                           if (state is FeedbackMainState) {
                             if (state.workplaceFieldVisible) {
-                              return const FeedbackLevelPlan();
+                              return Column(
+                                children: [
+                                  const FeedbackLevelPlan(),
+                                  if (state.selectedElementIndex != null) ...[
+                                    SizedBox(height: 5),
+                                    Text(
+                                      state
+                                          .listOfPlanElements![
+                                              state.selectedElementIndex!]
+                                          .type
+                                          .type,
+                                      style: Theme.of(context)
+                                          .textTheme
+                                          .headlineSmall,
+                                    ),
+                                  ],
+                                ],
+                              );
                             } else {
                               return const Center();
                             }
@@ -86,11 +103,11 @@ class FeedBackScreen extends StatelessWidget {
 
                   /// Поля для сообщения
                   const _MessageField(),
-                  const SizedBox(height: 45),
+                  const SizedBox(height: 25),
 
                   /// Кнопка отправить
                   _Button(),
-                  const SizedBox(height: 10)
+                  const SizedBox(height: 70)
                 ]),
           ),
         ),
@@ -102,7 +119,7 @@ class FeedBackScreen extends StatelessWidget {
 class _TypeField extends StatelessWidget {
   _TypeField();
   Future<List<String>> getFutureTypeList(String? str) async {
-    List<String> type = ["Отзыв", "Жалоба"];
+    List<String> type = ["Отзыв", "Жалоба на место"];
     return type;
   }
 
@@ -129,12 +146,12 @@ class _TypeField extends StatelessWidget {
                       style: Theme.of(context)
                           .textTheme
                           .headlineSmall
-                          ?.copyWith( fontSize: 20),
+                          ?.copyWith(fontSize: 20),
                       // decoration: const InputDecoration(
                       //   border: OutlineInputBorder(),
                       //   labelText: "Выберите тип обращения...",
                       // ),
-                      decoration:InputDecoration(
+                      decoration: InputDecoration(
                         hintText: "Выберите тип обращения...",
                         filled: true,
                         fillColor: Theme.of(context).backgroundColor,
@@ -142,7 +159,8 @@ class _TypeField extends StatelessWidget {
                           borderSide: BorderSide.none,
                           borderRadius: BorderRadius.all(Radius.circular(10.0)),
                         ),
-                        suffixIcon: Icon(Icons.arrow_drop_down,color: Theme.of(context).primaryColor),
+                        suffixIcon: Icon(Icons.arrow_drop_down,
+                            color: Theme.of(context).primaryColor),
                       ),
                       controller: FeedBackScreen.typeInputController,
                     ),
@@ -264,7 +282,7 @@ class _OfficeField extends StatelessWidget {
                 style: Theme.of(context)
                     .textTheme
                     .headlineSmall
-                    ?.copyWith( fontSize: 20),
+                    ?.copyWith(fontSize: 20),
                 decoration: InputDecoration(
                   hintText: "Выберите офис",
                   filled: true,
@@ -328,7 +346,7 @@ class _LevelField extends StatelessWidget {
                 style: Theme.of(context)
                     .textTheme
                     .headlineSmall
-                    ?.copyWith( fontSize: 20),
+                    ?.copyWith(fontSize: 20),
                 decoration: InputDecoration(
                   hintText: "Этаж",
                   filled: true,
@@ -397,8 +415,7 @@ class _MessageField extends StatelessWidget {
                             .textTheme
                             .headlineSmall
                             ?.copyWith(
-                                fontSize: 22,
-                                fontWeight: FontWeight.w300)),
+                                fontSize: 22, fontWeight: FontWeight.w300)),
                   ),
                   SizedBox(
                     width: double.infinity,
@@ -426,7 +443,7 @@ class _MessageField extends StatelessWidget {
                         style: Theme.of(context)
                             .textTheme
                             .headlineSmall
-                            ?.copyWith( fontSize: 20),
+                            ?.copyWith(fontSize: 20),
                         maxLines: 20,
                         minLines: 1,
                         maxLength: 1000,
