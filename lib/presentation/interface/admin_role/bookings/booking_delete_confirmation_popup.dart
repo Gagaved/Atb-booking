@@ -15,10 +15,11 @@ class BookingDeleteDialog extends StatelessWidget {
           insetPadding:
               const EdgeInsets.symmetric(vertical: 30, horizontal: 30),
           content: Text(
-            'Вы действительно хотите отменить  бонирование?',
-            style: Theme.of(context).textTheme.headlineSmall?.copyWith(
-                fontSize: 20,
-                fontWeight: FontWeight.w300),
+            'Вы действительно хотите отменить бонирование?',
+            style: Theme.of(context)
+                .textTheme
+                .headlineSmall
+                ?.copyWith(fontSize: 20, fontWeight: FontWeight.w300),
           ),
           actions: <Widget>[
             TextButton(

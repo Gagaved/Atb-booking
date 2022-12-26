@@ -9,18 +9,20 @@ import 'package:meta/meta.dart';
 part 'admin_person_booking_list_event.dart';
 part 'admin_person_booking_list_state.dart';
 
-class AdminPersonBookingListBloc extends Bloc<AdminPersonBookingListEvent, AdminPersonBookingListState> {
+class AdminPersonBookingListBloc
+    extends Bloc<AdminPersonBookingListEvent, AdminPersonBookingListState> {
   final User user;
-  List<Booking>bookingList = [];
-  bool isGuest= false;
-  bool isHolder =true;
-  AdminPersonBookingListBloc(this.user) : super(AdminPersonBookingListLoadingState()) {
-    on<AdminPersonBookingLoadBookingsEvent>((event,emit) async {
+  List<Booking> bookingList = [];
+  bool isGuest = false;
+  bool isHolder = true;
+  AdminPersonBookingListBloc(this.user)
+      : super(AdminPersonBookingListLoadingState()) {
+    on<AdminPersonBookingLoadBookingsEvent>((event, emit) async {
       emit(AdminPersonBookingListLoadingState());
-      try{
-        bookingList = await BookingProvider().getBookingsByUserId(user.id,isHolder:isHolder,isGuest:isGuest);
-        emit(AdminPersonBookingListLoadedState(user,bookingList));
-      }catch(_){
+      try {
+        bookingList = await BookingProvider().getBookingsByUserId(user.id, isHolder: isHolder, isGuest: isGuest);
+        emit(AdminPersonBookingListLoadedState(user, bookingList));
+      } catch (_) {
         emit(AdminPersonBookingListErrorState());
       }
     });

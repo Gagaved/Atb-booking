@@ -1,7 +1,9 @@
 import 'package:atb_booking/logic/auth_bloc/auth_bloc.dart';
+import 'package:atb_booking/logic/user_role/profile_bloc/profile_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../widgets/elevated_button.dart';
+
 class Auth extends StatelessWidget {
   const Auth({super.key});
 
@@ -15,6 +17,7 @@ class Auth extends StatelessWidget {
         listener: (context, state) {
           if (state is AuthUserSuccessState) {
             Navigator.of(context).pushReplacementNamed('/home');
+            ProfileBloc().add(ProfileLoadEvent());
           } else if (state is AuthAdminSuccessState) {
             Navigator.of(context).pushReplacementNamed('/adminHome');
           }

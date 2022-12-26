@@ -1,10 +1,12 @@
 import 'package:atb_booking/data/services/image_provider.dart';
 import 'package:atb_booking/data/services/network/network_controller.dart';
+import 'package:atb_booking/logic/notifications/notifications_bloc.dart';
 import 'package:atb_booking/logic/user_role/booking/booking_list_bloc/booking_list_bloc.dart';
 import 'package:atb_booking/logic/user_role/feedback_bloc/feedback_bloc.dart';
 import 'package:atb_booking/logic/user_role/profile_bloc/profile_bloc.dart';
 import 'package:atb_booking/presentation/interface/auth/auth_screen.dart';
 import 'package:atb_booking/presentation/interface/user_role/feedback/feedback_screen.dart';
+import 'package:atb_booking/presentation/interface/user_role/profile/notifications/notifications.dart';
 import 'package:atb_booking/presentation/interface/user_role/profile/pdf_file_list.dart';
 import 'package:atb_booking/presentation/widgets/elevated_button.dart';
 import 'package:cached_network_image/cached_network_image.dart';
@@ -13,18 +15,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-
-void _bubbleTransition(BuildContext context) async {
-  await Navigator.push(
-    context,
-    MaterialPageRoute(builder: (context) {
-      return BlocProvider<FeedbackBloc>(
-        create: (context) => FeedbackBloc(),
-        child: const FeedBackScreen(),
-      );
-    }),
-  );
-}
 
 class ProfileScreen extends StatelessWidget {
   const ProfileScreen({super.key});
@@ -237,6 +227,7 @@ class _UserBubbleButton extends StatelessWidget {
       padding: const EdgeInsets.symmetric(horizontal: 30),
       child: Column(
         children: [
+          /// Обратная связь
           GestureDetector(
             onTap: () {
               _bubbleTransition(context);
@@ -246,6 +237,18 @@ class _UserBubbleButton extends StatelessWidget {
                 subTitle: "Пожаловаться или оставить отзыв"),
           ),
           const SizedBox(height: 25),
+
+          /// Уведомления
+          GestureDetector(
+            onTap: () {
+              _openNotificationsList(context);
+            },
+            child: _NotificationsBtn(
+                title: "Уведомления", subTitle: "Уведомления и оповещения"),
+          ),
+          const SizedBox(height: 25),
+
+          /// PDF Files
           GestureDetector(
             onTap: () {
               _openPDFList(context);
@@ -255,6 +258,75 @@ class _UserBubbleButton extends StatelessWidget {
           ),
         ],
       ),
+    );
+  }
+}
+
+class _NotificationsBtn extends _UserBubbleBtn {
+  _NotificationsBtn({required super.title, required super.subTitle});
+
+  @override
+  Widget build(BuildContext context) {
+    return BlocBuilder<ProfileBloc, ProfileState>(
+      builder: (context, state) {
+        return Container(
+          decoration: BoxDecoration(
+            color: Theme.of(context).backgroundColor,
+            borderRadius: BorderRadius.circular(15),
+            boxShadow: [
+              BoxShadow(
+                color: Colors.grey.withOpacity(0.2),
+                spreadRadius: 2,
+                blurRadius: 3,
+                offset: const Offset(0, 0),
+              ),
+            ],
+          ),
+          padding: const EdgeInsets.only(
+            top: 10,
+            bottom: 10,
+            left: 25,
+          ),
+          width: double.infinity,
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+                Text(
+                  title,
+                ),
+                const SizedBox(
+                  height: 5,
+                ),
+                Text(
+                  subTitle,
+                  style: Theme.of(context).textTheme.bodySmall,
+                )
+              ]),
+              if (state is ProfileLoadedState && state.notificationsList.isNotEmpty) ...[
+                Container(
+                  width: 40,
+                  height: 40,
+                  decoration: BoxDecoration(
+                      color: Colors.white,
+                      border: Border.all(color: Colors.white),
+                      borderRadius:
+                          const BorderRadius.all(Radius.circular(20))),
+                  child: Center(
+                      child: Text(
+                    '+${state.notificationsList.length}',
+                    style: Theme.of(context)
+                        .textTheme
+                        .titleMedium!
+                        .copyWith(color: Theme.of(context).primaryColor),
+                  )),
+                ),
+              ],
+              const Icon(Icons.keyboard_arrow_right_sharp)
+            ],
+          ),
+        );
+      },
     );
   }
 }
@@ -313,4 +385,24 @@ class _UserBubbleBtn extends StatelessWidget {
 void _openPDFList(BuildContext context) {
   Navigator.of(context)
       .push(MaterialPageRoute(builder: ((context) => PDFListPage())));
+}
+
+void _openNotificationsList(BuildContext context) {
+  Navigator.of(context).push(MaterialPageRoute(
+      builder: ((context) => BlocProvider(
+            create: (context) => NotificationsBloc(),
+            child: NotificationsPage(),
+          ))));
+}
+
+void _bubbleTransition(BuildContext context) async {
+  await Navigator.push(
+    context,
+    MaterialPageRoute(builder: (context) {
+      return BlocProvider<FeedbackBloc>(
+        create: (context) => FeedbackBloc(),
+        child: const FeedBackScreen(),
+      );
+    }),
+  );
 }

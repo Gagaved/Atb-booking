@@ -9,7 +9,9 @@ class ProfileLoadingState extends ProfileState {}
 
 class ProfileLoadedState extends ProfileState {
   final User userPerson;
-  ProfileLoadedState({required this.userPerson});
+  final List<NotificationsModel> notificationsList;
+  ProfileLoadedState(
+      {required this.userPerson, required this.notificationsList});
 }
 
 class ProfileErrorState extends ProfileState {}
