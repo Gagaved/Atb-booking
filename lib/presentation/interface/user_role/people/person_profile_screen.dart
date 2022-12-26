@@ -58,66 +58,64 @@ class PersonProfileScreen extends StatelessWidget {
                     ),
                   ),
                 ),
-                Expanded(
-                  child: Container(
-                    padding: const EdgeInsets.all(10.0),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Container(
-                          decoration: BoxDecoration(
-                            color: AtbAdditionalColors.black7,
-                            borderRadius: BorderRadius.circular(20),
-                          ),
-                          child: Padding(
-                            padding:
-                                const EdgeInsets.symmetric(horizontal: 8.0),
-                            child: Text(
-                              user.fullName,
-                              style: Theme.of(context)
-                                  .textTheme
-                                  .bodyLarge!
-                                  .copyWith(
-                                    fontWeight: FontWeight.w600,
-                                    height: 0,
-                                  ),
-                            ),
+                Container(
+                  padding: const EdgeInsets.all(10.0),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Container(
+                        decoration: BoxDecoration(
+                          color: AtbAdditionalColors.black7,
+                          borderRadius: BorderRadius.circular(20),
+                        ),
+                        child: Padding(
+                          padding:
+                              const EdgeInsets.symmetric(horizontal: 8.0),
+                          child: Text(
+                            user.fullName,
+                            style: Theme.of(context)
+                                .textTheme
+                                .bodyLarge!
+                                .copyWith(
+                                  fontWeight: FontWeight.w600,
+                                  height: 0,
+                                ),
                           ),
                         ),
-                        Container(
-                          child: Padding(
-                            padding:
-                                const EdgeInsets.symmetric(horizontal: 8.0),
-                            child: Text(
-                              user.jobTitle,
-                              style: Theme.of(context)
-                                  .textTheme
-                                  .bodyMedium!
-                                  .copyWith(
-                                    fontWeight: FontWeight.w300,
-                                    height: 0,
-                                  ),
-                            ),
+                      ),
+                      Container(
+                        child: Padding(
+                          padding:
+                              const EdgeInsets.symmetric(horizontal: 8.0),
+                          child: Text(
+                            user.jobTitle,
+                            style: Theme.of(context)
+                                .textTheme
+                                .bodyMedium!
+                                .copyWith(
+                                  fontWeight: FontWeight.w300,
+                                  height: 0,
+                                ),
                           ),
                         ),
-                        Container(
-                          child: Padding(
-                            padding:
-                                const EdgeInsets.symmetric(horizontal: 8.0),
-                            child: Text(
-                              user.email,
-                              style: Theme.of(context)
-                                  .textTheme
-                                  .bodyMedium!
-                                  .copyWith(
-                                    fontWeight: FontWeight.w300,
-                                    height: 0,
-                                  ),
-                            ),
+                      ),
+                      Container(
+                        child: Padding(
+                          padding:
+                              const EdgeInsets.symmetric(horizontal: 8.0),
+                          child: Text(
+                            user.email,
+                            style: Theme.of(context)
+                                .textTheme
+                                .bodyMedium!
+                                .copyWith(
+                                  fontWeight: FontWeight.w300,
+                                  height: 0,
+                                ),
                           ),
                         ),
-                      ],
-                    ),
+                      ),
+                    ],
                   ),
                 ),
               ],
@@ -142,35 +140,33 @@ class PersonProfileScreen extends StatelessWidget {
                                   10.0, 00.0, 10.0, 0),
                               child: Stack(children: <Widget>[
                                 Scrollbar(
-                                  child: Expanded(
-                                    child: ListView.builder(
-                                      controller: scrollController,
-                                      itemCount: state.bookingList.length,
-                                      itemBuilder: (context, index) {
-                                        final item = state.bookingList[index];
-                                        return GestureDetector(
-                                          onTap: () {
-                                            PeopleProfileBookingBloc().add(
-                                                PeopleProfileBookingCardTapEvent(
-                                                    item.id));
-                                            Navigator.of(context).push(
-                                                MaterialPageRoute(
-                                                    builder: (context) =>
-                                                        BlocProvider(
-                                                          create: (context) =>
-                                                              BookingDetailsBloc(
-                                                                  item.id,
-                                                                  false),
-                                                          child:
-                                                              const BookingDetailsScreen(),
-                                                        )));
-                                          },
-                                          child: getBookingCard(
-                                              state.bookingList[index],
-                                              state.mapOfTypes),
-                                        );
-                                      },
-                                    ),
+                                  child: ListView.builder(
+                                    controller: scrollController,
+                                    itemCount: state.bookingList.length,
+                                    itemBuilder: (context, index) {
+                                      final item = state.bookingList[index];
+                                      return GestureDetector(
+                                        onTap: () {
+                                          PeopleProfileBookingBloc().add(
+                                              PeopleProfileBookingCardTapEvent(
+                                                  item.id));
+                                          Navigator.of(context).push(
+                                              MaterialPageRoute(
+                                                  builder: (context) =>
+                                                      BlocProvider(
+                                                        create: (context) =>
+                                                            BookingDetailsBloc(
+                                                                item.id,
+                                                                false),
+                                                        child:
+                                                            const BookingDetailsScreen(),
+                                                      )));
+                                        },
+                                        child: getBookingCard(
+                                            state.bookingList[index],
+                                            state.mapOfTypes),
+                                      );
+                                    },
                                   ),
                                 ),
                               ]),
