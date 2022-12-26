@@ -454,8 +454,14 @@ class FeedbackBloc extends Bloc<FeedbackEvent, FeedbackState> {
             selectedElementIndex,
             message));
 
-        await FeedbackProvider().createFeedbackMessage(message, feedbackTypeId,
-            officeId, selectedLevelId, listOfPlanElements![selectedElementIndex!].id, guiltyId);
+            if(selectedElementIndex != null){
+              await FeedbackProvider().createFeedbackMessage(message, feedbackTypeId,
+                  officeId, selectedLevelId, listOfPlanElements![selectedElementIndex!].id, guiltyId);
+            }else{
+              await FeedbackProvider().createFeedbackMessage(message, feedbackTypeId,
+                  officeId, selectedLevelId, null, guiltyId);
+            }
+
 
         emit(FeedbackSuccessState(
             typeFieldVisible!,
