@@ -126,7 +126,7 @@ class AdminPersonBookingListPage extends StatelessWidget {
       body: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          Expanded(child: _PersonInfoWidget()),
+          _PersonInfoWidget(),
           const _BookingList(),
         ],
       ),
