@@ -60,6 +60,7 @@ class PlanElementWidget extends StatelessWidget {
             ),
           ),
           onTap: () {
+            print("$isActive");
             if (isActive) {
               PlanBloc().add(PlanTapElementEvent(workspace));
             }

@@ -43,7 +43,7 @@ class NewOfficePage extends StatelessWidget {
                   _OfficeAddress(
                     state: state,
                   ),
-                  _BookingRange(state: state),
+                  _BookingRange(state: state,),
                   _WorkTimeRange(state: state),
                   if (state.buttonIsActive) const _CreateButton()
                 ],
@@ -245,15 +245,17 @@ class _BookingRange extends StatelessWidget {
                 Container(
                   height: 60,
                   width: 0.3,
+                  color: Theme.of(context).backgroundColor,
                 )
               ],
             ),
           ),
           Expanded(
-            flex: 3,
+            flex: 5,
             child: Padding(
-              padding: const EdgeInsets.only(left: 10),
+              padding: const EdgeInsets.only(left: 20),
               child: TextField(
+                textAlign: TextAlign.center,
                 decoration: InputDecoration(
                   filled: true,
                   fillColor: Theme.of(context).backgroundColor,
@@ -262,9 +264,9 @@ class _BookingRange extends StatelessWidget {
                     borderRadius: BorderRadius.all(Radius.circular(10.0)),
                   ),
                 ),
-                textAlign:TextAlign.center ,
                 keyboardType: TextInputType.number,
                 onTap: () {
+                  print('tap');
                   context
                       .read<NewOfficePageBloc>()
                       .add(NewOfficePageUpdateFieldsEvent());
@@ -275,11 +277,16 @@ class _BookingRange extends StatelessWidget {
                       .read<NewOfficePageBloc>()
                       .add(NewOfficeBookingRangeChangeEvent(int.parse(form)));
                 },
+                onSubmitted: (form) {
+                  context
+                      .read<NewOfficePageBloc>()
+                      .add(NewOfficePageUpdateFieldsEvent());
+                },
                 controller: _bookingRangeController,
                 style: Theme.of(context)
                     .textTheme
                     .headlineSmall
-                    ?.copyWith( fontSize: 23),
+                    ?.copyWith( fontSize: 22),
                 //keyboardType: TextInputType.multiline,
               ),
             ),
@@ -289,7 +296,6 @@ class _BookingRange extends StatelessWidget {
     );
   }
 }
-
 class _WorkTimeRange extends StatelessWidget {
   final NewOfficePageLoadedState state;
 

@@ -25,7 +25,6 @@ class NetworkController {
   Future<String> getAccessToken() async {
     return await SecurityStorage().getAccessTokenStorage();
   }
-
   Map<String, String> getAuthHeader() {
     Map<String, String> headers = {};
     var token = SecurityStorage().getAccessTokenStorageCYNC();
