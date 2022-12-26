@@ -154,7 +154,7 @@ class _LevelPlanEditorElementWidget extends StatelessWidget {
                     child: Padding(
                       padding:
                           EdgeInsets.all(6 * FeedbackLevelPlan.SCALE_FACTOR),
-                      child: Container(child: data.type.cachedNetworkImage),
+                      child: Container(child: data.type.image),
                     ),
                   ),
                 ),

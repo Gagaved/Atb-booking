@@ -16,19 +16,11 @@ class WorkspaceTypeRepository {
       WorkspaceType(
           1,
           "Стол с компьютером",
-          CachedNetworkImage(
-            imageUrl: "https://cdn-icons-png.flaticon.com/512/198/198163.png",
-            placeholder: (context, url) => const CircularProgressIndicator(),
-            errorWidget: (context, url, error) => const Icon(Icons.error),
-          )),
+          Image.asset("assets/workspace1.png")),
       WorkspaceType(
           2,
           "Переговорка",
-          CachedNetworkImage(
-            imageUrl: "http://clipart-library.com/img/1997756.png",
-            placeholder: (context, url) => const CircularProgressIndicator(),
-            errorWidget: (context, url, error) => const Icon(Icons.error),
-          )),
+          Image.asset("assets/workspace2.png")),
     ]);
     var result = { for (var v in list) v.id: v};
     return result;

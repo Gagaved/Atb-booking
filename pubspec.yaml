@@ -54,7 +54,7 @@ dependencies:
   image_picker: 0.8.6
   shimmer: ^2.0.0
   syncfusion_flutter_pdfviewer: ^20.4.38
-
+  flutter_svg: ^1.1.6
 
 dev_dependencies:
   # The "flutter_lints" package below contains a set of recommended lints to
@@ -74,12 +74,11 @@ flutter:
     - assets/pdf_files/general_remote_access.pdf
     - assets/pdf_files/mac_access.pdf
     - assets/pdf_files/windows_access.pdf
-    - assets/workplace.png
-    - assets/workplacelogo.png
-    - assets/map.png
-    - assets/team_card.png
+    - assets/workspace1.png
+    - assets/workspace2.png
     - assets/avatar.jpg
     - assets/atb_logo.png
+    - assets/atblogo.svg
   # The following line ensures that the Material Icons font is
   # included with your application, so that you can use the icons in
   # the material Icons class.

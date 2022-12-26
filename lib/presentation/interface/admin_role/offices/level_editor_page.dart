@@ -242,7 +242,7 @@ class _LevelPlanEditorSelectedElementWidget extends StatelessWidget {
                     // height: data.height * LevelEditorPage.SCALE_FACTOR,
                     child: Padding(
                       padding: EdgeInsets.all(6 * LevelEditorPage.SCALE_FACTOR),
-                      child: Container(child: data.type.cachedNetworkImage),
+                      child: Container(child: data.type.image),
                     ),
                   ),
                 ),
@@ -669,7 +669,7 @@ class _LevelPlanEditorUnselectedElementWidget extends StatelessWidget {
                     // height: data.height * LevelEditorPage.SCALE_FACTOR,
                     child: Padding(
                       padding: EdgeInsets.all(6 * LevelEditorPage.SCALE_FACTOR),
-                      child: Container(child: data.type.cachedNetworkImage),
+                      child: Container(child: data.type.image),
                     ),
                   ),
                 ),
@@ -735,7 +735,7 @@ class _HorizontalWorkspaceBar extends StatelessWidget {
                         child: Padding(
                           padding: const EdgeInsets.all(5.0),
                           child:
-                              Container(child: types[index].cachedNetworkImage),
+                              Container(child: types[index].image),
                         ),
                       ),
                     ),

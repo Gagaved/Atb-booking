@@ -2,7 +2,9 @@ import 'package:atb_booking/logic/auth_bloc/auth_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../widgets/elevated_button.dart';
-
+import 'package:flutter/material.dart';
+import 'package:flutter_svg/avd.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 class Auth extends StatelessWidget {
   const Auth({super.key});
 
@@ -59,7 +61,12 @@ class _AuthTitle extends StatelessWidget {
       padding: const EdgeInsets.symmetric(vertical: 15),
       child: Column(
         children: [
-          Center(child: Image.asset("assets/atb_logo.png")),
+          Center(child: SvgPicture.asset(
+              "assets/atblogo.svg",
+              semanticsLabel: 'Acme Logo',
+            // width: 300,
+            // height: 300,
+          )),
           Text(
             "Авторизация",
             style: Theme.of(context)
@@ -184,12 +191,10 @@ class __FormWidgetState extends State<_FormWidget> {
                           });
                         }),
                       ),
-                      const Expanded(
-                        child: Text(
-                          "Запомнить логин и пароль?",
-                          textAlign: TextAlign.center,
-                          style: TextStyle(fontSize: 18),
-                        ),
+                      const Text(
+                        "Запомнить меня",
+                        textAlign: TextAlign.center,
+                        style: TextStyle(fontSize: 18),
                       ),
                     ],
                   ),

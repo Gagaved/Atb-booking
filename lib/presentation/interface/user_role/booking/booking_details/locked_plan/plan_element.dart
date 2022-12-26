@@ -12,7 +12,7 @@ class LockedPlanElement extends StatelessWidget {
   final double y;
   final double height;
   final double width;
-  final CachedNetworkImage cachedNetworkImage;
+  final Image cachedNetworkImage;
 
   const LockedPlanElement(
       {super.key,
