@@ -5,6 +5,7 @@ import '../../widgets/elevated_button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/avd.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+
 class Auth extends StatelessWidget {
   const Auth({super.key});
 
@@ -27,19 +28,63 @@ class Auth extends StatelessWidget {
           body: Center(
             child: SingleChildScrollView(
               child: Container(
-                height: 650,
-                padding: const EdgeInsets.only(top: 30, right: 50, left: 50),
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    const Expanded(flex: 1, child: _AuthTitle()),
-                    Expanded(
-                      flex: 2,
-                      child: _FormWidget(
-                        scrollController: _scrollController,
+                height: 560,
+                padding: const EdgeInsets.only(top: 30),
+                child: Center(
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.symmetric(vertical: 8.0),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            Center(
+                                child: Image.asset(
+                              "assets/atb_logo.png",
+                              width: 100,
+                              height: 100,
+                            )),
+                            Column(
+                              mainAxisAlignment:MainAxisAlignment.center,
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  "АТБ",
+                                  style: Theme.of(context)
+                                      .textTheme
+                                      .titleLarge!
+                                      .copyWith(
+                                      fontSize: 35,
+                                      fontWeight: FontWeight.w800),
+                                ),
+                                Text(
+                                  "Бронирование",
+                                  style: Theme.of(context)
+                                      .textTheme
+                                      .titleLarge!
+                                      .copyWith(
+                                      fontSize: 32,
+                                      fontWeight: FontWeight.w700),
+                                )
+                              ],
+                            )
+                          ],
+                        ),
                       ),
-                    ),
-                  ],
+                      Expanded(
+                        flex: 1,
+                        child: Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 30.0),
+                          child: _FormWidget(
+                            scrollController: _scrollController,
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
                 ),
               ),
             ),
@@ -60,21 +105,7 @@ class _AuthTitle extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 15),
       child: Column(
-        children: [
-          // Center(child: SvgPicture.asset(
-          //     "assets/atblogo.svg",
-          //     semanticsLabel: 'Acme Logo',
-          //   // width: 300,
-          //   // height: 300,
-          // )),
-          Text(
-            "Авторизация",
-            style: Theme.of(context)
-                .textTheme
-                .displayMedium
-                ?.copyWith(fontWeight: FontWeight.w500,),
-          ),
-        ],
+        children: [],
       ),
     );
   }
@@ -157,7 +188,8 @@ class __FormWidgetState extends State<_FormWidget> {
                     Text(
                       _errorTextLogin,
                       style: TextStyle(
-                          color: Theme.of(context).colorScheme.error, fontSize: 17),
+                          color: Theme.of(context).colorScheme.error,
+                          fontSize: 17),
                     ),
                     const SizedBox(height: 5)
                   ]
@@ -167,7 +199,8 @@ class __FormWidgetState extends State<_FormWidget> {
                     Text(
                       _errorTextInput,
                       style: TextStyle(
-                          color: Theme.of(context).colorScheme.error, fontSize: 17),
+                          color: Theme.of(context).colorScheme.error,
+                          fontSize: 17),
                     ),
                     const SizedBox(height: 5)
                   ]
@@ -176,7 +209,8 @@ class __FormWidgetState extends State<_FormWidget> {
                     Text(
                       state.message,
                       style: TextStyle(
-                          color: Theme.of(context).colorScheme.error, fontSize: 17),
+                          color: Theme.of(context).colorScheme.error,
+                          fontSize: 17),
                     ),
                     const SizedBox(height: 5)
                   ],
