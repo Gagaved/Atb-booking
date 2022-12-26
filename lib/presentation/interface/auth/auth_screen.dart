@@ -61,12 +61,12 @@ class _AuthTitle extends StatelessWidget {
       padding: const EdgeInsets.symmetric(vertical: 15),
       child: Column(
         children: [
-          Center(child: SvgPicture.asset(
-              "assets/atblogo.svg",
-              semanticsLabel: 'Acme Logo',
-            // width: 300,
-            // height: 300,
-          )),
+          // Center(child: SvgPicture.asset(
+          //     "assets/atblogo.svg",
+          //     semanticsLabel: 'Acme Logo',
+          //   // width: 300,
+          //   // height: 300,
+          // )),
           Text(
             "Авторизация",
             style: Theme.of(context)
