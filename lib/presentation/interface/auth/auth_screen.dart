@@ -1,4 +1,5 @@
 import 'package:atb_booking/logic/auth_bloc/auth_bloc.dart';
+import 'package:atb_booking/logic/user_role/profile_bloc/profile_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../widgets/elevated_button.dart';
@@ -16,6 +17,7 @@ class Auth extends StatelessWidget {
         listener: (context, state) {
           if (state is AuthUserSuccessState) {
             Navigator.of(context).pushReplacementNamed('/home');
+            ProfileBloc().add(ProfileLoadEvent());
           } else if (state is AuthAdminSuccessState) {
             Navigator.of(context).pushReplacementNamed('/adminHome');
           }
@@ -62,10 +64,9 @@ class _AuthTitle extends StatelessWidget {
           Center(child: Image.asset("assets/atb_logo.png")),
           Text(
             "Авторизация",
-            style: Theme.of(context)
-                .textTheme
-                .displayMedium
-                ?.copyWith(fontWeight: FontWeight.w500,),
+            style: Theme.of(context).textTheme.displayMedium?.copyWith(
+                  fontWeight: FontWeight.w500,
+                ),
           ),
         ],
       ),
@@ -150,7 +151,8 @@ class __FormWidgetState extends State<_FormWidget> {
                     Text(
                       _errorTextLogin,
                       style: TextStyle(
-                          color: Theme.of(context).colorScheme.error, fontSize: 17),
+                          color: Theme.of(context).colorScheme.error,
+                          fontSize: 17),
                     ),
                     const SizedBox(height: 5)
                   ]
@@ -160,7 +162,8 @@ class __FormWidgetState extends State<_FormWidget> {
                     Text(
                       _errorTextInput,
                       style: TextStyle(
-                          color: Theme.of(context).colorScheme.error, fontSize: 17),
+                          color: Theme.of(context).colorScheme.error,
+                          fontSize: 17),
                     ),
                     const SizedBox(height: 5)
                   ]
@@ -169,7 +172,8 @@ class __FormWidgetState extends State<_FormWidget> {
                     Text(
                       state.message,
                       style: TextStyle(
-                          color: Theme.of(context).colorScheme.error, fontSize: 17),
+                          color: Theme.of(context).colorScheme.error,
+                          fontSize: 17),
                     ),
                     const SizedBox(height: 5)
                   ],

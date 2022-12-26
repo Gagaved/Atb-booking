@@ -227,6 +227,7 @@ class _UserBubbleButton extends StatelessWidget {
       padding: const EdgeInsets.symmetric(horizontal: 30),
       child: Column(
         children: [
+          /// Обратная связь
           GestureDetector(
             onTap: () {
               _bubbleTransition(context);
@@ -236,14 +237,18 @@ class _UserBubbleButton extends StatelessWidget {
                 subTitle: "Пожаловаться или оставить отзыв"),
           ),
           const SizedBox(height: 25),
+
+          /// Уведомления
           GestureDetector(
             onTap: () {
               _openNotificationsList(context);
             },
-            child: const _UserBubbleBtn(
+            child: _NotificationsBtn(
                 title: "Уведомления", subTitle: "Уведомления и оповещения"),
           ),
           const SizedBox(height: 25),
+
+          /// PDF Files
           GestureDetector(
             onTap: () {
               _openPDFList(context);
@@ -253,6 +258,75 @@ class _UserBubbleButton extends StatelessWidget {
           ),
         ],
       ),
+    );
+  }
+}
+
+class _NotificationsBtn extends _UserBubbleBtn {
+  _NotificationsBtn({required super.title, required super.subTitle});
+
+  @override
+  Widget build(BuildContext context) {
+    return BlocBuilder<ProfileBloc, ProfileState>(
+      builder: (context, state) {
+        return Container(
+          decoration: BoxDecoration(
+            color: Theme.of(context).backgroundColor,
+            borderRadius: BorderRadius.circular(15),
+            boxShadow: [
+              BoxShadow(
+                color: Colors.grey.withOpacity(0.2),
+                spreadRadius: 2,
+                blurRadius: 3,
+                offset: const Offset(0, 0),
+              ),
+            ],
+          ),
+          padding: const EdgeInsets.only(
+            top: 10,
+            bottom: 10,
+            left: 25,
+          ),
+          width: double.infinity,
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+                Text(
+                  title,
+                ),
+                const SizedBox(
+                  height: 5,
+                ),
+                Text(
+                  subTitle,
+                  style: Theme.of(context).textTheme.bodySmall,
+                )
+              ]),
+              if (state is ProfileLoadedState && state.notificationsList.isNotEmpty) ...[
+                Container(
+                  width: 40,
+                  height: 40,
+                  decoration: BoxDecoration(
+                      color: Colors.white,
+                      border: Border.all(color: Colors.white),
+                      borderRadius:
+                          const BorderRadius.all(Radius.circular(20))),
+                  child: Center(
+                      child: Text(
+                    '+${state.notificationsList.length}',
+                    style: Theme.of(context)
+                        .textTheme
+                        .titleMedium!
+                        .copyWith(color: Theme.of(context).primaryColor),
+                  )),
+                ),
+              ],
+              const Icon(Icons.keyboard_arrow_right_sharp)
+            ],
+          ),
+        );
+      },
     );
   }
 }

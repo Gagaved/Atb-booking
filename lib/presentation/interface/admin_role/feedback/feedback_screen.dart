@@ -1,5 +1,6 @@
 import 'package:atb_booking/data/services/network/network_controller.dart';
 import 'package:atb_booking/logic/admin_role/feedback/admin_feedback_bloc.dart';
+import 'package:atb_booking/logic/user_role/profile_bloc/profile_bloc.dart';
 import 'package:atb_booking/presentation/interface/admin_role/feedback/feedback_card.dart';
 import 'package:atb_booking/presentation/interface/auth/auth_screen.dart';
 import 'package:atb_booking/presentation/widgets/elevated_button.dart';
@@ -21,6 +22,7 @@ class AdminFeedbackScreen extends StatelessWidget {
                 Navigator.pushReplacement(context,
                     MaterialPageRoute(builder: (context) => const Auth()));
                 NetworkController().exitFromApp();
+
               },
               icon: const Icon(Icons.logout, size: 28))
         ],

@@ -1,3 +1,4 @@
+import 'package:atb_booking/logic/admin_role/people/person_booking_list/admin_person_booking_list_bloc.dart';
 import 'package:atb_booking/logic/user_role/booking/booking_details_bloc/booking_details_bloc.dart';
 
 import 'package:flutter/material.dart';
@@ -15,10 +16,11 @@ class BookingDeleteDialog extends StatelessWidget {
           insetPadding:
               const EdgeInsets.symmetric(vertical: 30, horizontal: 30),
           content: Text(
-            'Вы действительно хотите отменить  бонирование?',
-            style: Theme.of(context).textTheme.headlineSmall?.copyWith(
-                fontSize: 20,
-                fontWeight: FontWeight.w300),
+            'Вы действительно хотите отменить бонирование?',
+            style: Theme.of(context)
+                .textTheme
+                .headlineSmall
+                ?.copyWith(fontSize: 20, fontWeight: FontWeight.w300),
           ),
           actions: <Widget>[
             TextButton(
@@ -27,9 +29,10 @@ class BookingDeleteDialog extends StatelessWidget {
               },
               child: Text(
                 'Отмена',
-                style: Theme.of(context).textTheme.headlineSmall?.copyWith(
-                    fontSize: 20,
-                    fontWeight: FontWeight.w500),
+                style: Theme.of(context)
+                    .textTheme
+                    .headlineSmall
+                    ?.copyWith(fontSize: 20, fontWeight: FontWeight.w500),
               ),
             ),
             TextButton(
@@ -37,18 +40,19 @@ class BookingDeleteDialog extends StatelessWidget {
                 context
                     .read<BookingDetailsBloc>()
                     .add(BookingDetailsDeleteEvent());
+
                 int count = 3;
                 Navigator.popUntil(context, (route) {
                   count--;
                   return count == 0;
                 });
-
               },
               child: Text(
-                'Отменить',
-                style: Theme.of(context).textTheme.headlineSmall?.copyWith(
-                    fontSize: 20,
-                    fontWeight: FontWeight.w500),
+                'Подтвердить',
+                style: Theme.of(context)
+                    .textTheme
+                    .headlineSmall
+                    ?.copyWith(fontSize: 20, fontWeight: FontWeight.w500),
               ),
             ),
           ],

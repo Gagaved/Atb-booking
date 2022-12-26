@@ -1,4 +1,5 @@
 import 'package:atb_booking/logic/notifications/notifications_bloc.dart';
+import 'package:atb_booking/logic/user_role/profile_bloc/profile_bloc.dart';
 import 'package:atb_booking/presentation/widgets/elevated_button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/container.dart';
@@ -12,12 +13,22 @@ class NotificationsPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(title: const Text("Уведомления"), centerTitle: true),
-      body: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 30),
-        child: Column(
-          children: [_ListOfNotifications()],
+    return WillPopScope(
+      onWillPop: () async {
+        try {
+          ProfileBloc().add(ProfileLoadEvent());
+        } catch (e) {
+          print(e);
+        }
+        return true;
+      },
+      child: Scaffold(
+        appBar: AppBar(title: const Text("Уведомления"), centerTitle: true),
+        body: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 30),
+          child: Column(
+            children: [_ListOfNotifications()],
+          ),
         ),
       ),
     );
@@ -66,8 +77,11 @@ class _ListOfNotifications extends StatelessWidget {
                 child: CircularProgressIndicator(),
               );
             } else if (state.ListOfNotifications.isEmpty) {
-              return  Center(
-                child: Text("Уведомлений пока нет", style: Theme.of(context).textTheme.headlineMedium,),
+              return Center(
+                child: Text(
+                  "Уведомлений пока нет",
+                  style: Theme.of(context).textTheme.headlineMedium,
+                ),
               );
             } else {
               return ListView.builder(

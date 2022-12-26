@@ -6,6 +6,7 @@ import 'package:atb_booking/logic/admin_role/offices/new_office_page/new_office_
 import 'package:atb_booking/logic/admin_role/offices/offices_screen/admin_offices_bloc.dart';
 import 'package:atb_booking/logic/admin_role/offices/office_page/admin_office_page_bloc.dart';
 import 'package:atb_booking/logic/user_role/booking/booking_list_bloc/booking_list_bloc.dart';
+import 'package:atb_booking/logic/user_role/profile_bloc/profile_bloc.dart';
 import 'package:atb_booking/presentation/interface/admin_role/offices/new_office_page.dart';
 import 'package:atb_booking/presentation/interface/admin_role/offices/office_page.dart';
 import 'package:atb_booking/presentation/interface/auth/auth_screen.dart';
@@ -21,15 +22,16 @@ class AdminOfficesScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Center(child: Text("      Офисы")),
+        title: Text("Офисы"),
+        centerTitle: true,
         actions: [
           IconButton(
               onPressed: () {
                 BookingListBloc().add(BookingListInitialEvent());
                 Navigator.pushReplacement(
                     context, MaterialPageRoute(builder: (_) => const Auth()));
-                NetworkController().exitFromApp();//todo вынести в блок как эвент и ждать
-
+                NetworkController()
+                    .exitFromApp(); //todo вынести в блок как эвент и ждать
               },
               icon: const Icon(Icons.logout, size: 28))
         ],
@@ -51,11 +53,11 @@ class AdminOfficesScreen extends StatelessWidget {
               BlocProvider<NewOfficePageBloc>(
                   create: (context) =>
                       NewOfficePageBloc() //context.read<NewOfficePageBloc>(),
-              ),
+                  ),
               BlocProvider(
                   create: (context) =>
                       AdminOfficePageBloc() //context.read<AdminOfficePageBloc>(),
-              ),
+                  ),
             ], child: const NewOfficePage());
           }));
         },
@@ -70,7 +72,7 @@ class _CityField extends StatelessWidget {
   ///City input fields
   /// -> -> ->
   static final TextEditingController _cityInputController =
-  TextEditingController();
+      TextEditingController();
 
   const _CityField({Key? key}) : super(key: key);
 
@@ -117,7 +119,7 @@ class _CityField extends StatelessWidget {
               //todo _selectedCity = suggestion;
             },
             validator: (value) =>
-            value!.isEmpty ? 'Введите название города' : null,
+                value!.isEmpty ? 'Введите название города' : null,
             //onSaved: (value) => this._selectedCity = value,
           ),
         );
@@ -203,14 +205,13 @@ class OfficeCard extends StatelessWidget {
             Navigator.of(context).push(PageRouteBuilder(
               pageBuilder: (_, animation, secondaryAnimation) =>
                   MultiBlocProvider(providers: [
-                    BlocProvider.value(
-                      value: context.read<AdminOfficesBloc>(),
-                    ),
-                    BlocProvider<AdminOfficePageBloc>(
-                        create: (_) =>
-                        AdminOfficePageBloc()
-                          ..add(OfficePageLoadEvent(officeListItem.id)))
-                  ], child: const OfficePage()),
+                BlocProvider.value(
+                  value: context.read<AdminOfficesBloc>(),
+                ),
+                BlocProvider<AdminOfficePageBloc>(
+                    create: (_) => AdminOfficePageBloc()
+                      ..add(OfficePageLoadEvent(officeListItem.id)))
+              ], child: const OfficePage()),
               transitionsBuilder:
                   (context, animation, secondaryAnimation, child) {
                 const begin = Offset(1.0, 0.0);
@@ -233,12 +234,10 @@ class OfficeCard extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 _AddressRow(officeListItem: officeListItem),
-
                 _WorkTimeRangeRow(officeListItem: officeListItem)
               ],
             ),
-          )
-      ),
+          )),
     );
   }
 }
@@ -257,14 +256,17 @@ class _AddressRow extends StatelessWidget {
         //   color: AtbAdditionalColors.black7,
         //   borderRadius: BorderRadius.circular(20),
         // ),
-        child: Text(officeListItem.address,
-          style: Theme.of(context).textTheme.bodyMedium!.copyWith(
-              fontWeight: FontWeight.w400),),
+        child: Text(
+          officeListItem.address,
+          style: Theme.of(context)
+              .textTheme
+              .bodyMedium!
+              .copyWith(fontWeight: FontWeight.w400),
+        ),
       ),
     );
   }
 }
-
 
 class _WorkTimeRangeRow extends StatelessWidget {
   final Office officeListItem;
@@ -273,15 +275,18 @@ class _WorkTimeRangeRow extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    String text = "c ${DateFormat('HH:mm').format(
-        officeListItem.workTimeRange.start)} до ${DateFormat('HH:mm').format(
-        officeListItem.workTimeRange.end)}";
+    String text =
+        "c ${DateFormat('HH:mm').format(officeListItem.workTimeRange.start)} до ${DateFormat('HH:mm').format(officeListItem.workTimeRange.end)}";
     return Padding(
       padding: const EdgeInsets.all(5.0),
       child: Container(
-        child: Text("Работает "+text,
-          style: Theme.of(context).textTheme.bodyMedium!.copyWith(
-              fontWeight: FontWeight.w400),),
+        child: Text(
+          "Работает " + text,
+          style: Theme.of(context)
+              .textTheme
+              .bodyMedium!
+              .copyWith(fontWeight: FontWeight.w400),
+        ),
       ),
     );
   }

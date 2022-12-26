@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:atb_booking/data/services/network/network_controller.dart';
 import 'package:atb_booking/logic/admin_role/people/people_page/admin_people_bloc.dart';
 import 'package:atb_booking/logic/user_role/booking/booking_list_bloc/booking_list_bloc.dart';
+import 'package:atb_booking/logic/user_role/profile_bloc/profile_bloc.dart';
 import 'package:atb_booking/presentation/interface/admin_role/people/admin_person_card.dart';
 import 'package:atb_booking/presentation/interface/auth/auth_screen.dart';
 import 'package:atb_booking/presentation/interface/user_role/people/person_card_widget.dart';
@@ -16,9 +17,8 @@ class AdminPeopleScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Center(
-          child: Text("      Люди"),
-        ),
+        title: const Text("Люди"),
+        centerTitle: true,
         actions: [
           IconButton(
               onPressed: () {
@@ -126,14 +126,15 @@ class _PeopleSearchResultList extends StatelessWidget {
             );
           }
           if (state.users.isNotEmpty) {
-            if (state is AdminPeopleLoadingState && state.page ==0) {
+            if (state is AdminPeopleLoadingState && state.page == 0) {
               return ListView.builder(
                 controller: _scrollController,
                 shrinkWrap: false,
                 itemCount: 6,
                 itemBuilder: (context, index) {
                   return const ShimmerPersonCard();
-                },);
+                },
+              );
             } else {
               return ListView.builder(
                   //controller: _scrollController,
