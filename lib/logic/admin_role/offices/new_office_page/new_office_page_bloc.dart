@@ -75,8 +75,7 @@ class NewOfficePageBloc extends Bloc<NewOfficePageEvent, NewOfficePageState> {
     });
     on<NewOfficeBookingRangeChangeEvent>((event, emit) {
       bookingRange = event.newRange;
-      emit(NewOfficePageLoadedState(futureCityList, address, bookingRange,
-          workTimeRange, buttonIsActive()));
+      //emit(NewOfficePageLoadedState(futureCityList, address, bookingRange,workTimeRange, buttonIsActive()));
     });
     on<NewOfficePageAddressChangeEvent>((event, emit) {
       address = event.newAddress;

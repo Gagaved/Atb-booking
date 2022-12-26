@@ -105,12 +105,37 @@ class OfficePage extends StatelessWidget {
                 ),
               );
             } else if (state is AdminOfficePageErrorState) {
-              return const Center(
-                child: Text("errorstate"),
+              return Scaffold(
+                appBar: AppBar(title: const Text("Офис")),
+                body: Center(
+                  child: Text(
+                  "Не удалось загрузить офис. Проверьте интернет подключение",
+                  style: Theme
+                      .of(context)
+                      .textTheme
+                      .headlineSmall
+                      ?.copyWith(
+                      fontSize: 22,
+                      fontWeight: FontWeight.w300),
+                  textAlign: TextAlign.center,
+
+                ),
+                ),
               );
             } else if (state is AdminOfficePageInitial) {
-              return const Center(
-                child: Text("initial state of office page"),
+              return Center(
+                child: Text(
+                  "",
+                  style: Theme
+                      .of(context)
+                      .textTheme
+                      .headlineSmall
+                      ?.copyWith(
+                      fontSize: 22,
+                      fontWeight: FontWeight.w300),
+                  textAlign: TextAlign.center,
+
+                ),
               );
             } else {
               throw Exception("unknown AdminOfficePageState $state");

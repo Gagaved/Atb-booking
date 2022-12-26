@@ -13,7 +13,7 @@ class AdminBookingsPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(),
+        appBar: AppBar(title: const Text("Брони в офисе"),),
         body: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 20),
           child: Column(children: [

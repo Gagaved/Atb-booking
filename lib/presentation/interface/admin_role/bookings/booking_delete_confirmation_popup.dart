@@ -27,7 +27,7 @@ class BookingDeleteDialog extends StatelessWidget {
                 Navigator.pop(context, false);
               },
               child: Text(
-                'назад',
+                'Назад',
                 style: Theme.of(context).textTheme.headlineSmall?.copyWith(
                     fontSize: 20,
                     fontWeight: FontWeight.w500),

@@ -205,7 +205,7 @@ class _LevelPlanElementWidget extends StatelessWidget {
         width: data.width * PlanWidget.SCALE_FACTOR + (cornerSize * 2),
         child: GestureDetector(
           onTap: () {
-            PlanBloc().add(PlanTapElementEvent(data));
+            if(data.isActive) PlanBloc().add(PlanTapElementEvent(data));
           },
           child: Stack(children: [
             Positioned(
