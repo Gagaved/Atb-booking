@@ -40,8 +40,10 @@ class AdminBookingsBloc extends Bloc<AdminBookingsEvent, AdminBookingsState> {
     });
     on<AdminBookingsUpdateEvent>((event, emit) async {
       emit(AdminBookingsLoadingState(_selectedDateTimeRange,_loadedBookings));
+      print("update AdminBookingsBloc event");
       try {
         _page = 0;
+        _loadedBookings=[];
         List<Booking> newPageBookings = await OfficeProvider().getBookingsRangeByOfficeId(_officeId,_selectedDateTimeRange!,_page);
         _loadedBookings.addAll(newPageBookings);
         emit(AdminBookingsLoadedState(_selectedDateTimeRange, _loadedBookings));

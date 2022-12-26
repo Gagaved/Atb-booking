@@ -2,9 +2,9 @@ import 'package:atb_booking/data/models/feedback.dart';
 import 'package:atb_booking/data/services/feedback_provider.dart';
 import 'package:atb_booking/logic/admin_role/feedback/feedback_open_card_bloc/feedback_open_card_bloc.dart';
 import 'package:atb_booking/logic/admin_role/offices/LevelPlanEditor/level_plan_editor_bloc.dart';
-import 'package:atb_booking/logic/user_role/people_profile_bloc/people_profile_booking_bloc.dart';
+import 'package:atb_booking/logic/admin_role/people/person_booking_list/admin_person_booking_list_bloc.dart';
 import 'package:atb_booking/presentation/interface/admin_role/offices/level_editor_page.dart';
-import 'package:atb_booking/presentation/interface/user_role/people/person_profile_screen.dart';
+import 'package:atb_booking/presentation/interface/admin_role/people/person_booking_list.dart';
 import 'package:atb_booking/presentation/widgets/elevated_button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -66,11 +66,9 @@ class _PersonSenderCard extends StatelessWidget {
                   onTap: () async {
                     await Navigator.of(context).push(
                       MaterialPageRoute(
-                        builder: (context) => BlocProvider.value(
-                          value: PeopleProfileBookingBloc()
-                            ..add(PeopleProfileBookingLoadEvent(
-                                id: state.user.id)),
-                          child: PersonProfileScreen(state.user),
+                        builder: (context) => BlocProvider<AdminPersonBookingListBloc>(
+                          create:(_)=> AdminPersonBookingListBloc(state.user),
+                          child: AdminPersonBookingListPage(),
                         ),
                       ),
                     );
@@ -247,11 +245,9 @@ class _PersonComplaintCard extends StatelessWidget {
                   onTap: () async {
                     await Navigator.of(context).push(
                       MaterialPageRoute(
-                        builder: (context) => BlocProvider.value(
-                          value: PeopleProfileBookingBloc()
-                            ..add(PeopleProfileBookingLoadEvent(
-                                id: state.complaint!.id)),
-                          child: PersonProfileScreen(state.complaint!),
+                        builder: (context) => BlocProvider<AdminPersonBookingListBloc>(
+                          create:(_)=> AdminPersonBookingListBloc(state.complaint!) ,
+                          child: AdminPersonBookingListPage(),
                         ),
                       ),
                     );

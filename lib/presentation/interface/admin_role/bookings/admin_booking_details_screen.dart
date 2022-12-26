@@ -3,9 +3,8 @@ import 'package:atb_booking/data/services/network/network_controller.dart';
 import 'package:atb_booking/logic/admin_role/offices/bookings_page/admin_bookings_bloc.dart';
 import 'package:atb_booking/logic/admin_role/people/person_booking_list/admin_person_booking_list_bloc.dart';
 import 'package:atb_booking/logic/user_role/booking/booking_details_bloc/booking_details_bloc.dart';
-import 'package:atb_booking/logic/user_role/booking/booking_list_bloc/booking_list_bloc.dart';
 import 'package:atb_booking/logic/user_role/booking/locked_plan_bloc/locked_plan_bloc.dart';
-import 'package:atb_booking/presentation/interface/admin_role/bookings/booking_delete_confirmation_popup.dart';
+import 'package:atb_booking/presentation/interface/admin_role/bookings/admin_booking_delete_confirmation_popup.dart';
 import 'package:atb_booking/presentation/interface/admin_role/people/admin_person_card.dart';
 import 'package:atb_booking/presentation/interface/user_role/booking/booking_details/locked_plan/booking_added_people_widget.dart';
 import 'package:atb_booking/presentation/interface/user_role/booking/booking_details/locked_plan/lockedPlanWidget.dart';
@@ -23,57 +22,60 @@ class _InfoField extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return WillPopScope(
-      onWillPop: () async {
-        // try {
-        //   context
-        //       .read<AdminPersonBookingListBloc>()
-        //       .add(AdminPersonBookingLoadBookingsEvent());
-        // } catch (e) {
-        //   print(e);
-        // }
-        // try {
-        //   context.read<AdminBookingsBloc>().add(AdminBookingsUpdateEvent());
-        // } catch (e) {
-        //   print(e);
-        // }
-        return true;
-      },
-      child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 30.0, vertical: 5),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(title,
-                textAlign: TextAlign.left,
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 30.0, vertical: 5),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(title,
+              textAlign: TextAlign.left,
+              style: Theme.of(context)
+                  .textTheme
+                  .headlineSmall
+                  ?.copyWith(fontSize: 24, fontWeight: FontWeight.w300)),
+          Container(
+            decoration: BoxDecoration(
+              color: Theme.of(context).backgroundColor,
+              borderRadius: const BorderRadius.all(Radius.circular(10.0)),
+            ),
+            child: Text(body,
                 style: Theme.of(context)
                     .textTheme
                     .headlineSmall
-                    ?.copyWith(fontSize: 24, fontWeight: FontWeight.w300)),
-            Container(
-              decoration: BoxDecoration(
-                color: Theme.of(context).backgroundColor,
-                borderRadius: const BorderRadius.all(Radius.circular(10.0)),
-              ),
-              child: Text(body,
-                  style: Theme.of(context)
-                      .textTheme
-                      .headlineSmall
-                      ?.copyWith(fontSize: 23)),
-            ),
-          ],
-        ),
+                    ?.copyWith(fontSize: 23)),
+          ),
+        ],
       ),
     );
   }
 }
 
-class BookingDetailsScreen extends StatelessWidget {
-  const BookingDetailsScreen({super.key});
+class AdminBookingDetailsScreen extends StatelessWidget {
+  const AdminBookingDetailsScreen({super.key});
 
   @override
-  Widget build(BuildContext context) {
-    return BlocBuilder<BookingDetailsBloc, BookingDetailsState>(
+  Widget build(BuildContext pageContext) {
+    return BlocConsumer<BookingDetailsBloc, BookingDetailsState>(
+      listener: (context, state) {
+        if (state is BookingDetailsDeletedState) {
+          try {
+            pageContext
+                .read<AdminPersonBookingListBloc>()
+                .add(AdminPersonBookingLoadBookingsEvent());
+          } catch (e) {
+            print(e);
+          }
+          try {
+            pageContext
+                .read<AdminBookingsBloc>()
+                .add(AdminBookingsUpdateEvent());
+          } catch (e) {
+            print(e);
+          }
+          print('pop');
+          Navigator.pop(pageContext);
+        }
+      },
       builder: (context, state) {
         if (state is BookingDetailsLoadedState) {
           getPhotoSize() {
@@ -405,31 +407,33 @@ class BookingDetailsScreen extends StatelessWidget {
                             padding: const EdgeInsets.symmetric(
                                 horizontal: 30.0, vertical: 30),
                             child: AtbElevatedButton(
-                              onPressed: ()async {
+                              onPressed: () async {
                                 bool? wasDelete = await showDialog<bool>(
                                   useRootNavigator: false,
                                   context: context,
                                   builder: (_) {
-                                    return BlocProvider.value(
-                                      value: context.read<BookingDetailsBloc>(),
-                                      child: const BookingDeleteDialog(),
-                                    );
+                                    return const BookingDeleteDialog();
                                   },
                                 );
-                                if(wasDelete!){
-                                  Navigator.of(context).pop();
-                                try {
-                                  context
-                                      .read<AdminPersonBookingListBloc>()
-                                      .add(AdminPersonBookingLoadBookingsEvent());
-                                } catch (e) {
-                                  print(e);
-                                }
-                                try {
-                                  context.read<AdminBookingsBloc>().add(AdminBookingsUpdateEvent());
-                                } catch (e) {
-                                  print(e);
-                                }
+                                if (wasDelete != null && wasDelete) {
+                                  pageContext
+                                      .read<BookingDetailsBloc>()
+                                      .add(BookingDetailsDeleteEvent());
+                                  try {
+                                    // pageContext
+                                    //     .read<AdminPersonBookingListBloc>()
+                                    //     .add(AdminPersonBookingLoadBookingsEvent());
+                                  } catch (e) {
+                                    print(e);
+                                  }
+                                  try {
+                                    //context.read<AdminBookingsBloc>().add(AdminBookingsUpdateEvent());
+                                  } catch (e) {
+                                    print(e);
+                                  }
+                                  try {
+                                    //Navigator.of(pageContext).pop();
+                                  } catch (_) {}
                                 }
                               },
                               text: "Отменить",
@@ -490,6 +494,7 @@ class BookingDetailsScreen extends StatelessWidget {
                 padding: const EdgeInsets.symmetric(vertical: 20),
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     ///
                     ///
