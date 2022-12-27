@@ -115,6 +115,17 @@ class _BookingsList extends StatelessWidget {
     return BlocBuilder<AdminBookingsBloc, AdminBookingsState>(
       builder: (context, state) {
         if (state is AdminBookingsLoadedState) {
+          if(state.bookings.isEmpty){
+            return Center(
+                child: Text(
+                  "нет броней за этот период",
+                  style: Theme.of(context)
+                      .textTheme
+                      .headlineSmall
+                      ?.copyWith(fontSize: 22, fontWeight: FontWeight.w300),
+                  textAlign: TextAlign.center,
+                ));
+          }
           return Expanded(
             child: ListView.builder(
                 controller: _scrollController,
@@ -151,8 +162,18 @@ class _BookingsList extends StatelessWidget {
               ),
             ),
           );
-        } else {
-          throw Exception("invalid state: $state");
+        } else if(state is AdminBookingsErrorState) {
+          return Center(
+              child: Text(
+                "Не удалось загрузить информацию, проверьте интернет подключение",
+                style: Theme.of(context)
+                    .textTheme
+                    .headlineSmall
+                    ?.copyWith(fontSize: 22, fontWeight: FontWeight.w300),
+                textAlign: TextAlign.center,
+              ));
+        }else{
+          throw Exception("unknown state: $state");
         }
       },
     );
