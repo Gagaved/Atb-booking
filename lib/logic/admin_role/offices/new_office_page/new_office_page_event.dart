@@ -26,3 +26,5 @@ class NewOfficePageCitySelectedEvent extends NewOfficePageEvent{
 
   NewOfficePageCitySelectedEvent(this.selectedCity);
 }
+class NewOfficePageButtonPressEvent extends NewOfficePageEvent{
+  NewOfficePageButtonPressEvent();}

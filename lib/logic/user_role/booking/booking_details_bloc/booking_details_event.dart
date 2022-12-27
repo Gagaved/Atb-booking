@@ -4,9 +4,7 @@ part of 'booking_details_bloc.dart';
 abstract class BookingDetailsEvent {}
 
 class BookingDetailsLoadEvent extends BookingDetailsEvent {
-  final int bookingId;
-  final bool deleteButtonIsActive;
-  BookingDetailsLoadEvent(this.bookingId,this.deleteButtonIsActive);
+  BookingDetailsLoadEvent();
 }
 
 class BookingDetailsDeleteEvent extends BookingDetailsEvent {}

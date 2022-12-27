@@ -10,6 +10,8 @@ enum PlaceType {
 
 class Booking {
   final int id;
+  final int holderId;
+  final String holderName;
   final String cityName;
   final int levelId;
   final String officeAddress;
@@ -24,6 +26,8 @@ class Booking {
     required this.workspace,
     required this.reservationInterval,
     required this.guests,
+    required this.holderId,
+    required this.holderName
   });
 
   Booking.fromJson(Map<String, dynamic> json)
@@ -38,5 +42,7 @@ class Booking {
               .toLocal(), //..add(Duration(hours: 10)),
         ),
         workspace = Workspace.fromJson(json['workspaceInfo']),
-        guests =  json['guests']!=null?(json['guests'] as List<dynamic>).map((elem)=>User.fromJson(elem)).toList():null;
+        guests =  json['guests']!=null?(json['guests'] as List<dynamic>).map((elem)=>User.fromJson(elem)).toList():null,
+        holderId = json['holderInfo']['id'],
+        holderName = json['holderInfo']['fullName'];
 }

@@ -1,5 +1,4 @@
 import 'dart:convert';
-
 import 'package:atb_booking/logic/secure_storage_api.dart';
 import 'package:http/http.dart' as http;
 
@@ -31,7 +30,8 @@ class UsersProvider {
 
     /// Проверка ответа
     if (response.statusCode == 200) {
-      User persons = User.fromJson(dataJson);
+      User persons = User.  fromJson(dataJson);
+      print(json.decode(utf8.decode(response.bodyBytes)));
       return persons;
     } else if (response.statusCode == 401) {
       /// Обновление access токена
@@ -77,7 +77,7 @@ class UsersProvider {
       int page, int size, String userName, bool isFavorites) async {
     /// Получение Access токена
     String accessToken = await NetworkController().getAccessToken();
-
+    int currentUserId = await SecurityStorage().getIdStorage();
     /// Создание параметров
     Map<String, dynamic> queryParameters = {}
       ..["page"] = page.toString()
@@ -89,9 +89,8 @@ class UsersProvider {
     Map<String, String> headers = {"Authorization": 'Bearer $accessToken'};
 
     /// Сам запрос
-    int curUserId = await SecurityStorage().getIdStorage();
     var uri =
-        Uri.http(baseUrl, '/api/users/$curUserId/search', queryParameters);
+        Uri.http(baseUrl, '/api/users/search/$currentUserId', queryParameters);
     var response = await http.get(uri, headers: headers);
 
     /// Проверка
@@ -160,52 +159,41 @@ class UsersProvider {
     }
   }
 
-  Future<void> addFavoritesProvider(int favoriteId) async {
-    int id = await SecurityStorage().getIdStorage();
+  Future<void> addFavorite(int favoriteId) async  {
+    var currentUserId = await SecurityStorage().getIdStorage();
     var uri = Uri.http(
       baseUrl,
-      '/api/favorites/$favoriteId/users/$id',
+      '/api/favorites/$favoriteId/users/$currentUserId',
     );
 
     /// Создание тела запроса
-    var newJson = <String, dynamic>{};
-    newJson["userId"] = id.toString();
-    newJson["favoriteId"] = favoriteId.toString();
-    var encoded = jsonEncode(newJson);
-
     /// Получение Access токена
     String accessToken = await NetworkController().getAccessToken();
-
     /// Создание headers запроса
     Map<String, String> headers = {};
     headers["Content-type"] = 'application/json';
     headers["Authorization"] = 'Bearer $accessToken';
 
     /// Вызов POST запроса
-    var response = await http.post(uri, headers: headers, body: encoded);
+    var response = await http.post(uri, headers: headers,);
 
     if (response.statusCode == 401) {
       /// Обновление access токена
       await NetworkController().updateAccessToken();
-      return addFavoritesProvider(favoriteId);
+      return addFavorite(favoriteId);
     } else if (response.statusCode != 201) {
       throw Exception('Error creation favorite');
     }
   }
 
-  Future<void> deleteFromFavoritesProvider(int favoriteId) async {
-    int userId = await SecurityStorage().getIdStorage();
+  Future<void> deleteFromFavorites(int favoriteId) async {
+    var currentUserId = await SecurityStorage().getIdStorage();
     var uri = Uri.http(
       baseUrl,
-      '/api/favorites/$favoriteId/users/$userId',
+      '/api/favorites/$favoriteId/users/$currentUserId',
     );
 
     /// Создание тела запроса
-    var newJson = <String, dynamic>{};
-    newJson["userId"] = userId.toString();
-    newJson["favoriteId"] = favoriteId.toString();
-    var encoded = jsonEncode(newJson);
-
     /// Получение Access токена
     String accessToken = await NetworkController().getAccessToken();
 
@@ -215,14 +203,14 @@ class UsersProvider {
     headers["Authorization"] = 'Bearer $accessToken';
 
     /// Вызов POST запроса
-    var response = await http.delete(uri, headers: headers, body: encoded);
+    var response = await http.delete(uri, headers: headers,);
 
     if (response.statusCode == 401) {
       /// Обновление access токена
       await NetworkController().updateAccessToken();
-      return deleteFromFavoritesProvider(favoriteId);
+      return deleteFromFavorites(favoriteId);
     } else if (response.statusCode != 200) {
-      throw Exception('Error creation favorite');
+      throw Exception('Error creation favorite bad response. response code: ${response.statusCode}');
     }
   }
 }

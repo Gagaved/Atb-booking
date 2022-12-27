@@ -1,7 +1,6 @@
 
 import 'package:atb_booking/logic/user_role/booking/booking_list_bloc/booking_list_bloc.dart';
 import 'package:atb_booking/logic/user_role/booking/new_booking/new_booking_bloc/new_booking_sheet_bloc/new_booking_confirmation_popup_bloc.dart';
-import 'package:atb_booking/presentation/constants/styles.dart';
 import 'package:atb_booking/presentation/widgets/elevated_button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -40,7 +39,7 @@ class NewBookingConfirmationPopup extends StatelessWidget {
                 Text(
                   "Упс, что-то пошло не так...",
                   textAlign: TextAlign.center,
-                  style: appThemeData.textTheme.titleLarge!.copyWith(
+                  style: Theme.of(context).textTheme.titleLarge!.copyWith(
                       color: const Color.fromARGB(255, 49, 41, 0), fontSize: 30),
                 ),
                 AtbElevatedButton(
@@ -77,8 +76,7 @@ class NewBookingConfirmationPopup extends StatelessWidget {
             Text(
               "Успешно\n забронированно ✓",
               textAlign: TextAlign.center,
-              style: appThemeData.textTheme.titleLarge!.copyWith(
-                  color: const Color.fromARGB(255, 0, 82, 11), fontSize: 30),
+              style: Theme.of(context).textTheme.titleLarge!.copyWith( fontSize: 30),
             ),
             AtbElevatedButton(
                 onPressed: () {

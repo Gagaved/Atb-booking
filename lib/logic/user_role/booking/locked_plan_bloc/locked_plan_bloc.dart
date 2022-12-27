@@ -17,10 +17,9 @@ class LockedPlanBloc extends Bloc<LockedPlanEvent, LockedPlanState> {
   factory LockedPlanBloc() {
     return _singleton;
   }
-
   static const double WIDTH = 350;
   static const double HEIGHT = 350;
-  LevelPlan? levelPlan;
+  Level? levelPlan;
   Map<int, WorkspaceType>? workspaceTypes;
   int? selectedWorkspaceId;
   final LevelPlanRepository levelPlanRepository = LevelPlanRepository();
@@ -30,15 +29,14 @@ class LockedPlanBloc extends Bloc<LockedPlanEvent, LockedPlanState> {
     on<LockedPlanLoadEvent>((event, emit) async {
       try {
         workspaceTypes = await workspaceTypeRepository.getMapOfTypes();
-        levelPlan = await levelPlanRepository.getPlanByLevelId(event.levelId);
+        Level levelPlan = await levelPlanRepository.getPlanByLevelId(event.levelId);
         selectedWorkspaceId = event.workspaceId;
         emit(LockedPlanLoadedState(
-          levelPlan!.workspaces,
+          levelPlan.workspaces,
           workspaceTypes!,
           HEIGHT,
           WIDTH,
-          selectedWorkspaceId!,
-          levelPlan!.plan
+          selectedWorkspaceId!, levelPlan.planId
         ));
       } catch (_) {
         emit(LockedPlanErrorState());

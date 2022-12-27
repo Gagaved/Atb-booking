@@ -3,7 +3,7 @@ part of 'plan_bloc.dart';
 @immutable
 abstract class PlanEvent {}
 class PlanTapElementEvent extends PlanEvent{
-  final WorkspaceOnPlan workspace;
+  final LevelPlanElementData workspace;
 
   PlanTapElementEvent(this.workspace);
 }

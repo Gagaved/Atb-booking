@@ -58,14 +58,21 @@ class BookingProvider {
     }
   }
 
-  Future<List<Booking>> getBookingByUserId(int id) async {
+  Future<List<Booking>> getBookingsByUserId(int id,{required bool isHolder, required bool isGuest}) async {
+    if(isHolder == false && isGuest ==false){
+      print("bad param to getBookingByUserId");
+      throw Exception("getBookingsByUserId bad request: isHolder == false and isGuest == false");
+    }
     print("PROVIDER getBookingByUserId");
     var baseUrl = NetworkController().getUrl();
     Map<String, String> headers = {};
+    Map<String, dynamic> queryParameters = {};
+    queryParameters["isHolder"] = isHolder.toString();
+    queryParameters["isGuest"] = isGuest.toString();
     var token = await NetworkController().getAccessToken();
     headers["Authorization"] = 'Bearer $token';
 
-    var uri = Uri.http(baseUrl, '/api/reservations/user/$id');
+    var uri = Uri.http(baseUrl, '/api/reservations/user/$id',queryParameters);
     print("Uri:");
     print(uri.toString());
     var response = await http.get(
@@ -73,6 +80,7 @@ class BookingProvider {
       headers: headers,
     );
     if (response.statusCode == 200) {
+      print(json.decode(utf8.decode(response.bodyBytes)));
       print("successful fetching booking!");
       final List<dynamic> bookingJson =
           json.decode(utf8.decode(response.bodyBytes));
@@ -83,8 +91,9 @@ class BookingProvider {
     } else if (response.statusCode == 401) {
       /// Обновление access токена
       await NetworkController().updateAccessToken();
-      return getBookingByUserId(id);
+      return getBookingsByUserId(id,isHolder: isHolder,isGuest: isGuest);
     } else {
+      print(json.decode(utf8.decode(response.bodyBytes)));
       throw Exception('Error fetching booking');
     }
   }
@@ -100,6 +109,7 @@ class BookingProvider {
     var uri = Uri.http(baseUrl, '/api/reservations/$id');
     var response = await http.get(uri, headers: headers);
     if (response.statusCode == 200) {
+      print(json.decode(utf8.decode(response.bodyBytes)));
       final Map<String, dynamic> bookingJson =
           json.decode(utf8.decode(response.bodyBytes));
       return Booking.fromJson(bookingJson);
@@ -130,6 +140,7 @@ class BookingProvider {
     var uri = Uri.http(baseUrl, '/api/reservations', queryParameters);
     var response = await http.get(uri, headers: headers);
     if (response.statusCode == 200) {
+      print(json.decode(utf8.decode(response.bodyBytes)));
       final List<dynamic> windowsJson =
           json.decode(utf8.decode(response.bodyBytes))['freeIntervals'];
       var result = windowsJson
@@ -173,8 +184,6 @@ class BookingProvider {
     var baseUrl = NetworkController().getUrl();
     var token = await NetworkController().getAccessToken();
     headers["Authorization"] = 'Bearer $token';
-    Map<String, dynamic> queryParameters = {};
-    //queryParameters['reservationId'] = id.toString();
     var uri = Uri.http(baseUrl, '/api/reservations/$id');
     var response = await http.delete(uri, headers: headers);
     if (response.statusCode == 200) {

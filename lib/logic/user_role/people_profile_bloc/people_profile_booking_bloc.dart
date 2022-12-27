@@ -1,9 +1,8 @@
 import 'package:atb_booking/data/models/booking.dart';
 import 'package:atb_booking/data/models/workspace_type.dart';
-import 'package:atb_booking/data/services/booking_repository.dart';
+import 'package:atb_booking/data/services/booking_api_provider.dart';
 import 'package:atb_booking/data/services/workspace_type_repository.dart';
 import 'package:atb_booking/logic/secure_storage_api.dart';
-import 'package:atb_booking/logic/user_role/booking/booking_details_bloc/booking_details_bloc.dart';
 import 'package:bloc/bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -29,7 +28,7 @@ class PeopleProfileBookingBloc
         emit(PeopleProfileBooking_LoadingState());
         currentUserId = event.id;
         final List<Booking> bookingList =
-            await BookingRepository().getBookingsByUserId(currentUserId!);
+            await BookingProvider().getBookingsByUserId(currentUserId!, isHolder: true,isGuest:false);
         final Map<int, WorkspaceType> mapOfTypes =
             await WorkspaceTypeRepository().getMapOfTypes();
         initializeDateFormatting();
@@ -46,7 +45,6 @@ class PeopleProfileBookingBloc
     on<PeopleProfileBookingCardTapEvent>((event, emit) async {
       try {
         bool deleteButtonIsActive = await SecurityStorage().getIdStorage()==currentUserId;
-        BookingDetailsBloc().add(BookingDetailsLoadEvent(event.bookingId,deleteButtonIsActive));
       } catch (_) {}
     });
   }

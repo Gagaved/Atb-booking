@@ -1,9 +1,0 @@
-part of 'booking_delete_confirmation_bloc.dart';
-
-@immutable
-abstract class BookingDeleteConfirmationEvent {}
-class BookingDeleteConfirmationLoadEvent extends BookingDeleteConfirmationEvent{}
-
-class BookingDeleteConfirmationSuccessEvent extends BookingDeleteConfirmationEvent{}
-
-class BookingDeleteConfirmationErrorEvent extends BookingDeleteConfirmationEvent{}

@@ -80,7 +80,8 @@ class SecurityStorage {
   }
 
   Future<String> getTypeStorage() async {
-    return await getValueStorage('type');
+    _userTypeMemorized = await getValueStorage('type');
+    return _userTypeMemorized;
   }
 
   Future<String> getLoginStorage() async {
@@ -93,5 +94,9 @@ class SecurityStorage {
   String _accessToken = '';
   String getAccessTokenStorageCYNC() {
     return _accessToken;
+  }
+  String _userTypeMemorized = '';
+  String getLastUserTypeCYNC(){
+    return _userTypeMemorized;
   }
 }

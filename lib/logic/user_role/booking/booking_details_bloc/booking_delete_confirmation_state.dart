@@ -1,9 +1,0 @@
-part of 'booking_delete_confirmation_bloc.dart';
-
-@immutable
-abstract class BookingDeleteConfirmationState {}
-
-class BookingDeleteConfirmationInitialState extends BookingDeleteConfirmationState {}
-class BookingDeleteConfirmationLoadingState extends BookingDeleteConfirmationState {}
-class BookingDeleteConfirmationSuccessState extends BookingDeleteConfirmationState {}
-class BookingDeleteConfirmationErrorState extends BookingDeleteConfirmationState {}

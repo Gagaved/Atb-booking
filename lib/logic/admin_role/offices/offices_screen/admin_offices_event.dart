@@ -7,3 +7,6 @@ class AdminOfficesCitySelectedEvent extends AdminOfficesEvent{
 
   AdminOfficesCitySelectedEvent(this.city);
 }
+
+class AdminOfficesReloadEvent extends AdminOfficesEvent{
+}

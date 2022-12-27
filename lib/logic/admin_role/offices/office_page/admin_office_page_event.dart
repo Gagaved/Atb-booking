@@ -7,6 +7,9 @@ class OfficePageLoadEvent extends AdminOfficePageEvent{
 
   OfficePageLoadEvent(this.officeId);
 }
+class OfficePageReloadEvent extends AdminOfficePageEvent{
+
+}
 class AdminOfficeAddressChangeEvent extends AdminOfficePageEvent{
   final String address;
 
@@ -24,4 +27,11 @@ class AdminOfficePageWorkRangeChangeEvent extends AdminOfficePageEvent{
   final DateTimeRange newWorkTimeRange;
 
   AdminOfficePageWorkRangeChangeEvent(this.newWorkTimeRange);
+}
+
+class AdminOfficePageCreateNewLevelButtonPress extends AdminOfficePageEvent{
+}
+class AdminOfficeSaveChangesButtonEvent extends AdminOfficePageEvent{
+}
+class AdminOfficeDeleteEvent extends AdminOfficePageEvent{
 }

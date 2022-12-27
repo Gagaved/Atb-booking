@@ -16,7 +16,18 @@ class NewOfficePageLoadedState extends NewOfficePageState {
   final String address;
   final int bookingRange;
   final DateTimeRange workTimeRange;
-
+  final bool buttonIsActive;
   const NewOfficePageLoadedState(super.futureCityList, this.address,
-      this.bookingRange, this.workTimeRange);
+      this.bookingRange, this.workTimeRange, this.buttonIsActive);
+}
+
+class NewOfficePageSuccessfulCreatedState extends NewOfficePageLoadedState{
+  final int officeId;
+  const NewOfficePageSuccessfulCreatedState(super.futureCityList, super.address, super.bookingRange, super.workTimeRange, super.buttonIsActive, this.officeId);
+
+}
+
+class NewOfficePageErrorCreatedState extends NewOfficePageLoadedState{
+  const NewOfficePageErrorCreatedState(super.futureCityList, super.address, super.bookingRange, super.workTimeRange, super.buttonIsActive);
+
 }

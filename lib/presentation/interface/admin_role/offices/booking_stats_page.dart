@@ -1,5 +1,5 @@
+import 'package:atb_booking/data/models/office.dart';
 import 'package:atb_booking/logic/admin_role/offices/booking_stats/admin_booking_stats_bloc.dart';
-import 'package:atb_booking/presentation/constants/styles.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';
@@ -11,7 +11,9 @@ class AdminBookingsStatsPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text("Статистика по офису"),),
+      appBar: AppBar(
+        title: const Text("Статистика по офису"),
+      ),
       body: Column(
         children: [
           Padding(
@@ -20,18 +22,11 @@ class AdminBookingsStatsPage extends StatelessWidget {
               onChanged: (DateTimeRange dateTimeRange) {},
             ),
           ),
-          _Charts()
+          const _Charts()
         ],
       ),
     );
   }
-}
-
-class ChartData {
-  final DateTime date;
-  final int value;
-
-  ChartData(this.date, this.value);
 }
 
 class _DateRangePickerWidget extends StatelessWidget {
@@ -48,12 +43,18 @@ class _DateRangePickerWidget extends StatelessWidget {
         var selectedDateTimeRange = state.selectedDateTimeRange;
         if (selectedDateTimeRange != null) {
           _textEditingController.text =
-              "${DateFormat('dd.MM.yyyy').format(selectedDateTimeRange!.start)} - ${DateFormat('dd.MM.yyyy').format(selectedDateTimeRange!.end)}";
+              "${DateFormat('dd.MM.yyyy').format(selectedDateTimeRange.start)} - ${DateFormat('dd.MM.yyyy').format(selectedDateTimeRange.end)}";
         }
         return TextField(
           decoration: InputDecoration(
-            border: const OutlineInputBorder(),
-            labelText: _defaultText,
+            hintText: "Выберите диапазон...",
+            filled: true,
+            fillColor: Theme.of(context).backgroundColor,
+            border: const OutlineInputBorder(
+              borderSide: BorderSide.none,
+              borderRadius: BorderRadius.all(Radius.circular(10.0)),
+            ),
+            suffixIcon: const Icon(Icons.search),
           ),
           focusNode: _AlwaysDisabledFocusNode(),
           controller: _textEditingController,
@@ -61,21 +62,10 @@ class _DateRangePickerWidget extends StatelessWidget {
             DateTimeRange? newDateTimeRange = await showDateRangePicker(
               context: context,
               builder: (context, child) {
-                return Theme(
-                  data: ThemeData.light().copyWith(
-                    colorScheme: ColorScheme.light(
-                      primary: appThemeData.primaryColor,
-                      onPrimary: Colors.white,
-                      surface: appThemeData.primaryColor,
-                      onSurface: Colors.black,
-                    ),
-                    dialogBackgroundColor: Colors.white,
-                  ),
-                  child: child!,
-                );
+                return child!;
               },
-              firstDate: DateTime.now().add(Duration(days: -100)),
-              lastDate: DateTime.now().add(Duration(days: 100)),
+              firstDate: DateTime.now().add(const Duration(days: -100)),
+              lastDate: DateTime.now().add(const Duration(days: 100)),
             );
             if (newDateTimeRange != null) {
               print("add AdminBookingStatsSelectNewRangeEvent to bloc");
@@ -97,40 +87,94 @@ class _Charts extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SfCartesianChart(
-        // Initialize category axis
-        primaryYAxis: NumericAxis(
-            title: AxisTitle(
-                text: 'Число бронирований',
-                textStyle: const TextStyle(
-                    fontSize: 16,
-                    fontWeight: FontWeight.w300
-                )
-            )
-        ),
-        primaryXAxis: DateTimeAxis(
-            dateFormat: DateFormat.MMM("ru_RU")
-        ),
-        series: <CartesianSeries>[
-          ColumnSeries<ChartData, DateTime>(
-              dataSource: [
-                // Bind data source
-                ChartData(DateTime(2022, 1,0), 35),
-                ChartData(DateTime(2022, 2,0), 28),
-                ChartData(DateTime(2022, 3,0), 34),
-                ChartData(DateTime(2022, 4,0), 32),
-                ChartData(DateTime(2022, 5,0), 70),
-                ChartData(DateTime(2022, 6,0), 41),
-                ChartData(DateTime(2022, 7,0), 20),
-                ChartData(DateTime(2022, 8,0), 100),
-                ChartData(DateTime(2022, 9,0), 24),
-                ChartData(DateTime(2022, 10,0), 45),
-                ChartData(DateTime(2022, 11,0), 33),
-
-              ],
-              xValueMapper: (ChartData data, _) => data.date,
-              yValueMapper: (ChartData data, _) => data.value)
-        ]);
+    return BlocBuilder<AdminBookingStatsBloc, AdminBookingStatsState>(
+      builder: (context, state) {
+        if (state is AdminBookingStatsLoadedState) {
+          DateFormat format;
+          if (state.selectedDateTimeRange!.duration.inDays < 60) {
+            format = DateFormat.MMMd("ru_RU");
+          } else {
+            format = DateFormat.MMM("ru_RU");
+          }
+          return SfCartesianChart(
+              // Initialize category axis
+              primaryYAxis: NumericAxis(
+                  rangePadding: ChartRangePadding.additional,
+                  title: AxisTitle(
+                      text: 'Число бронирований',
+                      textStyle: const TextStyle(
+                          fontSize: 16, fontWeight: FontWeight.w300))),
+              primaryXAxis: DateTimeAxis(
+                //minorTicksPerInterval: 10,
+                dateFormat: format,
+              ),
+              legend: Legend(
+                position: LegendPosition.bottom,
+                isVisible: true,
+                // Border color and border width of legend
+              ),
+              series: <CartesianSeries>[
+                ColumnSeries<OfficeBookingStatsItem, DateTime>(
+                    name: 'Рабочие места',
+                    dataSource: state.stats,
+                    xValueMapper: (OfficeBookingStatsItem data, _) => data.date,
+                    yValueMapper: (OfficeBookingStatsItem data, _) =>
+                        data.workspace),
+                ColumnSeries<OfficeBookingStatsItem, DateTime>(
+                    name: 'Переговорки',
+                    color: Theme.of(context).primaryColor,
+                    dataSource: state.stats,
+                    xValueMapper: (OfficeBookingStatsItem data, _) => data.date,
+                    yValueMapper: (OfficeBookingStatsItem data, _) =>
+                        data.meetingRoom)
+              ]);
+        } else if (state is AdminBookingStatsInitial) {
+          return Expanded(
+              child: Center(
+            child: Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Text(
+                "Для просмотра статистики выберите диапазон выше",
+                style: Theme.of(context).textTheme.headlineMedium,
+                textAlign: TextAlign.center,
+              ),
+            ),
+          ));
+        } else if (state is AdminBookingStatsLoadingState) {
+          return Center(
+              child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              const CircularProgressIndicator(
+                color: Colors.grey,
+              ),
+              Text(
+                "Загружаем",
+                style: Theme.of(context)
+                    .textTheme
+                    .headlineSmall
+                    ?.copyWith(fontSize: 22, fontWeight: FontWeight.w300),
+                textAlign: TextAlign.center,
+              ),
+            ],
+          ));
+        } else if (state is AdminBookingStatsErrorState) {
+          return Expanded(
+              child: Center(
+            child: Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Text(
+                "Не удалось загрузить. Проверьте интернет соеденение.",
+                style: Theme.of(context).textTheme.headlineMedium,
+                textAlign: TextAlign.center,
+              ),
+            ),
+          ));
+        } else {
+          throw ErrorWidget(Exception("unexpected state: $state"));
+        }
+      },
+    );
   }
 }
 

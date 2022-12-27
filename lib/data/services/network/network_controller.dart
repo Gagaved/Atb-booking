@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'package:atb_booking/data/authController.dart';
 
 import 'package:http/http.dart' as http;
 
@@ -10,8 +11,13 @@ class NetworkController {
   factory NetworkController() {
     return _singleton;
   }
-
-  final _baseUrl = "85.192.32.12:8080";
+  void exitFromApp(){
+    AuthController().exitFromApp();
+    /// Чистка SecurityStorage
+    SecurityStorage().clearValueStorage();
+  }
+  final _baseUrl = "45.67.58.123:8080";
+  //final _baseUrl = "atb-booking.tk:8080";
   String getUrl() => _baseUrl;
 
 
@@ -19,21 +25,30 @@ class NetworkController {
   Future<String> getAccessToken() async {
     return await SecurityStorage().getAccessTokenStorage();
   }
-
   Map<String, String> getAuthHeader() {
     Map<String, String> headers = {};
     var token = SecurityStorage().getAccessTokenStorageCYNC();
     headers["Authorization"] = 'Bearer $token';
     return headers;
   }
+
   /// Метод обновления access токена
   Future<void> updateAccessToken() async {
+    /// Получение Access токена
+    String accessToken = await NetworkController().getAccessToken();
+
     /// Получение Refresh токена
     String refreshToken = await SecurityStorage().getRefreshTokenStorage();
 
+    /// Создаем header
+    Map<String, String> headers = {};
+    headers["Authorization"] = 'Bearer $accessToken';
+    headers["Content-type"] = 'application/json; charset=utf-8';
+    headers["Accept"] = "application/json";
+
     /// Сам запрос
     var uri = Uri.http(_baseUrl, '/api/auth/access-token/$refreshToken');
-    var response = await http.post(uri, headers: {});
+    var response = await http.post(uri, headers: headers);
 
     /// Проверка
     if (response.statusCode == 200) {

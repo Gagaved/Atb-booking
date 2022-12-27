@@ -15,7 +15,7 @@ class Workspace {
   final double sizeY;
   final WorkspaceType type;
   final int level;
-  final List<Photo> photos;
+  final List<int> photosIds;
 
   Workspace.fromJson(Map<String, dynamic> json)
       : id = json['id'],
@@ -28,10 +28,9 @@ class Workspace {
         sizeY = (json['sizeY'] as int).toDouble(),
         type = WorkspaceType.fromJson(json['type']),
         level = json['level'],
-        photos = //getRandomPhotoList();
-        (json['photos'] as List<dynamic>)
-            .map((json) => Photo.fromJson(json))
-            .toList();
+        photosIds = json['photos'] != null
+            ? (json['photos'] as List<dynamic>).map((e) => e as int).toList()
+            : [];
 
   Workspace(
       this.id,
@@ -41,67 +40,89 @@ class Workspace {
       this.positionX,
       this.positionY,
       this.level,
-      this.photos,
+      this.photosIds,
       this.sizeX,
       this.sizeY,
       this.type);
-
-  static getRandomPhotoList(
-      ) {
-    List<Photo> listPhoto = [];
-    for(int i=0 ;i<1;i++){
-      listPhoto.add(Photo(id: i, photo: CachedNetworkImage(
-        fit: BoxFit.cover,
-        imageUrl: 'https://iili.io/HKq6S3P.webp',
-        placeholder: (context, url) => const Center(child: CircularProgressIndicator()),
-        errorWidget: (context, url, error) => const Icon(Icons.error),
-      )));
-    }
-    return listPhoto;
-  }
 }
 
-class WorkspaceOnPlan {
-  final int id;
-  final bool isActive;
-  final double positionX;
-  final double positionY;
-  final double sizeX;
-  final double sizeY;
-  final int typeId;
+class LevelPlanElementData {
+  int? id;
+  double positionX;
+  double positionY;
 
-  WorkspaceOnPlan(
-      {required this.id,
-      required this.isActive,
-      required this.positionX,
-      required this.positionY,
-      required this.sizeX,
-      required this.sizeY,
-      required this.typeId});
+  //double? minSize;
+  double width;
+  double height;
+  int numberOfWorkspaces;
+  String description;
+  bool isActive;
+  WorkspaceType type;
+  int? levelId;
+  late List<int> photosIds;
+  int? levelNumber;
 
-  WorkspaceOnPlan.fromJson(Map<String, dynamic> json)
+  LevelPlanElementData({
+    required this.positionX,
+    required this.positionY,
+    //required this.minSize,
+    required this.width,
+    required this.height,
+    required this.numberOfWorkspaces,
+    required this.type,
+    required this.description,
+    required this.isActive,
+    required this.levelId,
+  }) {
+    photosIds = [];
+  }
+
+  Map<String, dynamic> toJson() {
+    var json = <String, dynamic>{};
+    json['id'] = id;
+    json["numberOfWorkspaces"] = numberOfWorkspaces;
+    json["description"] = description;
+    json["isActive"] = isActive;
+    json["positionX"] = positionX.floor();
+    json["positionY"] = positionY.floor();
+    json["sizeX"] = width.floor();
+    json["sizeY"] = height.floor();
+    json["typeId"] = type.id;
+    json["levelId"] = levelId;
+    return json;
+  }
+
+  LevelPlanElementData.fromJson(Map<String, dynamic> json)
       : id = json['id'],
+        numberOfWorkspaces = json['numberOfWorkspaces'],
+        description = json['description'],
         isActive = json['isActive'],
         positionX = (json['positionX'] as int).toDouble(),
         positionY = (json['positionY'] as int).toDouble(),
-        sizeX = (json['sizeX'] as int).toDouble(),
-        sizeY = (json['sizeY'] as int).toDouble(),
-        typeId = json['typeId'];
+        width = (json['sizeX'] as int).toDouble(),
+        height = (json['sizeY'] as int).toDouble(),
+        type = WorkspaceType.fromJson(json['type']),
+        levelNumber = json['level'],
+        photosIds = json['photos'] != null
+            ? (json['photos'] as List<dynamic>).map((e) => e as int).toList()
+            : [];
 }
 
 class Photo {
   final int id;
+  final int imageId;
   final CachedNetworkImage photo;
+
   Photo.fromJson(Map<String, dynamic> json)
       : id = json['id'],
+        imageId = json['imageId'],
         photo = CachedNetworkImage(
           fit: BoxFit.cover,
           imageUrl: AppImageProvider.getImageUrlFromImageId(json['imageId']),
           httpHeaders: NetworkController().getAuthHeader(),
           placeholder: (context, url) => const Center(),
           errorWidget: (context, url, error) => const Icon(Icons.error),
-
         );
 
-  Photo({required this.id, required this.photo});
+  Photo({required this.id, required this.photo, required this.imageId});
 }

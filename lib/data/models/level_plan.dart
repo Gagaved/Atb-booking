@@ -1,27 +1,38 @@
 import 'workspace.dart';
 
-class Level {
+class LevelListItem {
   final int id;
   final int number;
 
-  Level({required this.id, required this.number});
+  LevelListItem({required this.id, required this.number});
 
-  Level.fromJson(Map<String, dynamic> json)
+  LevelListItem.fromJson(Map<String, dynamic> json)
       : id = json['id'],
         number = json['number'];
 }
 
-class LevelPlan {
+class Level {
   final int id;
-  final String? plan;
-  final List<WorkspaceOnPlan> workspaces;
+  final int number;
+  final int? planId;
+  final List<LevelPlanElementData> workspaces;
 
-  LevelPlan({required this.id, required this.plan, required this.workspaces});
+  Level({required this.id, required this.number,required this.planId, required this.workspaces});
 
-  LevelPlan.fromJson(Map<String, dynamic> json)
+  Level.fromJson(Map<String, dynamic> json)
       : id = json['id'],
-        plan = json['plan'],
+        planId = json['planId'],
+        number = json['number'],
         workspaces = (json['workspaces'] as List<dynamic>)
-            .map((json) => WorkspaceOnPlan.fromJson(json))
+            .map((json) => LevelPlanElementData.fromJson(json))
             .toList();
+
+  Map<String, dynamic> toJson() {
+    var json = <String, dynamic>{};
+    //json['id'] = id;
+    json["number"] = number;
+    json["planId"] = planId;
+    return json;
+  }
 }
+

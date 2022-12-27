@@ -16,7 +16,8 @@ class AdminPeopleEmptyState extends AdminPeopleState {
 }
 
 class AdminPeopleLoadingState extends AdminPeopleState {
-  const AdminPeopleLoadingState(super.users);
+  final int page;
+  const AdminPeopleLoadingState(super.users, this.page);
 }
 
 class AdminPeopleLoadedState extends AdminPeopleState {

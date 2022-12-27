@@ -29,6 +29,7 @@ environment:
 # the latest version available on pub.dev. To see which dependencies have newer
 # versions available, run `flutter pub outdated`.
 dependencies:
+  timezone: ^0.9.0
   cached_network_image: 3.2.2
   clickable_list_wheel_view: ^0.2.0
   cupertino_icons: ^1.0.2
@@ -50,7 +51,12 @@ dependencies:
   syncfusion_flutter_charts:
   test: null
   url_launcher: ^6.1.7
+  image_picker: 0.8.6
+  shimmer: ^2.0.0
+  syncfusion_flutter_pdfviewer: ^20.4.38
+
 dev_dependencies:
+  flutter_launcher_icons: ^0.11.0
   # The "flutter_lints" package below contains a set of recommended lints to
   # encourage good coding practices. The lint set provided by the package is
   # actiflutter build web --web-renderer canvaskitvated in the `analysis_options.yaml` file located at the root of your
@@ -60,18 +66,26 @@ dev_dependencies:
   flutter_test:
     sdk: flutter
 
-# For information on the generic Dart part of this file, see the
-# following page: https://dart.dev/tools/pub/pubspec
-# The following section is specific to Flutter packages.
+flutter_icons:
+  android: "launcher_icon"
+  image_path: "assets/icons/logo_icon.webp"
+
+
+flutter_localizations:
+  sdk: flutter
 flutter:
   uses-material-design: true
   assets:
-    - assets/workplace.png
-    - assets/workplacelogo.png
-    - assets/map.png
-    - assets/team_card.png
+    - assets/icons/
+    - assets/pdf_files/book_new_worker.pdf
+    - assets/pdf_files/general_remote_access.pdf
+    - assets/pdf_files/mac_access.pdf
+    - assets/pdf_files/windows_access.pdf
+    - assets/workspace1.png
+    - assets/workspace2.png
     - assets/avatar.jpg
     - assets/atb_logo.png
+    - assets/atblogo.svg
   # The following line ensures that the Material Icons font is
   # included with your application, so that you can use the icons in
   # the material Icons class.

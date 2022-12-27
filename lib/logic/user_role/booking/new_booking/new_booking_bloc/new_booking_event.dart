@@ -18,7 +18,7 @@ class NewBookingOfficeFormEvent extends NewBookingEvent {
 }
 
 class NewBookingLevelFormEvent extends NewBookingEvent {
-  final Level level;
+  final LevelListItem level;
 
   NewBookingLevelFormEvent(this.level);
 }

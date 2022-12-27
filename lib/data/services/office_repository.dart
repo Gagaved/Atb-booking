@@ -18,6 +18,6 @@ class OfficeRepository {
 
   //Future<Office> getOfficeById(int id) => _officeProvider.getOfficeById(id);
 
-  Future<List<Level>> getLevelsByOfficeId(int id) =>
+  Future<List<LevelListItem>> getLevelsByOfficeId(int id) =>
       _officeProvider.getLevelsByOfficeId(id);
 }

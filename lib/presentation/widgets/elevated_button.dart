@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 
-import '../constants/styles.dart';
-
 class AtbElevatedButton extends StatelessWidget {
   final VoidCallback onPressed;
   final String text;
@@ -13,9 +11,9 @@ class AtbElevatedButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Theme(
-        data: appThemeData.copyWith(
-            colorScheme: appThemeData.colorScheme
-                .copyWith(surface: appThemeData.primaryColor)),
+        data: Theme.of(context).copyWith(
+            colorScheme: Theme.of(context).colorScheme
+                .copyWith(surface: Theme.of(context).primaryColor)),
         child: ElevatedButton(
           style: const ButtonStyle(),
           onPressed: onPressed,
@@ -29,7 +27,7 @@ class AtbElevatedButton extends StatelessWidget {
                     Center(
                         child: Text(
                       text,
-                      style: appThemeData.textTheme.displayLarge
+                      style: Theme.of(context).textTheme.displayLarge
                           ?.copyWith(color: Colors.white, fontSize: 20),
                     )),
                     icon ?? const SizedBox.shrink(),

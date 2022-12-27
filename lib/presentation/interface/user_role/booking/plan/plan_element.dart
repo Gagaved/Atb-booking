@@ -1,22 +1,20 @@
 
 import 'package:atb_booking/data/models/workspace.dart';
-import 'package:atb_booking/data/models/workspace_type.dart';
 import 'package:atb_booking/logic/user_role/booking/new_booking/new_booking_bloc/plan_bloc/plan_bloc.dart';
-import 'package:atb_booking/presentation/constants/styles.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 
-class PlanElement extends StatelessWidget {
+class PlanElementWidget extends StatelessWidget {
   final bool isActive;
   final bool isSelect;
-  final WorkspaceOnPlan workspace;
+  final LevelPlanElementData workspace;
   final double x;
   final double y;
   final double height;
   final double width;
   final CachedNetworkImage cachedNetworkImage;
 
-  const PlanElement(
+  const PlanElementWidget(
       {super.key,
       required this.x,
       required this.y,
@@ -39,7 +37,7 @@ class PlanElement extends StatelessWidget {
                 side: !isSelect?
                 BorderSide(
                     width: 0.2, color: Colors.black):
-                    BorderSide(width: 4,color: appThemeData.primaryColor),
+                    BorderSide(width: 4,color: Theme.of(context).primaryColor),
                 borderRadius: BorderRadius.circular(12.0)),
             shadowColor: !isActive
                 ? Colors.grey
@@ -62,6 +60,7 @@ class PlanElement extends StatelessWidget {
             ),
           ),
           onTap: () {
+            print("$isActive");
             if (isActive) {
               PlanBloc().add(PlanTapElementEvent(workspace));
             }
@@ -69,23 +68,4 @@ class PlanElement extends StatelessWidget {
         ));
   }
 
-  static List<PlanElement> getListOfPlanElement(
-      List<WorkspaceOnPlan> workspaces, WorkspaceOnPlan? selectedWorkplace, Map<int, WorkspaceType> types) {
-    List<PlanElement> elements = [];
-    for (WorkspaceOnPlan workspace in workspaces) {
-      elements.add(PlanElement(
-        isActive: workspace.isActive,
-        x: workspace.positionX,
-        y: workspace.positionY,
-        height: workspace.sizeY,
-        // workspace.height,
-        width: workspace.sizeX,
-        //workspace.width,
-        workspace: workspace,
-        isSelect: workspace == selectedWorkplace ? true : false,
-        cachedNetworkImage: getCachedNetworkImage(workspace.typeId),
-      )); //workspace.isSelect));
-    }
-    return elements;
-  }
 }

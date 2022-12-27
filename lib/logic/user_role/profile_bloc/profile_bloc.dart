@@ -1,3 +1,6 @@
+import 'package:atb_booking/data/models/notificathions.dart';
+import 'package:atb_booking/data/services/network/network_controller.dart';
+import 'package:atb_booking/data/services/notificationsProvider.dart';
 import 'package:atb_booking/logic/secure_storage_api.dart';
 import 'package:bloc/bloc.dart';
 import 'package:flutter/cupertino.dart';
@@ -16,23 +19,25 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
     return _singleton;
   }
 
-  ProfileBloc._internal() : super(ProfileInitialState()) {
+  ProfileBloc._internal() : super(ProfileLoadingState()) {
     on<ProfileLoadEvent>((event, emit) async {
       try {
         emit(ProfileLoadingState());
         int id = await SecurityStorage().getIdStorage();
         User user = await UsersRepository().getUserById(id);
-        emit(ProfileLoadedState(userPerson: user));
+        List<NotificationsModel> notificationsList =
+            await NotificationsProvider().getNotifications(0, 10);
+        emit(ProfileLoadedState(userPerson: user, notificationsList: notificationsList));
       } catch (e) {
         emit(ProfileErrorState());
       }
     });
 
     on<ProfileExitToAuthEvent>((event, emit) async {
-      await SecurityStorage().clearValueStorage();
-      
+      /// Выход для бека
+      NetworkController().exitFromApp();
     });
-    emit(ProfileLoadingState());
+    //emit(ProfileLoadingState());
     add(ProfileLoadEvent());
   }
 }

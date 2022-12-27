@@ -46,6 +46,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
         /// Запрос и сохранение результата (возвращает тип пользователя)
         String type = await AuthController().login(event.login, event.password);
         print('USERTYPE IS: $type');
+
         /// Проверка сохранять ли пользователя
         if (event.isChecked == true) {
           SecurityStorage().saveLoginStorage(event.login); // save login

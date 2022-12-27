@@ -21,5 +21,5 @@ class UsersRepository {
       UsersProvider().fetchUserFavorites(id);
 
   Future<void> addUserFavorites(int userId, int favoriteId) =>
-      UsersProvider().addFavoritesProvider(favoriteId);
+      UsersProvider().addFavorite(favoriteId);
 }

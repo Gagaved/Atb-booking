@@ -1,11 +1,9 @@
+import 'package:atb_booking/logic/admin_role/feedback/admin_feedback_bloc.dart';
 import 'package:atb_booking/logic/admin_role/offices/offices_screen/admin_offices_bloc.dart';
-import 'package:atb_booking/logic/admin_role/offices/office_page/admin_office_page_bloc.dart';
-import 'package:atb_booking/logic/admin_role/people/admin_people_bloc.dart';
-import 'package:atb_booking/presentation/constants/styles.dart';
+import 'package:atb_booking/logic/admin_role/people/people_page/admin_people_bloc.dart';
 import 'package:atb_booking/presentation/interface/admin_role/feedback/feedback_screen.dart';
 import 'package:atb_booking/presentation/interface/admin_role/offices/offices_list_screen.dart';
 import 'package:atb_booking/presentation/interface/admin_role/people/people_screen.dart';
-import 'package:atb_booking/presentation/interface/admin_role/profile/profile_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -21,8 +19,7 @@ class _HomeState extends State<AdminHome> {
   static final List<Widget> _widgetOptions = <Widget>[
     const AdminOfficesScreen(),
     const AdminPeopleScreen(),
-    const AdminFeedbackScreen(),
-    const AdminProfileScreen(),
+     const AdminFeedbackScreen(),
   ];
 
   @override
@@ -32,9 +29,9 @@ class _HomeState extends State<AdminHome> {
 
   @override
   build(BuildContext context) {
-    return MaterialApp(
-        theme: appThemeData,
-        home: MultiBlocProvider(
+    return
+
+        MultiBlocProvider(
           providers: [
             BlocProvider<AdminOfficesBloc>(
               create: (context) => AdminOfficesBloc(),
@@ -42,12 +39,11 @@ class _HomeState extends State<AdminHome> {
             BlocProvider<AdminPeopleBloc>(
               create: (context) => AdminPeopleBloc(),
             ),
-            BlocProvider<AdminOfficePageBloc>(
-              create: (context) => AdminOfficePageBloc(),
-            )
+            BlocProvider<AdminFeedbackBloc>(
+              create: (context) => AdminFeedbackBloc(),
+            ),
           ],
           child: Scaffold(
-              resizeToAvoidBottomInset: false,
               body: Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 00),
                 child: Center(
@@ -62,14 +58,14 @@ class _HomeState extends State<AdminHome> {
                           color: Colors.white,
                         );
                       } else {
-                        return IconThemeData(color: appThemeData.primaryColor);
+                        return IconThemeData(color: Theme.of(context).primaryColor);
                       }
                     }),
-                    indicatorColor: appThemeData.primaryColor,
+                    indicatorColor: Theme.of(context).primaryColor,
                     //surfaceTintColor: Colors.lightGreen,
                   ),
                   child: Container(
-                    color: appThemeData.colorScheme.secondary,
+                    color: Theme.of(context).colorScheme.secondary,
                     child: NavigationBar(
                       selectedIndex: selectedIndex,
                       onDestinationSelected: (index) => setState(() {
@@ -78,7 +74,7 @@ class _HomeState extends State<AdminHome> {
                       destinations: const [
                         NavigationDestination(
                           icon: Icon(Icons.apartment_rounded),
-                          label: 'Офисы',
+                           label: 'Офисы',
                         ),
                         NavigationDestination(
                           icon: Icon(Icons.people_outline_rounded),
@@ -88,11 +84,9 @@ class _HomeState extends State<AdminHome> {
                           icon: Icon(Icons.feed),
                           label: 'Фидбек',
                         ),
-                        NavigationDestination(
-                            icon: Icon(Icons.person), label: 'Профиль')
                       ],
                     ),
                   ))),
-        ));
+        );
   }
 }

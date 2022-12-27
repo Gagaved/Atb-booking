@@ -8,6 +8,6 @@ class BookingRepository {
   Future<Booking> getBookingById(int id) => _bookingProvider.getBookingById(id);
   Future<void> deleteBooking(int bookingId) => _bookingProvider.deleteBooking(bookingId);
   Future<void> book(int workspaceId,int userId,DateTimeRange dateTimeRange, List<int> guestsIds) => _bookingProvider.book(workspaceId,userId,dateTimeRange,guestsIds);
-  Future<List<Booking>> getBookingsByUserId(int id) => _bookingProvider.getBookingByUserId(id);
+  //Future<List<Booking>> getBookingsByUserId(int id) => _bookingProvider.getBookingByUserId(id);
   Future<List<DateTimeRange>> getBookingWindows(int id, DateTime date) => _bookingProvider.getBookingWindows(id, date);
 }

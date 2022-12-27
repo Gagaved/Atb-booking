@@ -30,10 +30,10 @@ class NewBookingBloc extends Bloc<NewBookingEvent, NewBookingState> {
   DateTime? selectedDate;
   Office? selectedOffice;
   City? selectedCity;
-  Level? selectedLevel;
+  LevelListItem? selectedLevel;
   DateTimeRange? selectedDateTimeRange;
   Future<List<Office>>? futureOfficeListItem;
-  Future<List<Level>>? futureLevelList;
+  Future<List<LevelListItem>>? futureLevelList;
   Future<List<City>>? futureCityList;
 
   void setGuests(List<User> userList) {
@@ -41,7 +41,7 @@ class NewBookingBloc extends Bloc<NewBookingEvent, NewBookingState> {
     guests.addAll(userList);
   }
 
-  Future<List<Level>> getFutureLevelList(String? str) {
+  Future<List<LevelListItem>> getFutureLevelList(String? str) {
     return futureLevelList!;
   }
 
@@ -154,6 +154,7 @@ class NewBookingBloc extends Bloc<NewBookingEvent, NewBookingState> {
             .add(NewBookingSheetLoadEvent(selectedWorkspaceId!, selectedDate!));
         BookingListBloc().add(BookingListLoadEvent());
         setGuests([]);
+        NewBookingSheetBloc().add(NewBookingSheetAddingPeopleToBookingEvent(const []));
         ///обнуляем добавленных гостей для следуещей брони если эта успешна
       } catch (_) {
         NewBookingConfirmationPopupBloc()

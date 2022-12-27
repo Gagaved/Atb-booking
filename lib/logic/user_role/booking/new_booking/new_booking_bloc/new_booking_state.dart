@@ -22,8 +22,8 @@ class NewBookingSecondState extends NewBookingFirstState {
 
 /// Выбор этажа
 class NewBookingThirdState extends NewBookingSecondState {
-  final Future<List<Level>> Function(String?) getFutureLevelList;
-  final Level? selectedLevel;
+  final Future<List<LevelListItem>> Function(String?) getFutureLevelList;
+  final LevelListItem? selectedLevel;
   const NewBookingThirdState(super.futureCityList,super.labelCity,super.futureOfficeList,super.labelOffice,this.getFutureLevelList, this.selectedLevel);
 }
 ///Выбор места и даты

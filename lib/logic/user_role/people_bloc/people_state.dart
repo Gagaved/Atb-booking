@@ -16,7 +16,8 @@ class PeopleEmptyState extends PeopleState {
 }
 
 class PeopleLoadingState extends PeopleState {
-  const PeopleLoadingState(super.isFavoriteOn, super.users);
+  final int page;
+  const PeopleLoadingState(super.isFavoriteOn, super.users, this.page);
 }
 
 class PeopleLoadedState extends PeopleState {

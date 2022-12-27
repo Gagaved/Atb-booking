@@ -1,7 +1,5 @@
 import 'package:atb_booking/data/models/user.dart';
 import 'package:atb_booking/data/services/users_provider.dart';
-import 'package:atb_booking/data/services/users_repository.dart';
-import 'package:atb_booking/logic/secure_storage_api.dart';
 import 'package:atb_booking/logic/user_role/booking/new_booking/new_booking_bloc/new_booking_sheet_bloc/new_booking_sheet_bloc.dart';
 import 'package:bloc/bloc.dart';
 import 'package:meta/meta.dart';
@@ -69,7 +67,7 @@ class AddingPeopleToBookingBloc
           isFavoriteOn, selectedUsers, loadedUsers));
       try {
         // int curUserId = await SecurityStorage().getIdStorage();
-        UsersProvider().addFavoritesProvider(event.user.id);
+        UsersProvider().addFavorite(event.user.id);
       } catch (_) {
         event.user.isFavorite = false;
       }
@@ -80,7 +78,7 @@ class AddingPeopleToBookingBloc
           isFavoriteOn, selectedUsers, loadedUsers));
       // int curUserId = await SecurityStorage().getIdStorage();
       try {
-        UsersProvider().deleteFromFavoritesProvider(event.user.id);
+        UsersProvider().deleteFromFavorites(event.user.id);
       } catch (_) {
         event.user.isFavorite = true;
       }

@@ -1,8 +1,10 @@
 import 'package:atb_booking/data/models/city.dart';
 import 'package:atb_booking/data/models/level_plan.dart';
 import 'package:atb_booking/data/models/office.dart';
+import 'package:atb_booking/data/services/city_provider.dart';
+import 'package:atb_booking/data/services/office_provider.dart';
 import 'package:atb_booking/logic/user_role/booking/new_booking/new_booking_bloc/new_booking_bloc.dart';
-import 'package:atb_booking/presentation/constants/styles.dart';
+import 'package:atb_booking/logic/user_role/booking/new_booking/new_booking_bloc/new_booking_sheet_bloc/new_booking_sheet_bloc.dart';
 import 'package:atb_booking/presentation/interface/user_role/booking/plan/planWidget.dart';
 import 'package:atb_booking/presentation/widgets/elevated_button.dart';
 import 'package:dropdown_search/dropdown_search.dart';
@@ -33,8 +35,8 @@ class NewBookingScreen extends StatelessWidget {
               ///
               /// Инпут офиса и этажа
               Padding(
-                padding: const EdgeInsets.symmetric(
-                    horizontal: 30.0, vertical: 10),
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 30.0, vertical: 10),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: [
@@ -60,10 +62,7 @@ class NewBookingScreen extends StatelessWidget {
                 // TODO: implement listener
               }, builder: (context, state) {
                 if (state is NewBookingFourthState) {
-                  return Padding(
-                    padding: const EdgeInsets.all(10.0),
-                    child: PlanWidget(),
-                  );
+                  return const PlanWidget();
                 } else {
                   return const Center();
                 }
@@ -104,25 +103,47 @@ class _CityField extends StatelessWidget {
           return Padding(
             padding: const EdgeInsets.symmetric(horizontal: 30.0, vertical: 10),
             child: TypeAheadFormField(
+
+              noItemsFoundBuilder: (context){
+                return Flexible(child:
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Text("Не удалось найти город с таким именем",style: Theme.of(context).textTheme.bodyMedium,),
+                ),);
+              },
+              errorBuilder: (context,er){
+                return Flexible(child:
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Text("Не удалось загрузить, проверьте интернет соеденение.",style: Theme.of(context).textTheme.bodyMedium,),
+                ),);},
               textFieldConfiguration: TextFieldConfiguration(
-                decoration: const InputDecoration(
-                  border: OutlineInputBorder(),
-                  labelText: "Выберите город...",
+                decoration: InputDecoration(
+                  hintText: "Выберите город",
+                  filled: true,
+                  fillColor: Theme.of(context).backgroundColor,
+                  border: const OutlineInputBorder(
+                    borderSide: BorderSide.none,
+                    borderRadius: BorderRadius.all(Radius.circular(10.0)),
+                  ),
+                  suffixIcon: const Icon(Icons.search),
                 ),
                 controller: _cityInputController,
               ),
-              suggestionsCallback: (pattern) { // при нажатии на поле
-                return (state as NewBookingFirstState)
-                    .futureCityList; //CityRepository().getAllCities();
+              suggestionsCallback: (pattern) {
+                // при нажатии на поле
+                return CityProvider().getCitiesByName(pattern); //CityRepository().getAllCities();
               },
               itemBuilder: (context, City suggestion) {
                 return ListTile(
                   title: Text(suggestion.name),
                 );
               },
-              transitionBuilder: (context, suggestionsBox, controller) { // при вводи чего то в форму
+              transitionBuilder: (context, suggestionsBox, controller) {
+                // при вводи чего то в форму
                 return suggestionsBox;
               },
+
               onSuggestionSelected: (City suggestion) {
                 _cityInputController.text = suggestion.name;
                 context
@@ -131,7 +152,7 @@ class _CityField extends StatelessWidget {
                 //todo _selectedCity = suggestion;
               },
               validator: (value) =>
-                  value!.isEmpty ? 'Please select a city' : null,
+                  value!.isEmpty ? 'Введите город' : null,
               //onSaved: (value) => this._selectedCity = value,
             ),
           );
@@ -156,15 +177,37 @@ class _OfficeField extends StatelessWidget {
           if (state is NewBookingSecondState) {
             _officeInputController.text = state.labelOffice;
             return TypeAheadFormField(
+
+              noItemsFoundBuilder: (context){
+                return Flexible(child:
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Text("Не удалось найти офис с таким адерсом",style: Theme.of(context).textTheme.bodyMedium,),
+                ),);
+              },
+              errorBuilder: (context,er){
+                return Flexible(child:
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Text("Не удалось загрузить, проверьте интернет соеденение.",style: Theme.of(context).textTheme.bodyMedium,),
+                ),);
+
+              },
               textFieldConfiguration: TextFieldConfiguration(
-                decoration: const InputDecoration(
-                  border: OutlineInputBorder(),
-                  labelText: "Выберите офис...",
+                decoration: InputDecoration(
+                  hintText: "Выберите офис",
+                  filled: true,
+                  fillColor: Theme.of(context).backgroundColor,
+                  border: const OutlineInputBorder(
+                    borderSide: BorderSide.none,
+                    borderRadius: BorderRadius.all(Radius.circular(10.0)),
+                  ),
                 ),
                 controller: _officeInputController,
               ),
               suggestionsCallback: (pattern) {
-                return (state).futureOfficeList;
+                //return (state).futureOfficeList;
+                return OfficeProvider().getOfficesByCityId(context.read<NewBookingBloc>().selectedCity!.id);
               },
               itemBuilder: (context, Office suggestion) {
                 return ListTile(
@@ -193,6 +236,7 @@ class _OfficeField extends StatelessWidget {
 
 class _LevelField extends StatelessWidget {
   const _LevelField({Key? key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     return BlocConsumer<NewBookingBloc, NewBookingState>(
@@ -208,7 +252,7 @@ class _LevelField extends StatelessWidget {
                 //color: appThemeData.colorScheme.tertiary,
                 borderRadius: BorderRadius.circular(10).copyWith(),
               ),
-              child: DropdownSearch<Level>(
+              child: DropdownSearch<LevelListItem>(
                 selectedItem: state.selectedLevel,
                 onChanged: (level) {
                   if (level != null) {
@@ -219,27 +263,26 @@ class _LevelField extends StatelessWidget {
                 },
                 dropdownDecoratorProps: DropDownDecoratorProps(
                   dropdownSearchDecoration: InputDecoration(
-                    border: const OutlineInputBorder(),
-                    hintStyle: appThemeData.textTheme.titleMedium,
-                    suffixIconColor: Colors.red,
-                    iconColor: appThemeData.primaryColor,
-                    labelText: "Этаж",
-                    hintText: "Select an Level",
-                    //filled: true,
+                    hintText: "Введите имя...",
+                    filled: true,
+                    fillColor: Theme.of(context).backgroundColor,
+                    border: const OutlineInputBorder(
+                      borderSide: BorderSide.none,
+                      borderRadius: BorderRadius.all(Radius.circular(10.0)),
+                    ),
                   ),
                 ),
-                //items: List.generate(50, (i) => i),//snapshot.data!,
-                //items: snapshot.data!,
                 asyncItems: (state).getFutureLevelList,
                 //asyncItems: getFutureLevelList,
-                itemAsString: (Level level) {
+                itemAsString: (LevelListItem level) {
                   return "${level.number} Этаж";
                 },
-                dropdownBuilder: (BuildContext context, Level? level) {
+                dropdownBuilder: (BuildContext context, LevelListItem? level) {
                   if (level != null) {
                     return Text(
                       "${level.number} Этаж",
-                      style: appThemeData.textTheme.titleMedium,
+                      style: Theme.of(context).textTheme.titleMedium!
+                          .copyWith(fontWeight: FontWeight.w500),
                     );
                   } else {
                     return const SizedBox.shrink();
@@ -248,10 +291,7 @@ class _LevelField extends StatelessWidget {
                 popupProps: const PopupProps.menu(
                   //showSearchBox: true,
                   fit: FlexFit.loose,
-                  constraints: BoxConstraints.tightFor(
-                    width: 300,
-                    height: 120,
-                  ),
+                  constraints: BoxConstraints.tightFor(),
                 ),
               ),
             );
@@ -280,7 +320,14 @@ class _ButtonShowBottomSheet extends StatelessWidget {
                   NewBookingBloc().add(NewBookingButtonTimeEvent());
                   showModalBottomSheet<void>(
                     builder: (BuildContext context) {
-                      return const BookingBottomSheet();
+                      return MultiBlocProvider(
+                        providers: [
+                          BlocProvider.value(
+                          value: NewBookingSheetBloc(),
+                        ),
+                        ],
+                        child: const BookingBottomSheet(),
+                      );
                     },
                     isScrollControlled: true,
                     shape: const RoundedRectangleBorder(

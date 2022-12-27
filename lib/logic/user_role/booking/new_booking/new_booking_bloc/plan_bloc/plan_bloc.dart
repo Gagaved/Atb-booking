@@ -21,11 +21,11 @@ class PlanBloc extends Bloc<PlanEvent, PlanState> {
   static const double WIDTH = 350;
   static const double HEIGHT = 350;
   static const String _defaultTitle = "Выберите место для бронирования";
-  LevelPlan? levelPlan;
+  Level? levelPlan;
   int? maxBookingRangeInDays;
   Map<int, WorkspaceType>? workspaceTypes;
-  WorkspaceOnPlan? selectedWorkspace;
-  DateTime selectedDate = DateTime.now().add(Duration(days: 1));
+  LevelPlanElementData? selectedWorkspace;
+  DateTime selectedDate = DateTime(DateTime.now().year,DateTime.now().month,DateTime.now().day,DateTime.now().hour).add(const Duration(days: 1));
   final LevelPlanRepository levelPlanRepository = LevelPlanRepository();
   final WorkspaceTypeRepository workspaceTypeRepository =
       WorkspaceTypeRepository();
@@ -43,8 +43,8 @@ class PlanBloc extends Bloc<PlanEvent, PlanState> {
             selectedWorkspace,
             selectedWorkspace == null
                 ? _defaultTitle
-                : workspaceTypes![selectedWorkspace!.typeId]!.type,
-            levelPlan!.plan,
+                : selectedWorkspace!.type.type,
+              levelPlan!.planId
           ));
         } else {
           selectedWorkspace = event.workspace;
@@ -57,8 +57,8 @@ class PlanBloc extends Bloc<PlanEvent, PlanState> {
             selectedWorkspace,
             selectedWorkspace == null
                 ? _defaultTitle
-                : workspaceTypes![selectedWorkspace!.typeId]!.type,
-            levelPlan!.plan,
+                : workspaceTypes![selectedWorkspace!.type.id]!.type,
+              levelPlan!.planId
           ));
         }
       } catch (_) {}
@@ -77,8 +77,8 @@ class PlanBloc extends Bloc<PlanEvent, PlanState> {
           selectedWorkspace,
           selectedWorkspace == null
               ? _defaultTitle
-              : workspaceTypes![selectedWorkspace!.typeId]!.type,
-          levelPlan!.plan,
+              : selectedWorkspace!.type.type,
+            levelPlan!.planId
         ));
       } catch (_) {
         emit(PlanErrorState(selectedDate));
