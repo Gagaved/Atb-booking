@@ -148,15 +148,18 @@ class _Image extends StatelessWidget {
     if (booking.workspace.photosIds.isEmpty) {
       return const SizedBox.shrink();
     } else {
-      return CachedNetworkImage(
-          fit: BoxFit.fitWidth,
-          imageUrl: AppImageProvider.getImageUrlFromImageId(
-              booking.workspace.photosIds.first),
-          httpHeaders: NetworkController().getAuthHeader(),
-          progressIndicatorBuilder: (context, url, downloadProgress) => Center(
-              child:
-                  CircularProgressIndicator(value: downloadProgress.progress)),
-          errorWidget: (context, url, error) => const Icon(Icons.error));
+      return Container(
+        height: 150,
+        child: CachedNetworkImage(
+            fit: BoxFit.fitHeight,
+            imageUrl: AppImageProvider.getImageUrlFromImageId(
+                booking.workspace.photosIds.first),
+            httpHeaders: NetworkController().getAuthHeader(),
+            progressIndicatorBuilder: (context, url, downloadProgress) => Center(
+                child:
+                    CircularProgressIndicator(value: downloadProgress.progress)),
+            errorWidget: (context, url, error) => const Icon(Icons.error)),
+      );
     }
   }
 }

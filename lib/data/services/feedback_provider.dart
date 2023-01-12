@@ -15,7 +15,7 @@ class FeedbackProvider {
       int? guiltyId) async {
 
     int id = await SecurityStorage().getIdStorage();
-    var uri = Uri.http(
+    var uri = Uri.https(
       NetworkController().getUrl(),
       '/api/feedbacks/$id',
     );
@@ -68,7 +68,7 @@ class FeedbackProvider {
 
     int id = await SecurityStorage().getIdStorage();
     /// Сам запрос
-    var uri = Uri.http(
+    var uri = Uri.https(
         NetworkController().getUrl(), '/api/feedbacks/all/$id', queryParameters);
     var response = await http.get(uri, headers: headers);
 
@@ -101,7 +101,7 @@ class FeedbackProvider {
     headers["Content-type"] = 'application/json';
 
     /// Сам запрос
-    var uri = Uri.http(
+    var uri = Uri.https(
         NetworkController().getUrl(), '/api/feedbacks', queryParameters);
     var response = await http.get(uri, headers: headers);
 
@@ -129,7 +129,7 @@ class FeedbackProvider {
     headers["Authorization"] = 'Bearer $token';
 
     var baseUrl = NetworkController().getUrl();
-    var uri = Uri.http(baseUrl, '/api/feedbacks/$id');
+    var uri = Uri.https(baseUrl, '/api/feedbacks/$id');
     var response = await http.delete(uri, headers: headers);
 
     if (response.statusCode == 200) {
