@@ -11,6 +11,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:image_picker/image_picker.dart';
 
+
+///
+///
+/// Страница редактора этажа
 class LevelEditorPage extends StatelessWidget {
   const LevelEditorPage({Key? key}) : super(key: key);
   static double SCALE_FACTOR = 1.0; //MediaQuery.of(context).size.height * 0.75,
@@ -94,6 +98,10 @@ class LevelEditorPage extends StatelessWidget {
   }
 }
 
+
+///
+///
+/// Редактор этажа
 class _LevelPlanEditor extends StatelessWidget {
   const _LevelPlanEditor({Key? key}) : super(key: key);
   static TransformationController _transformationController =
@@ -183,6 +191,10 @@ class _LevelPlanEditor extends StatelessWidget {
   }
 }
 
+
+///
+///
+/// Выбранный элемент на плане
 class _LevelPlanEditorSelectedElementWidget extends StatelessWidget {
   final LevelPlanElementData data;
   final double scaleInteractiveViewValue;
@@ -621,6 +633,10 @@ class _LevelPlanEditorSelectedElementWidget extends StatelessWidget {
   }
 }
 
+
+///
+///
+/// Не выбранный элемент на плане
 class _LevelPlanEditorUnselectedElementWidget extends StatelessWidget {
   final LevelPlanElementData data;
   final double scaleInteractiveViewValue;
@@ -748,6 +764,9 @@ class _HorizontalWorkspaceBar extends StatelessWidget {
   }
 }
 
+///
+///
+/// Кнопка удаления места
 class _DeleteWorkspaceButton extends StatelessWidget {
   const _DeleteWorkspaceButton({Key? key}) : super(key: key);
 
@@ -808,6 +827,9 @@ class _DeleteWorkspaceButton extends StatelessWidget {
   }
 }
 
+///
+///
+/// Кнопка добавления описания к месту
 class _AddInfoButton extends StatelessWidget {
   const _AddInfoButton({Key? key}) : super(key: key);
 
@@ -873,6 +895,9 @@ class _AddInfoButton extends StatelessWidget {
   }
 }
 
+///
+///
+/// Текст под планом (например название выбранного места)
 class _TitleUnderPlan extends StatelessWidget {
   const _TitleUnderPlan({Key? key}) : super(key: key);
 
@@ -910,6 +935,9 @@ class _TitleUnderPlan extends StatelessWidget {
   }
 }
 
+///
+///
+/// Поле ввода номера этаа
 class _LevelNumberField extends StatelessWidget {
   static final TextEditingController _levelNumberTextController =
       TextEditingController();
@@ -989,6 +1017,9 @@ class _LevelNumberField extends StatelessWidget {
   }
 }
 
+///
+///
+/// Нижняя панель с информацией о выбранном рабочем месте
 class _BottomSheet extends StatelessWidget {
   const _BottomSheet({Key? key}) : super(key: key);
 
@@ -1030,6 +1061,9 @@ class _BottomSheet extends StatelessWidget {
   }
 }
 
+///
+///
+/// Горизонтальный список фотографий рабочих мест
 class _WorkSpacePhotos extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -1131,6 +1165,9 @@ class _WorkSpacePhotos extends StatelessWidget {
   }
 }
 
+///
+///
+/// Кнопка загрузки изображений к рабочему месту
 class _UploadImagePanel extends StatelessWidget {
   //File? image;
   @override
@@ -1218,6 +1255,9 @@ class _UploadImagePanel extends StatelessWidget {
   }
 }
 
+///
+///
+/// Поле ввода описания рабочего места
 class _DescriptionWorkspaceField extends StatelessWidget {
   static final TextEditingController _officeDescriptionController =
       TextEditingController();
@@ -1290,6 +1330,9 @@ class _DescriptionWorkspaceField extends StatelessWidget {
   }
 }
 
+///
+///
+/// Поле ввода вместимости рабочего места (Например переговорки)
 class _NumberOfWorkspacesField extends StatelessWidget {
   static final TextEditingController _numberOfWorkspacesController =
       TextEditingController();
@@ -1381,6 +1424,9 @@ class _NumberOfWorkspacesField extends StatelessWidget {
   }
 }
 
+///
+///
+/// Кнопка изменения статуса рабочего места
 class _ActiveStatusAndButton extends StatelessWidget {
   const _ActiveStatusAndButton({Key? key}) : super(key: key);
 
@@ -1469,6 +1515,9 @@ class _ActiveStatusAndButton extends StatelessWidget {
   }
 }
 
+///
+///
+/// Всплывающее окно подтверждения при удалении этажа
 class _DeleteLevelConfirmationPopup extends StatelessWidget {
   const _DeleteLevelConfirmationPopup({Key? key}) : super(key: key);
 
@@ -1515,6 +1564,10 @@ class _DeleteLevelConfirmationPopup extends StatelessWidget {
   }
 }
 
+
+///
+///
+/// Всплывающее окно подтверждения при удалении места
 class _DeleteWorkspaceConfirmationPopup extends StatelessWidget {
   const _DeleteWorkspaceConfirmationPopup({Key? key}) : super(key: key);
 
@@ -1562,6 +1615,10 @@ class _DeleteWorkspaceConfirmationPopup extends StatelessWidget {
   }
 }
 
+
+///
+///
+/// Всплывающее окно подтверждения при деактивации места
 class _DeactivateWorkplaceConfirmationPopup extends StatelessWidget {
   const _DeactivateWorkplaceConfirmationPopup({Key? key}) : super(key: key);
 
@@ -1609,6 +1666,10 @@ class _DeactivateWorkplaceConfirmationPopup extends StatelessWidget {
   }
 }
 
+
+///
+///
+/// Кнопка для загрузки изображения на задний план этажа
 class _UploadBackgroundImageButton extends StatelessWidget {
   const _UploadBackgroundImageButton({Key? key}) : super(key: key);
 
