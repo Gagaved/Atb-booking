@@ -16,7 +16,7 @@ class WorkspaceProvider {
     headers["Authorization"] = 'Bearer $token';
     headers["Content-type"] = 'application/json; charset=utf-8';
     headers["Accept"] = "application/json";
-    var uri = Uri.https(baseUrl, '/api/workspaces/$id', queryParameters);
+    var uri = Uri.http(baseUrl, '/api/workspaces/$id', queryParameters);
     var response = await http.get(uri, headers: headers);
     if (response.statusCode == 200) {
       return Workspace.fromJson(json.decode(utf8.decode(response.bodyBytes)));
@@ -42,7 +42,7 @@ class WorkspaceProvider {
     headers["Authorization"] = 'Bearer $token';
     headers["Content-type"] = 'application/json; charset=utf-8';
     headers["Accept"] = "application/json";
-    var uri = Uri.https(baseUrl, '/api/workspaces', queryParameters);
+    var uri = Uri.http(baseUrl, '/api/workspaces', queryParameters);
     var response = await http.post(uri, headers: headers, body: body);
     if (response.statusCode == 201) {
       int id = (json.decode(utf8.decode(response.bodyBytes)))["id"]!;
@@ -67,8 +67,7 @@ class WorkspaceProvider {
     headers["Authorization"] = 'Bearer $token';
     headers["Content-type"] = 'application/json; charset=utf-8';
     headers["Accept"] = "application/json";
-    var uri =
-        Uri.https(baseUrl, '/api/workspaces/$imageId', queryParameters);
+    var uri = Uri.http(baseUrl, '/api/workspaces/$imageId', queryParameters);
     var response = await http.delete(
       uri,
       headers: headers,
@@ -101,7 +100,7 @@ class WorkspaceProvider {
     headers["Authorization"] = 'Bearer $token';
     headers["Content-type"] = 'application/json; charset=utf-8';
     headers["Accept"] = "application/json";
-    var uri = Uri.https(baseUrl, '/api/workspaces');
+    var uri = Uri.http(baseUrl, '/api/workspaces');
     final response = await http.put(uri, headers: headers, body: body);
     if (response.statusCode == 200) {
       print("successful put workspaces!");
@@ -126,7 +125,7 @@ class WorkspaceProvider {
     fields['imageId'] = photosId;
     fields['workspaceId'] = workspaceId;
     var body = jsonEncode(fields);
-    var uri = Uri.https(baseUrl, '/api/workspacesPhoto');
+    var uri = Uri.http(baseUrl, '/api/workspacesPhoto');
     final response = await http.post(uri, headers: headers, body: body);
     if (response.statusCode == 201) {
       print("successful create workspaces photo!");
@@ -142,7 +141,7 @@ class WorkspaceProvider {
   Future<void> uploadWorkspacePhoto(File file,workspaceId) async {
     //create multipart request for POST or PATCH method
     var baseUrl = NetworkController().getUrl();
-    var uri = Uri.https(baseUrl,'/api/workspacesPhoto/$workspaceId');
+    var uri = Uri.http(baseUrl,'/api/workspacesPhoto/$workspaceId');
     Map<String, String> headers = {};
     var token = await NetworkController().getAccessToken();
     var request = http.MultipartRequest(
@@ -178,7 +177,7 @@ class WorkspaceProvider {
     headers["Content-type"] = 'application/json; charset=utf-8';
     headers["Accept"] = "application/json";
     var fields = <String, dynamic>{};
-    var uri = Uri.https(baseUrl, '/api/workspacesPhoto/$imageId');
+    var uri = Uri.http(baseUrl, '/api/workspacesPhoto/$imageId');
     final response = await http.delete(uri, headers: headers,);
     if (response.statusCode == 200) {
       print("successful delete workspaces photo!");

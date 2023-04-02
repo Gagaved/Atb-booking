@@ -17,7 +17,7 @@ class OfficeProvider {
     var token = await NetworkController().getAccessToken();
     headers["Authorization"] = 'Bearer $token';
     queryParameters["cityId"] = id.toString();
-    var uri = Uri.https(baseUrl, '/api/offices/city/$id');
+    var uri = Uri.http(baseUrl, '/api/offices/city/$id');
     final response = await http.get(uri, headers: headers);
     if (response.statusCode == 200) {
       final List<dynamic> officeListItemJson =
@@ -39,7 +39,7 @@ class OfficeProvider {
     Map<String, String> headers = {};
     var token = await NetworkController().getAccessToken();
     headers["Authorization"] = 'Bearer $token';
-    var uri = Uri.https(baseUrl, '/api/officeLevels/$id');
+    var uri = Uri.http(baseUrl, '/api/officeLevels/$id');
     final response = await http.get(uri, headers: headers);
     if (response.statusCode == 200) {
       print('successful fetching levels');
@@ -62,7 +62,7 @@ class OfficeProvider {
     Map<String, String> headers = {};
     var token = await NetworkController().getAccessToken();
     headers["Authorization"] = 'Bearer $token';
-    var uri = Uri.https(baseUrl, '/api/offices/info/${id}');
+    var uri = Uri.http(baseUrl, '/api/offices/info/${id}');
     final response = await http.get(uri, headers: headers);
     if (response.statusCode == 200) {
       print('successful fetching office');
@@ -87,7 +87,7 @@ class OfficeProvider {
 
     var body = jsonEncode(office.toJson());
     print(body);
-    var uri = Uri.https(baseUrl, '/api/offices');
+    var uri = Uri.http(baseUrl, '/api/offices');
     final response = await http.put(uri, headers: headers, body: body);
     if (response.statusCode == 200) {
       print("successful editing office");
@@ -112,7 +112,7 @@ class OfficeProvider {
     headers["Accept"] = "application/json";
 
     var body = jsonEncode(office.toJson());
-    var uri = Uri.https(baseUrl, '/api/offices');
+    var uri = Uri.http(baseUrl, '/api/offices');
     final response = await http.post(uri, headers: headers, body: body);
     if (response.statusCode == 201) {
       var jsonResponse = json.decode(utf8.decode(response.bodyBytes));
@@ -141,7 +141,7 @@ class OfficeProvider {
     headers["Authorization"] = 'Bearer $token';
     headers["Content-type"] = 'application/json; charset=utf-8';
     headers["Accept"] = "application/json";
-    var uri = Uri.https(baseUrl, '/api/offices/$officeId');
+    var uri = Uri.http(baseUrl, '/api/offices/$officeId');
     final response = await http.delete(
       uri,
       headers: headers,
@@ -171,7 +171,7 @@ class OfficeProvider {
     queryParameters["startDate"] = start.toUtc().toIso8601String();
     queryParameters["endDate"] = end.toUtc().toIso8601String();
 
-    var uri = Uri.https(baseUrl, '/api/statistics', queryParameters);
+    var uri = Uri.http(baseUrl, '/api/statistics', queryParameters);
 
     final response = await http.get(uri, headers: headers);
     if (response.statusCode == 200) {
@@ -201,7 +201,7 @@ class OfficeProvider {
     queryParameters["startDate"] = range.start.toUtc().toIso8601String();
     queryParameters["endDate"] = range.end.toUtc().toIso8601String();
 
-    var uri = Uri.https(baseUrl, '/api/reservations/office/$officeId', queryParameters);
+    var uri = Uri.http(baseUrl, '/api/reservations/office/$officeId', queryParameters);
 
     final response = await http.get(uri, headers: headers);
     if (response.statusCode == 200) {

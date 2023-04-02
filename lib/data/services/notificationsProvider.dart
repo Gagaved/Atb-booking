@@ -15,7 +15,7 @@ class NotificationsProvider {
     headers["Authorization"] = 'Bearer $token';
 
     var baseUrl = NetworkController().getUrl();
-    var uri = Uri.https(baseUrl, 'api/notification/$id');
+    var uri = Uri.http(baseUrl, 'api/notification/$id');
     var response = await http.delete(uri, headers: headers);
 
     if (response.statusCode == 200) {
@@ -43,7 +43,7 @@ class NotificationsProvider {
     int id = await SecurityStorage().getIdStorage();
 
     /// Сам запрос
-    var uri = Uri.https(
+    var uri = Uri.http(
         NetworkController().getUrl(), '/api/notification/$id', queryParameters);
     var response = await http.get(uri, headers: headers);
 

@@ -16,7 +16,7 @@ class BookingProvider {
     headers["Authorization"] = 'Bearer $accessToken';
     headers["Content-type"] = 'application/json; charset=utf-8';
     headers["Accept"] = "application/json";
-    var uri = Uri.https(
+    var uri = Uri.http(
       baseUrl,
       '/api/reservations',
     );
@@ -72,7 +72,7 @@ class BookingProvider {
     var token = await NetworkController().getAccessToken();
     headers["Authorization"] = 'Bearer $token';
 
-    var uri = Uri.https(baseUrl, '/api/reservations/user/$id',queryParameters);
+    var uri = Uri.http(baseUrl, '/api/reservations/user/$id',queryParameters);
     print("Uri:");
     print(uri.toString());
     var response = await http.get(
@@ -106,7 +106,7 @@ class BookingProvider {
     var token = await NetworkController().getAccessToken();
     headers["Authorization"] = 'Bearer $token';
 
-    var uri = Uri.https(baseUrl, '/api/reservations/$id');
+    var uri = Uri.http(baseUrl, '/api/reservations/$id');
     var response = await http.get(uri, headers: headers);
     if (response.statusCode == 200) {
       print(json.decode(utf8.decode(response.bodyBytes)));
@@ -137,7 +137,7 @@ class BookingProvider {
     print('Дата по которой получаем окна: ' + date.toUtc().toIso8601String());
     print('---------------');
 
-    var uri = Uri.https(baseUrl, '/api/reservations', queryParameters);
+    var uri = Uri.http(baseUrl, '/api/reservations', queryParameters);
     var response = await http.get(uri, headers: headers);
     if (response.statusCode == 200) {
       print(json.decode(utf8.decode(response.bodyBytes)));
@@ -184,7 +184,7 @@ class BookingProvider {
     var baseUrl = NetworkController().getUrl();
     var token = await NetworkController().getAccessToken();
     headers["Authorization"] = 'Bearer $token';
-    var uri = Uri.https(baseUrl, '/api/reservations/$id');
+    var uri = Uri.http(baseUrl, '/api/reservations/$id');
     var response = await http.delete(uri, headers: headers);
     if (response.statusCode == 200) {
       return;

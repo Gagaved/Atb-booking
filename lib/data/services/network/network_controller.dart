@@ -47,7 +47,7 @@ class NetworkController {
     headers["Accept"] = "application/json";
 
     /// Сам запрос
-    var uri = Uri.https(_baseUrl, '/api/auth/access-token/$refreshToken');
+    var uri = Uri.http(_baseUrl, '/api/auth/access-token/$refreshToken');
     var response = await http.post(uri, headers: headers);
 
     /// Проверка
@@ -70,7 +70,7 @@ class NetworkController {
     String refreshToken = await SecurityStorage().getRefreshTokenStorage();
 
     /// Сам запрос
-    var uri = Uri.https(_baseUrl, '/api/auth/refresh-token/$refreshToken');
+    var uri = Uri.http(_baseUrl, '/api/auth/refresh-token/$refreshToken');
     var response = await http.post(uri, headers: {});
 
     /// Проверка
@@ -95,7 +95,7 @@ class NetworkController {
     Map<String, String> headers = {"Authorization": 'Bearer $accessToken'};
 
     /// Сам запрос
-    var uri = Uri.https(_baseUrl, '/api/auth/logout/$refreshToken');
+    var uri = Uri.http(_baseUrl, '/api/auth/logout/$refreshToken');
     var response = await http.post(uri, headers: headers);
 
     /// Проверка

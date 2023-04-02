@@ -9,7 +9,7 @@ import 'models/login.dart';
 class AuthController {
   static String? role;
   static int? currentUserId;
-  var uri = Uri.https(
+  var uri = Uri.http(
     NetworkController().getUrl(),
     '/api/auth/login',
   );
@@ -54,7 +54,7 @@ class AuthController {
   Future<void> exitFromApp() async {
     /// Получаем refresh токен и добавляем его в url
     final String refresh = await SecurityStorage().getRefreshTokenStorage();
-    var uri = Uri.https(
+    var uri = Uri.http(
       NetworkController().getUrl(),
       '/api/auth/logout/$refresh',
     );

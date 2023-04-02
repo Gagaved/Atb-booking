@@ -14,7 +14,7 @@ class LevelProvider {
     headers["Authorization"] = 'Bearer $token';
     headers["Content-type"] = 'application/json; charset=utf-8';
     headers["Accept"] = "application/json";
-    var uri = Uri.https(baseUrl, '/api/officeLevels/levelWithWorkplaces/$id');
+    var uri = Uri.http(baseUrl, '/api/officeLevels/levelWithWorkplaces/$id');
     final response = await http.get(uri, headers: headers);
     if (response.statusCode == 200) {
       return Level.fromJson(json.decode(utf8.decode(response.bodyBytes)));
@@ -36,7 +36,7 @@ class LevelProvider {
     headers["Accept"] = "application/json";
     var jsonLevel = level.toJson();
     var body = jsonEncode(jsonLevel);
-    var uri = Uri.https(baseUrl, '/api/officeLevels/${level.id}');
+    var uri = Uri.http(baseUrl, '/api/officeLevels/${level.id}');
     final response = await http.put(uri, headers: headers, body: body);
     if (response.statusCode == 200) {
       print("successful put new level info");
@@ -62,7 +62,7 @@ class LevelProvider {
     headers["Content-type"] = 'application/json; charset=utf-8';
     headers["Accept"] = "application/json";
     var body = jsonEncode(jsonLevel);
-    var uri = Uri.https(baseUrl, '/api/officeLevels');
+    var uri = Uri.http(baseUrl, '/api/officeLevels');
     final response = await http.post(uri, headers: headers, body: body);
     if (response.statusCode == 201) {
       var jsonResponse = json.decode(utf8.decode(response.bodyBytes));
@@ -86,7 +86,7 @@ class LevelProvider {
     headers["Authorization"] = 'Bearer $token';
     headers["Content-type"] = 'application/json; charset=utf-8';
     headers["Accept"] = "application/json";
-    var uri = Uri.https(baseUrl, '/api/officeLevels/${levelId}');
+    var uri = Uri.http(baseUrl, '/api/officeLevels/${levelId}');
     final response = await http.delete(uri, headers: headers,);
     if (response.statusCode == 200) {
     print("successful delete level");
@@ -102,7 +102,7 @@ class LevelProvider {
   Future<void> addImageToPlanByIds(File file, int levelId) async {
     //create multipart request for POST or PATCH method
     var baseUrl = NetworkController().getUrl();
-    var uri = Uri.https(baseUrl, '/api/officeLevels/$levelId');
+    var uri = Uri.http(baseUrl, '/api/officeLevels/$levelId');
     var token = await NetworkController().getAccessToken();
     var request = http.MultipartRequest(
       "POST",

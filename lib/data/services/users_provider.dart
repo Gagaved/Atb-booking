@@ -24,7 +24,7 @@ class UsersProvider {
     Map<String, String> headers = {"Authorization": 'Bearer $accessToken'};
 
     /// Сам запрос
-    var uri = Uri.https(baseUrl, '/api/users/$id');
+    var uri = Uri.http(baseUrl, '/api/users/$id');
     var response = await http.get(uri, headers: headers);
     final dynamic dataJson = json.decode(utf8.decode(response.bodyBytes));
 
@@ -56,7 +56,7 @@ class UsersProvider {
     Map<String, String> headers = {"Authorization": 'Bearer $accessToken'};
 
     /// Сам запрос
-    var uri = Uri.https(baseUrl, '/api/users', queryParameters);
+    var uri = Uri.http(baseUrl, '/api/users', queryParameters);
     var response = await http.get(uri, headers: headers);
 
     /// Проверка
@@ -90,7 +90,7 @@ class UsersProvider {
 
     /// Сам запрос
     var uri =
-        Uri.https(baseUrl, '/api/users/search/$currentUserId', queryParameters);
+        Uri.http(baseUrl, '/api/users/search/$currentUserId', queryParameters);
     var response = await http.get(uri, headers: headers);
 
     /// Проверка
@@ -115,7 +115,7 @@ class UsersProvider {
     Map<String, String> headers = {"Authorization": 'Bearer $accessToken'};
 
     /// Сам запрос
-    var uri = Uri.https(baseUrl, '/api/users/role');
+    var uri = Uri.http(baseUrl, '/api/users/role');
     var response = await http.get(uri, headers: headers);
 
     /// Проверка ответа
@@ -142,7 +142,7 @@ class UsersProvider {
     Map<String, dynamic> queryParameters = {}..["userId"] = id.toString();
 
     /// Сам запрос
-    var uri = Uri.https(baseUrl, '/api/favorites', queryParameters);
+    var uri = Uri.http(baseUrl, '/api/favorites', queryParameters);
     var response = await http.get(uri, headers: headers);
 
     /// Проверка ответа
@@ -161,7 +161,7 @@ class UsersProvider {
 
   Future<void> addFavorite(int favoriteId) async  {
     var currentUserId = await SecurityStorage().getIdStorage();
-    var uri = Uri.https(
+    var uri = Uri.http(
       baseUrl,
       '/api/favorites/$favoriteId/users/$currentUserId',
     );
@@ -188,7 +188,7 @@ class UsersProvider {
 
   Future<void> deleteFromFavorites(int favoriteId) async {
     var currentUserId = await SecurityStorage().getIdStorage();
-    var uri = Uri.https(
+    var uri = Uri.http(
       baseUrl,
       '/api/favorites/$favoriteId/users/$currentUserId',
     );

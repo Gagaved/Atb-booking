@@ -7,14 +7,14 @@ import 'package:http/http.dart' as http;
 class AppImageProvider {
   static String getImageUrlFromImageId(int id) {
     var baseUrl = NetworkController().getUrl();
-    var uri = Uri.https(baseUrl, "/api/images/$id");
+    var uri = Uri.http(baseUrl, "/api/images/$id");
     return uri.toString();
   }
 
   static Future<int> upload(File file) async {
     //create multipart request for POST or PATCH method
     var baseUrl = NetworkController().getUrl();
-    var uri = Uri.https(baseUrl, '/api/images');
+    var uri = Uri.http(baseUrl, '/api/images');
     Map<String, String> headers = {};
     var token = await NetworkController().getAccessToken();
     var request = http.MultipartRequest(

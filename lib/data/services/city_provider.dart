@@ -13,7 +13,7 @@ class CityProvider {
     headers["Authorization"] = 'Bearer $token';
     Map<String, dynamic> queryParameters = {};
     queryParameters["cityName"] = pattern;
-    var uri = Uri.https(baseUrl, '/api/cities',queryParameters);
+    var uri = Uri.http(baseUrl, '/api/cities',queryParameters);
     var response = await http.get(uri, headers: headers);
     if (response.statusCode == 200) {
       final List<dynamic> cityJson =
@@ -35,7 +35,7 @@ class CityProvider {
     headers["Authorization"] = 'Bearer $token';
     Map<String, dynamic> queryParameters = {};
     queryParameters["cityName"] = "";
-    var uri = Uri.https(baseUrl, '/api/cities',queryParameters);
+    var uri = Uri.http(baseUrl, '/api/cities',queryParameters);
     var response = await http.get(uri, headers: headers);
     if (response.statusCode == 200) {
       final List<dynamic> cityJson =
