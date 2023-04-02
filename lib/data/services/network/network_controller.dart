@@ -17,7 +17,7 @@ class NetworkController {
     SecurityStorage().clearValueStorage();
   }
   //final _baseUrl = "45.67.58.123:8080";
-  final _baseUrl = "atb-booking.tk";
+  final _baseUrl = "45.12.237.184:8080";
   String getUrl() => _baseUrl;
 
 
