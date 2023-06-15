@@ -22,10 +22,7 @@
 
 
 Несколько скриншотов интерфейса пользователя:
-![1](https://github.com/Nezerbrood/Atb-booking/assets/75212647/f09e62a0-e876-4201-93b8-68d0f35bce45)
-![2](https://github.com/Nezerbrood/Atb-booking/assets/75212647/79e40e63-ac26-4df5-83d9-d5712ef81c28)
+![1_](https://github.com/Nezerbrood/Atb-booking/assets/75212647/3f72d9bc-948a-44db-8a08-a76e5e75cc7c)
 
-Несколько скриншотов интерфейса администратора:
-
-![3](https://github.com/Nezerbrood/Atb-booking/assets/75212647/419c2743-7fd2-4495-b6e9-120dfa61ddbe)
-![4](https://github.com/Nezerbrood/Atb-booking/assets/75212647/019ae222-bf8d-4274-9ed7-4bcb00f47816)
+Несколько скриншотов интерфейса администратора (и редактора этажа):
+![2_](https://github.com/Nezerbrood/Atb-booking/assets/75212647/e7cb0889-c366-468e-b6ca-ab655e61ba94)
